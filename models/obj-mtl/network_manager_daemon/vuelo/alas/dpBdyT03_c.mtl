@@ -1,0 +1,33 @@
+newmtl dnm_transparente
+Kd 0.64 0.64 0.64
+Ke 0 0 0
+Ka 1 1 1
+Ks 0 0 0
+Ns 96
+Tr 0.8
+d 0.2
+Ni 1
+Tf 1 1 1
+
+newmtl dnm_transparente
+Kd 0.64 0.64 0.64
+Ke 0 0 0
+Ka 1 1 1
+Ks 0 0 0
+Ns 96
+Tr 0.8
+d 0.2
+Ni 1
+Tf 1 1 1
+
+newmtl dnm_transparente
+Kd 0.64 0.64 0.64
+Ke 0 0 0
+Ka 1 1 1
+Ks 0 0 0
+Ns 96
+Tr 0.8
+d 0.2
+Ni 1
+Tf 1 1 1
+

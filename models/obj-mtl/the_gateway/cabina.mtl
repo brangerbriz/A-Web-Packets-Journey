@@ -1,0 +1,22 @@
+newmtl c_cabina
+Kd 0.64 0.64 0.64
+Ke 0 0 0
+Ka 1 1 1
+Ks 0 0 0
+Ns 96
+Tr 0
+d 1
+Ni 1
+Tf 1 1 1
+map_Kd models/cabina.jpg
+
+newmtl Material
+Kd 0.752941 0.709804 0.505882
+Ke 0 0 0
+Ka 1 1 1
+Ks 0 0 0
+Ns 96
+Tr 0.672
+d 0.328
+Ni 1
+Tf 1 1 1

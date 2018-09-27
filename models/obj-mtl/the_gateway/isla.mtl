@@ -1,0 +1,22 @@
+newmtl itext01
+Kd 0.64 0.64 0.64
+Ke 0 0 0
+Ka 1 1 1
+Ks 0 0 0
+Ns 96
+Tr 0
+d 1
+Ni 1
+Tf 1 1 1
+map_Kd models/iG01.jpg
+
+newmtl transparent
+Kd 1 0.870588 0.490196
+Ke 0 0 0
+Ka 1 1 1
+Ks 0 0 0
+Ns 0
+Tr 0.7
+d 0.3
+Ni 1
+Tf 1 1 1

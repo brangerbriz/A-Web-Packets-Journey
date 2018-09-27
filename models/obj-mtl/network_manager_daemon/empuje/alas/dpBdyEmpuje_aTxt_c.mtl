@@ -1,0 +1,12 @@
+newmtl dnm_dff
+Kd 0.64 0.64 0.64
+Ke 0 0 0
+Ka 1 1 1
+Ks 0 0 0
+Ns 0
+Tr 0
+d 1
+Ni 1
+Tf 1 1 1
+map_Kd C:Users/Eugenio/Desktop/DANTE/2018pc/videoJuego_/daemons/entrega_c/daemonPink/dmnPink_c/dmns_diff.jpg
+

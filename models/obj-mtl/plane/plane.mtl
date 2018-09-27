@@ -1,0 +1,11 @@
+newmtl plane.027
+Kd 0.64 0.64 0.64
+Ke 0.5 0.5 0.5
+Ka 1 1 1
+Ks 0 0 0
+Ns 92
+Tr 0
+d 1
+Ni 1
+Tf 1 1 1
+map_Kd models/plane.png

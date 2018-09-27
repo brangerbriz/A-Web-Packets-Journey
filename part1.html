@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <title> A Web Packet's Journey </title>
+
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+        <!-- <link rel="apple-touch-icon" sizes="128x128" href="#"> -->
+        <!-- <link rel="icon" type="image/x-icon" href="#"> -->
+
+        <meta name="description" content="A Web Packet's Journey is an online ( desktop, mobile, cardboard and WebVR ) educational interactive-narrative/game based on the route a web request packet takes over the Internet.">
+
+        <!-- for Google+ -->
+        <meta itemprop="name" content="A Web Packet's Journey">
+        <meta itemprop="description" content="A Web Packet's Journey is an online ( desktop, mobile, cardboard and WebVR ) educational interactive-narrative/game based on the route a web request packet takes over the Internet.">
+        <!-- <meta itemprop="image" content="#"> -->
+
+        <!-- for Twitter -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:site" content="@branger_briz">
+        <meta name="twitter:title" content="A Web Packet's Journey">
+        <meta name="twitter:description" content="A Web Packet's Journey is an online ( desktop, mobile, cardboard and WebVR ) educational interactive-narrative/game based on the route a web request packet takes over the Internet.">
+        <meta name="twitter:creator" content="@branger_briz">
+        <!-- Twitter summary card with large image must be at least 280x150px -->
+        <!-- <meta name="twitter:image:src" content="#"> -->
+
+        <!-- for Facebook -->
+        <meta property="og:title" content="A Web Packet's Journey">
+        <meta property="og:type" content="article">
+        <!-- <meta property="og:url" content="#"> -->
+        <!-- <meta property="og:image" content="#"> -->
+        <meta property="og:description" content="A Web Packet's Journey is an online ( desktop, mobile, cardboard and WebVR ) educational interactive-narrative/game based on the route a web request packet takes over the Internet.">
+        <meta property="og:site_name" content="A Web Packet's Journey">
+
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+    <body>
+        <!-- third party dependencies  -->
+        <script src="libs/Tween.js"></script>
+        <script src="libs/stats.min.js"></script>
+        <script src="libs/three.min.js"></script>
+        <script src="libs/vr/WebVR-edited.js"></script>
+        <script src="libs/vr/webvr-polyfill.js"></script>
+        <script src="libs/vr/VREffect.js"></script>
+        <script src="libs/vr/VRControls.js"></script>
+        <script src="libs/controls/OrbitControls.js"></script>
+        <script src="libs/controls/PointerLockControls.js"></script>
+        <script src="libs/loaders/draco/DRACOLoader.js"></script>
+        <script src="libs/shaders/ToonMaterial.js"></script>
+
+        <!-- globally used classes / functions  -->
+        <script src="js/VRWorld.js"></script>
+        <script src="js/DialogueVR.js"></script>
+        <script src="js/TrackCart.js"></script>
+        <script src="js/BaseObjClass.js"></script>
+        <script src="js/SceneLights.js"></script>
+        <script src="js/utils.js"></script>
+        <!-- scene specific classes / functions  -->
+        <script src="js/Packet.js"></script>
+        <script src="js/WiFiPlane.js"></script>
+        <script src="js/NetManagerStand.js"></script>
+        <script src="js/NetManagerDaemon.js"></script>
+        <script src="js/s1_functions.js"></script>
+        <script src="js/s1_narrative.js"></script>
+        <!-- web audio music -->
+        <script src="libs/StartAudioContext.js"></script>
+        <script src="js/music/Note.js"></script>
+        <script src="js/music/Chord.js"></script>
+        <script src="js/music/Melody.js"></script>
+        <script src="js/music/Sequencer.js"></script>
+        <script src="js/music/adsr.js"></script>
+        <script src="js/music/moozak_scene1.js"></script>
+
+        <script>
+
+            /*
+                welcome code explorer! we're glad you're interested to see how
+                this game works :) we've done our best to make the code readable
+                ( no minification or obfiscation ) and have tried to leave
+                helpful comments along the way. this project is open-source so
+                you can also look at all this code on our github:
+                https://github.com/brangerbriz/A-Web-Packets-Journey
+
+                if you have any thoughts/questions we'd love to hear 'em. you
+                can contact us@brangerbriz.com
+            */
+
+            const moozak = new Moozak_scene1()
+            const talk = new DialogueVR(narrative)
+            const loader = new Loader(3,()=>{ moozak.toggle() })
+            const bgcolor = '#77d878'
+
+            let stand, daemon, dcart, sparks = []
+            let plane, cart, line = []
+            let lights, looping = true
+
+            const world = new VRWorld({
+                titleCard:'images/title_screen_s1.png',
+                background:bgcolor,
+                // debug:true,
+                // debugControls:true,
+                camera:{x:-0.42,y:2,z:4.5,fov:70},
+                crosshair: {
+                    names:[...talk.options,...Object.keys(narrative)],
+                    block:['dialogue'],
+                    time:1500,
+                    progress:function(prog,name){
+                        talk.highlight(name)
+                    },
+                    exit:function(name){
+                        talk.removeHighlight(name)
+                    },
+                    select:function(name){
+                        moozak.interacting = true
+                        talk.say(name)
+                    }
+                },
+                setup:(scene,camera,renderer)=>{
+                    // all the functions used here can be found either in the
+                    // js/s1_functions.js file, the js/utils.js file or,
+                    // in the case of some of the classes, in their own
+                    // .js files ( refer to the script tags above )
+
+                    talk.setup({
+                        scene:scene,
+                        camera:camera,
+                        renderer:renderer,
+                        height: 1.6
+                    })
+
+                    lights = new SceneLights(scene)
+                    lights.a.intensity = 0.9
+                    lights.h.intensity = 0.39
+
+                    // ======== Network Manager Area ===========================
+
+                    scene.add( createCircuitFloor() )
+                    scene.add( createRunway() )
+                    scene.add( createSparks(sparks) )
+
+                    stand = new NetManagerStand((mesh)=>{
+                        mesh.scale.set(0.15,0.15,0.15)
+                        mesh.position.set(0,1.12,2.15)
+                        mesh.rotation.y = Math.PI
+                        scene.add(mesh)
+                        loader.loaded()
+                    })
+
+                    daemon = new NetManagerDaemon((mesh)=>{
+                        mesh.scale.set(0.15,0.15,0.15)
+                        mesh.position.set(0,1.5,3)
+                        mesh.rotation.y = Math.PI
+                        scene.add(mesh)
+                        loader.loaded()
+                    })
+
+                    // daemon's path when it's time to push player into plane
+                    dcart = new TrackCart(scene, [
+                        new THREE.Vector3(0,1.5,3),
+                        new THREE.Vector3(-2,1.5,3),
+                        new THREE.Vector3(-2,1.5,2),
+                        new THREE.Vector3(-0.5,1.5,0),
+                        new THREE.Vector3(2,1.5,2),
+                        new THREE.Vector3(2,1.5,3),
+                        new THREE.Vector3(2.75,0.83,5)
+                    ])
+
+                    // ===================== packet's && plane =================
+
+                    cart = new TrackCart(scene, [
+                        new THREE.Vector3(-100,100,100),
+                        new THREE.Vector3(-80,40,20),
+                        new THREE.Vector3(-35,2,5),
+                        new THREE.Vector3(3,0.58,5),
+                        new THREE.Vector3(35,2,5),
+                        new THREE.Vector3(80,40,20),
+                        new THREE.Vector3(100,100,100),
+                    ])
+
+                    // extra light for the plane
+                    let dl = new THREE.DirectionalLight( 0xffffff, 0.3 )
+                    dl.copy( lights.d )
+                    dl.position.set(-6, 3, -2)
+                    dl.rotation.set(0, Math.PI, 0)
+
+                    plane = new WiFiPlane({
+                        light:dl,
+                        ip:'192.168.0.68'
+                    },(mesh,plane)=>{
+                        mesh.rotation.set(0,-Math.PI/2,0)
+                        cart.mesh.add(mesh)
+                        planeLoop()
+                    })
+
+                    // packets waiting in line to board plane
+                    line = new LinePackets(4,scene,plane)
+
+                    // =============== the User ================================
+
+                    // 3 packets in awe of the User
+                    for (let i = 0; i < 3; i++) {
+                        let types = ['imap','http','bt']
+                        new Packet({
+                            name:`packet${i}`,
+                            bounce:true,
+                            lights:true,
+                            type:types[i]
+                        },(mesh)=>{
+                            scene.add(mesh)
+                            let x = -1 + i
+                            let z = (i==1) ? -3 : -3.5
+                            mesh.position.set(x,0,z)
+                            mesh.lookAt(new THREE.Vector3(0,15,-13))
+                        })
+                    }
+
+                    scene.add( createGlassFrame(bgcolor) )
+                    scene.add( createUserRoom(bgcolor) )
+
+                    loadUser((obj)=>{
+                        obj.scale.set(2,2,2)
+                        obj.position.set(0,15,-13.1)
+                        scene.add(obj)
+                        loader.loaded()
+                    })
+
+                },
+                draw:(scene,camera,renderer,clock)=>{
+                    TWEEN.update()
+                    let tick = clock.getElapsedTime()
+                    stand.update(tick)
+                    daemon.update(tick)
+                    sparks.forEach(spark=>spark.update(tick))
+                    if(cart && cart.mesh.children.length>0){
+                        plane.update(tick)
+                        cart.update()
+                        line.update(cart.mesh.position)
+                        dcart.update()
+                    }
+                    moozak.update()
+                }
+            })
+
+            // change orbit control target when debugging
+            if(world.scene.userData.debug){
+                world.debugControls.target = new THREE.Vector3(0,7,-8) //user
+                // world.debugControls.target = new THREE.Vector3(0,1.649,3) //daemon
+            }
+
+
+
+
+
+        </script>
+    </body>
+</html>
