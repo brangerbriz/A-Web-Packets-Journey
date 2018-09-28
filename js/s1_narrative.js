@@ -71,7 +71,7 @@ function takePlayer2Plane(){
             })
             .then(()=>cart.moveTo(1.0, 8000, TWEEN.Easing.Cubic.In))
             .catch(err => console.error(err))
-            setTimeout(()=>{ location='part2.html' },12000)
+            setTimeout(()=>{ location='part2.html?lvlprog=true' },12000)
         }
     },500)
 }
