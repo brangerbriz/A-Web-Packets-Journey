@@ -382,6 +382,7 @@ class VRWorld {
             let img = document.createElement('img')
             img.src = this.titleCard
             img.style.width = '90%'
+            img.ondragstart= ()=>{return false}
             this.titleCard = img
             this.screen.appendChild(this.titleCard)
         } else {
