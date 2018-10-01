@@ -44,7 +44,7 @@ class Packet {
             specular: new THREE.Color(0.5,0.5,0.5),
             side: THREE.DoubleSide,
             shininess: 1,
-            refelctivity:0,
+            reflectivity:0,
             transparent:true,
             opacity:0.9
         }
