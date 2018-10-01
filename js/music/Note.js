@@ -48,10 +48,10 @@
 
     // justStep is similar to .step(), except you can pass a custom root note
     // as a frequency and it always returns the value based on just intonation
-    note.justStep( rootFrquency, steps )
+    note.justStep( rootFrequency, steps )
 
-    // equalStep is like justStep but returns the new value in equal temperment
-    note.equalStep( rootFrquency, steps )
+    // equalStep is like justStep but returns the new value in equal temperament
+    note.equalStep( rootFrequency, steps )
 
     // this method takes a note string and optional tuning paramter and returns
     // the corresponding frequency value
@@ -69,7 +69,7 @@ class Note {
         else if(typeof params=='object') opts = params
         else if(typeof params=='undefined') opts = {}
         else throw new Error('Note: constructor requires either an options '+
-        'object or a ntoe string, ex: A, A#, C5, D#6, etc.')
+        'object or a note string, ex: A, A#, C5, D#6, etc.')
 
         // TODO more tunings? meantone? pythogorus? others?
         // - http://pages.mtu.edu/~suits/scales.html
@@ -282,7 +282,7 @@ class Note {
 
     equalStep( rootFreq, steps ){
         // formula: http://pages.mtu.edu/~suits/NoteFreqCalcs.html
-        let tr2 = Math.pow(2, 1/12) // the twelth root of 2
+        let tr2 = Math.pow(2, 1/12) // the twelfth root of 2
         let rnd = rootFreq * Math.pow(tr2,steps)
         return Math.round(rnd*100)/100
     }

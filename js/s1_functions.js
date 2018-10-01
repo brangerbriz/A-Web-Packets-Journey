@@ -357,9 +357,9 @@ function createUserRoom(bgClr){
 function createGlassFrame(bgClr){
 
     let b = 27.8 // side border size
-    let p = {w:4.5, h:8} // pane dimentions
-    let s = {w:b, h:p.h} // left/right side panel dimentions
-    let o = {w:p.w+b*2, h:40} // top/bottom panel dimentions
+    let p = {w:4.5, h:8} // pane dimensions
+    let s = {w:b, h:p.h} // left/right side panel dimensions
+    let o = {w:p.w+b*2, h:40} // top/bottom panel dimensions
 
     let glass = new THREE.Object3D()
 

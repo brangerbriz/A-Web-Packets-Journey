@@ -269,7 +269,7 @@ class Melody extends Note {
         } else {
             let total = [] // collect all the steps in all the modes
             for(let i in this.modes) total = [...total,...this.modes[i]]
-            let counts = {} // count how many occuranes of each step there are
+            let counts = {} // count how many occurrences of each step there are
             for (let i = 0; i < total.length; i++) {
                 let num = total[i]
                 counts[num] = counts[num] ? counts[num] + 1 : 1
