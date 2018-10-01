@@ -109,7 +109,7 @@ class Note {
     }
 
     _parseNoteStr(noteStr,calledBy){
-        let note, octave, index
+        let note, octave
         let arr = noteStr.split('')
         if( !isNaN(Number(arr[arr.length-1])) ){ // ends w/number?
 
