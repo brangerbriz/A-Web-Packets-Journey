@@ -10,22 +10,28 @@
        info
     -----------
 
-    instantiating this class creates the network manager stand (for scene 1). it
-    extends the BaseObjClass
+    instantiating this class creates the network manager daemon (for scene 1).
+    it extends the BaseObjClass
 
     requires the following dependencies from /libs:
     - BaseObjClass.js
     - three.min.js
     - DRACOLoader.js ( +decoder libs in libs/loaders/draco/ )
     as well as the following media files:
-    - nmd_stand.jpg
-    - nmd_stand.drc
-    - wind_sock-1.drc
-    - wind_sock-2.drc
-    - wind_sock-3.drc
-    - wind_sock-4.drc
-    - wind_sock-5.drc
-    - wind_sock-6.drc
+    - nmd_diff.jpg
+    - nmd_body.drc
+    - nmd_push.drc
+    - nmd_push_s.drc
+    - nmd_push_w.drc
+    - nmd_s1.drc
+    - nmd_s2.drc
+    - nmd_s3.drc
+    - nmd_s4.drc
+    - nmd_w1.drc
+    - nmd_w2.drc
+    - nmd_w3.drc
+    - nmd_w4.drc
+
 
     -----------
        usage
@@ -33,7 +39,7 @@
     let daemon
 
     // in VRWorld setup
-    daemon = new NetManagerDaemon((mesh,instance)=>{
+    daemon = new NetManagerDaemon((mesh)=>{
         scene.add(mesh)
     })
 
