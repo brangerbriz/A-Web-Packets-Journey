@@ -9,7 +9,7 @@
        info
     -----------
 
-    this class takes a 'narrative' object which it useses to create the 3D
+    this class takes a 'narrative' object which it uses to create the 3D
     dialogue boxes in the game.
 
     requires the following dependencies from /libs:
@@ -47,7 +47,7 @@
                         bringHttpPacketToMe(name,next)
                     },
                         // 'after' hook runs when the user picks an option
-                        // choise is either 'option1','option2', etc.
+                        // choice is either 'option1','option2', etc.
                     after:function(name,choice){
                         if(choice=="option3") sendHttpPacketBack(name)
                     }
@@ -174,7 +174,7 @@ class DialogueVR {
         this.status = {}
         for (let obj in script) {
             if( !(script[obj].hasOwnProperty('start')) )
-                throw new Error('DialogueVR: each objct in script needs a '+
+                throw new Error('DialogueVR: each object in script needs a '+
                 'their first dialogue to be called "start"')
             let status = { dialogue:"start", index:0 }
             this.status[obj] = status
@@ -197,7 +197,7 @@ class DialogueVR {
                             throw new Error(`DialogueVR: the ${d} dialogue `+
                             `${i} for ${obj} has too many options, max is 4.`)
                     }
-                    // create default option if necesary
+                    // create default option if necessary
                     if( !dialogue.options && i!=script[obj][d].length-1){
                         let defaultOpt = {text:'[more]',goto:'next'}
                         this.script[obj][d][i].options = [ defaultOpt ]

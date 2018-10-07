@@ -44,7 +44,7 @@
         whole: fn,             // optional, function to call every whole note
         half: fn,              // optional, function to call every half note
         quarter: fn,           // optional, function to call every quarter note
-        eigth: fn,             // optional, function to call every eigth note
+        eighth: fn,             // optional, function to call every eighth note
         sixteenth: fn          // optional, function to call every sixteenth
     })
 
@@ -60,15 +60,15 @@
 
     multitrack: when set to true it will play all the appropriate scheduled
     functions, when set to false it only plays the function of the least
-    frequent timeing. So for ex: if you have a function schedule to fire every
+    frequent timing. So for ex: if you have a function schedule to fire every
     "whole" note and another for every "quarter" and multitrack is false, then
     it will play the quarter function only on beats 2, 3 and 4, exclusively
     playing the whole function on beat 1.
 
     toggle(): this public method is used to toggle the sequencer on/off. If
-    called like .toggle('pause') then it pauses and picks up agian wherever it
-    last left off in the sequece. If called without "pause" then it stops the
-    sequence and picks back up at the beggining
+    called like .toggle('pause') then it pauses and picks up again wherever it
+    last left off in the sequence. If called without "pause" then it stops the
+    sequence and picks back up at the beginning
 
     update(): this needs to be called in your own loop, conditionally checking for
     the play status, otherwise the sequencer doesn't play, for example:
@@ -168,7 +168,7 @@ class Sequencer {
     toggle( type ){
         this.isPlaying = !this.isPlaying
         if (this.isPlaying) { // start playing
-            // if not 'paused' reset to beggining of sequence
+            // if not 'paused' reset to beginning of sequence
             if(type!=="pause") this.current16thNote = 0
             this.nextNoteTime = this.ctx.currentTime
             this.update() // kick off scheduling

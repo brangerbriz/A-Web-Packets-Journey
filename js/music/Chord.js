@@ -27,7 +27,7 @@
     // you can get the array of steps which follow the root of any chord like so
     ch.chords.maj // [ 4, 3 ]
 
-    // you can get the chord in degress like so
+    // you can get the chord in degrees like so
     ch.getChord() // [ 0, 4, 7 ]
 
     // you can get that array as note strings like so

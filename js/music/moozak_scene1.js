@@ -12,7 +12,7 @@ class Moozak_scene1 {
         this.mstr.release.value = 0.25
         this.mstr.connect( this.actx.destination )
 
-        // create insturments ------------------
+        // create instruments ------------------
         this.createBass()
         this.createSynths()
         // algorithmic composition -------------
@@ -233,7 +233,7 @@ class Moozak_scene1 {
         let hf2 = this.createHarmonicField('G4','melodic-minor')
         let bn = new Melody('G2','melodic-minor').getFreqMode(null,true)
         let n = 0 // bass note index
-        let m = 0 // measuere
+        let m = 0 // measure
         let b = 0 // beat
 
         this.seq = new Sequencer( this.actx, {
