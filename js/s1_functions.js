@@ -308,12 +308,12 @@ function createUserRoom(bgClr){
             side:2, color: bgClr//'#0ff'
         })
         g = new THREE.PlaneBufferGeometry(76.8,40,2)
-        blockerTop = new THREE.Mesh(g,m)
+        const blockerTop = new THREE.Mesh(g,m)
         blockerTop.position.set(x,45,8.4)
         blockerTop.rotation.y = Math.PI/2
         room.add(blockerTop)
         g = new THREE.PlaneBufferGeometry(30,50,2)
-        blockerBack = new THREE.Mesh(g,m)
+        const blockerBack = new THREE.Mesh(g,m)
         blockerBack.position.set(x,0,-45)
         blockerBack.rotation.y = Math.PI/2
         room.add(blockerBack)
@@ -325,7 +325,7 @@ function createUserRoom(bgClr){
     // load scene objects ------------------
 
     loader.load( `models/drcs/s1_fan.drc`, (geometry)=>{
-        obj = new THREE.Mesh(geometry,
+        const obj = new THREE.Mesh(geometry,
               new THREE.MeshBasicMaterial({color:'#888'}))
         obj.name = 'fan'
         obj.position.y = 15
@@ -334,14 +334,14 @@ function createUserRoom(bgClr){
         room.add(obj)
     })
     loader.load( `models/drcs/s1_door.drc`, (geometry)=>{
-        obj = new THREE.Mesh(geometry,mat1)
+        const obj = new THREE.Mesh(geometry,mat1)
         obj.name = 'door'
         obj.position.set(9,-18,-29.5)
         obj.scale.x = obj.scale.y = obj.scale.z = 0.1
         room.add(obj)
     })
     loader.load( `models/drcs/s1_window.drc`, (geometry)=>{
-        obj = new THREE.Mesh(geometry,mat2)
+        const obj = new THREE.Mesh(geometry,mat2)
         obj.name = 'window'
         obj.rotation.y = Math.PI/2
         obj.scale.x = obj.scale.z = 30
@@ -378,7 +378,7 @@ function createGlassFrame(bgClr){
         side:2,shininess:500,specular:0xffffff,
         transparent:true, opacity:0.5
     })
-    pane2 = new THREE.Mesh(g,m)
+    const pane2 = new THREE.Mesh(g,m)
     pane2.position.set(0,0,-0.05)
     glass.add(pane2)
 
