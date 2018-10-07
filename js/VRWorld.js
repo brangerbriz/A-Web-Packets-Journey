@@ -324,6 +324,7 @@ class VRWorld {
 
         if(config.debugControls){
             this.debugControlsSetup()
+            this.desktopAnimate()
         } else if(location.search.includes('platform=webvr')){
             this._setCntrls("webvr")
         } else if(location.search.includes('platform=mobile')){
