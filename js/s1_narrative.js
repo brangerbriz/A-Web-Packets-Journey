@@ -235,7 +235,7 @@ const narrative = {
                 text:[
                     "That's where you come in. Take the",
                     "DNS request to the Domain Server which",
-                    "lists all the IP addresses for .com's",
+                    "lists all the IP addresses for .coms",
                 ]
             },
             {
