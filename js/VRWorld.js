@@ -322,13 +322,15 @@ class VRWorld {
         this.type   // mobile | webvr | desktop
         this.height = config.height || 1.6
 
-        let hash = window.location.hash
-        console.log(hash)
         if(config.debugControls){
             this.debugControlsSetup()
-        } else if(hash=="#mobile"||hash=="#webvr"||hash=="#desktop"){
-            this._setCntrls(hash.substr(1))
-        } else {
+        } else if(location.search.includes('platform=webvr')){
+            this._setCntrls("webvr")
+        } else if(location.search.includes('platform=mobile')){
+            this._setCntrls("mobile")
+        } else if(location.search.includes('platform=desktop')){
+            this._setCntrls("desktop")
+        }  else {
             // if mobile (NOTE: this likely will also fire for tablets)
             if (typeof window.orientation !== 'undefined') this._setCntrls("mobile")
             // if desktop w/webVR capability
@@ -511,7 +513,7 @@ class VRWorld {
             document.addEventListener('pointerlockerror',error,false)
 
             this.desktopAnimate()
-            
+
         } else {
             throw new Error('VRWorld: no pointerlock API support')
         }
