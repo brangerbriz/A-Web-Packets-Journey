@@ -12,6 +12,14 @@ class Moozak_scene1 {
         this.mstr.release.value = 0.25
         this.mstr.connect( this.actx.destination )
 
+        // set up event listeners to silence when not in focus
+        window.addEventListener('focus',()=>{
+            this.mstr.connect( this.actx.destination )
+        })
+        window.addEventListener('blur',()=>{
+            this.mstr.disconnect()
+        })
+
         // create instruments ------------------
         this.createBass()
         this.createSynths()
