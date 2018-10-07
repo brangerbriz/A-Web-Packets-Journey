@@ -450,7 +450,8 @@ function createGlassFrame(bgClr){
 
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 5; j++) {
-            let w = h = 0.6
+            let w = 0.6
+            let h = w
             let r = 0.15
 
             let x = -1.85 + (i*1.025)
