@@ -82,10 +82,7 @@ class VRWorld {
 
         // run setup function
         if(config.setup) config.setup(this.scene,this.camera,this.renderer)
-        // run animation loop
         if(config.draw) this.draw = config.draw
-        if(this.type!=="mobile") this.animate()
-        // if mobile, then mobile triggers animation loop
     }
 
     resize(){
@@ -476,11 +473,12 @@ class VRWorld {
         document.body.appendChild( WEBVR.createButton(this.renderer) )
         this.camera.name = 'camera'
         this.scene.add( this.camera )
+        this.renderer.setAnimationLoop(()=>{ this.webvrAnimate() })
     }
 
     // ----------------------------------------------------------- type: desktop
 
-    desktopSetup(callFromVRBrowser){
+    desktopSetup(){
         this.camera.position.set(0,0,0)
 
         this.controls = new THREE.PointerLockControls( this.camera )
@@ -512,8 +510,8 @@ class VRWorld {
             document.addEventListener('pointerlockchange',change,false)
             document.addEventListener('pointerlockerror',error,false)
 
-            this.desktopHasBeenSetup = true
-            if(callFromVRBrowser) change()
+            this.desktopAnimate()
+            
         } else {
             throw new Error('VRWorld: no pointerlock API support')
         }
@@ -568,8 +566,16 @@ class VRWorld {
         this.vrDisplay.requestAnimationFrame(()=>{ this.mobileAnimate() })
     }
 
-    animate(){
-        requestAnimationFrame(()=>{ this.animate() })
+    webvrAnimate(){
+        this.renderer.render( this.scene, this.camera )
+        if(this.debugControls) this.debugControls.update()
+        if(this.raycaster && !this.pause && !this.debugControls) this.updateRaycaster()
+        if(this.draw) this.draw(this.scene,this.camera,this.renderer,this.tick )
+        if(this.stats) this.stats.update()
+    }
+
+    desktopAnimate(){
+        requestAnimationFrame(()=>{ this.desktopAnimate() })
         this.renderer.render( this.scene, this.camera )
         if(this.debugControls) this.debugControls.update()
         if(this.raycaster && !this.pause && !this.debugControls) this.updateRaycaster()
