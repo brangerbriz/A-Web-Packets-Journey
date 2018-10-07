@@ -1,5 +1,5 @@
 class Moozak_scene1 {
-    constructor(startElement){
+    constructor(){
         this.actx = new (window.AudioContext || window.webkitAudioContext)()
         this.interacting = false
         this.tempo = 70
