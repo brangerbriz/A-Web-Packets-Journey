@@ -57,14 +57,14 @@ class Packet {
     _init(){
         let mt = (this.opts.lights) ? 'MeshPhongMaterial' : 'MeshBasicMaterial'
         let opts = Object.assign({map: this.tx},this.matConfig)
-        this.materials = new THREE.MeshFaceMaterial([
+        this.materials = [
             new THREE[mt](this.matConfig),
             new THREE[mt](this.matConfig),
             new THREE[mt](this.matConfig),
             new THREE[mt](this.matConfig),
             new THREE[mt](opts),
             new THREE[mt](this.matConfig)
-        ])
+        ]
         this.materials[4].map.offset.y = 0.5
         this.materials[4].map.repeat.x = 0.5
         this.materials[4].map.repeat.y = 0.5
