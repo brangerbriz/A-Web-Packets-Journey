@@ -1,4 +1,21 @@
 
+Math.norm = function(value, min, max) {
+    return (value - min) / (max - min)
+}
+
+Math.lerp = function(norm, min, max) {
+    return (max - min) * norm + min
+}
+
+Math.clamp = function(value, min, max) {
+    return Math.max(min, Math.min(max, value))
+}
+
+Math.map = function(value, sourceMin, sourceMax, destMin, destMax) {
+    return this.lerp(this.norm(value, sourceMin, sourceMax), destMin, destMax)
+}
+
+
 function timeout(millis) {
     return new Promise((resolve, reject) => {
         setTimeout(resolve, millis)
@@ -12,7 +29,7 @@ function after(times,func){
 }
 
 class Loader {
-    constructor(amount,callback){
+    constructor(amount,onclick,onload){
         this.createCover()
 
         this.tally = 0
@@ -20,8 +37,13 @@ class Loader {
         this._loaded = this.after(this.total,()=>{
             this.cover.removeChild(this.loadStatus)
             this.cover.appendChild(this.clickStart)
+            // if we got to this level from previous level
+            if(location.search.includes('lvlprog=true'))
+                this.cover.style.display = "none"
+            // run callbacks
+            if(onload) onload()
             this.clickStart.addEventListener('click',()=>{
-                callback()
+                if(onclick) onclick()
                 this.cover.style.display = "none"
             })
         })
