@@ -1,7 +1,7 @@
-# A Web Packets Journey
+# A Web Packet's Journey
 
 ![screen-cap](images/readme.png)
-( check out our [teaser trailer](https://vimeo.com/292170651) on vimeo )
+( check out a [teaser trailer](https://vimeo.com/292170651) on vimeo )
 
 A Web Packet's Journey is an online ( desktop, mobile, cardboard and WebVR ) educational interactive-narrative/game based on the route a web request packet takes over the Internet, in 10 parts:
 
