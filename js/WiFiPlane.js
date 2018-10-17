@@ -250,4 +250,44 @@ class WiFiPlane extends BaseObjClass {
         .catch(err => console.error(err))
     }
 
+    // -------------------------------------------------------------------------
+    // animations for scene 2
+
+    bobAround(){
+        let pos = this.mesh.position
+        let time = Math.random()*4000+4000
+
+        if(!this.initialSpot) this.initialSpot = this.mesh.position.clone()
+        let targPos = this.initialSpot.clone()
+        targPos.x += Math.random()*4-2
+        targPos.y += Math.random()*4-2
+        targPos.z += Math.random()*4-2
+
+        let rot = ( pos.x > targPos.x ) ? 0.1 : -0.1
+        this.mesh.rotateX(rot)
+        let targRot = {
+            x:this.mesh.rotation.x,
+            y:this.mesh.rotation.y,
+            z:this.mesh.rotation.z
+        }
+        this.mesh.rotation.x = 0
+        this.mesh.rotation.y = -Math.PI/2
+        this.mesh.rotation.z = 0
+
+        new TWEEN.Tween(this.mesh.rotation).to(targRot, 1000)
+        .easing(TWEEN.Easing.Quadratic.InOut).start()
+
+        new TWEEN.Tween(this.mesh.position).to(targPos, time)
+        .easing(TWEEN.Easing.Quadratic.InOut)
+        .onComplete(()=>{
+            let normRot = { x:0, y:-Math.PI/2, z:0 }
+            new TWEEN.Tween(this.mesh.rotation).to(normRot, 1000)
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .onComplete(()=>{
+                this.bobAround()
+            }).start()
+        }).start()
+    }
+
+
 }
