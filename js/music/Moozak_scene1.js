@@ -1,36 +1,11 @@
-class Moozak_scene1 {
+class Moozak_scene1 extends Moozak {
     constructor(){
-        this.actx = new (window.AudioContext || window.webkitAudioContext)()
-        this.interacting = false
-        this.tempo = 70
+        super()
 
-        this.mstr = this.actx.createDynamicsCompressor()
-        this.mstr.threshold.value = -50
-        this.mstr.knee.value = 40
-        this.mstr.ratio.value = 12
-        this.mstr.attack.value = 0
-        this.mstr.release.value = 0.25
-        this.mstr.connect( this.actx.destination )
-
-        // set up event listeners to silence when not in focus
-        window.addEventListener('focus',()=>{
-            this.mstr.connect( this.actx.destination )
-        })
-        window.addEventListener('blur',()=>{
-            this.mstr.disconnect()
-        })
-
-        // create instruments ------------------
         this.createBass()
         this.createSynths()
-        // algorithmic composition -------------
         this.createMusic()
-        // iOS workaround ----------------------
-        StartAudioContext(this.actx, document.body)
     }
-
-    get playing(){ return this.seq.isPlaying }
-    set playing(v){ console.warn('nope, "playing" is read only') }
 
     createSynths(){
         this.leftSynths = []
@@ -58,7 +33,7 @@ class Moozak_scene1 {
         // create effects
         for (let i = 0; i < 3; i++) {
             const rev = this.actx.createConvolver()
-            rev.buffer = this.algoReverb(2,1)
+            rev.buffer = AudioUtils.impulseBuffer( this.actx, 2, 1 )
             const bqf = this.actx.createBiquadFilter()
             bqf.type = 'lowshelf'
             bqf.frequency.value = 495
@@ -113,7 +88,7 @@ class Moozak_scene1 {
         this.bassOut.gain.value = 0
 
         const rev = this.actx.createConvolver()
-        rev.buffer = this.algoReverb( 5, 3 )
+        rev.buffer = AudioUtils.impulseBuffer( this.actx, 5, 3 )
 
         const bqf = this.actx.createBiquadFilter()
         bqf.type = 'lowpass'
@@ -129,44 +104,6 @@ class Moozak_scene1 {
         this.bassOut.connect( this.mstr )
     }
 
-    algoReverb( seconds, decay, reverse ){
-        let rate = this.actx.sampleRate
-        let length = rate * seconds
-        let impulse = this.actx.createBuffer(2, length, rate)
-        let impulseL = impulse.getChannelData(0)
-        let impulseR = impulse.getChannelData(1)
-        let n, i
-        for (i = 0; i < length; i++) {
-            n = (reverse) ? length-i : i
-            impulseL[i] = (Math.random()*2 - 1) * Math.pow( 1 - n/length, decay)
-            impulseR[i] = (Math.random()*2 - 1) * Math.pow( 1 - n/length, decay)
-        }
-        return impulse
-    }
-
-    createHarmonicField(root,mode,includeOctave){
-        // create scale
-        let scale = new Melody(root,mode).getNoteMode(null,includeOctave)
-        // chord pattern for harmonic field
-        let chs = ['maj7','min7','min7','maj7','7','min7','min7']
-        if(includeOctave) chs.push('maj7')
-        // depending on mode, scale might be shorter/longer than 7,8
-        let arr = (chs.length>scale.length) ? scale : chs
-        // create harmonic field (table of chords per degree in scale)
-        let table = []
-        for (let n = 0; n < arr.length; n++) {
-            table.push( new Chord(scale[n],chs[n]) )
-        }
-        return table
-    }
-
-    chanceArr(percentage,length){
-        let arr = []
-        let l = length || 4
-        for (let i = 0; i < l; i++) arr.push( Math.random() < percentage )
-        return arr
-    }
-
     playSynth(whichSynth, freqArr, dur, time){
         let synth = (whichSynth=='left') ? this.leftSynths :
             (whichSynth=='right') ? this.rightSynths : this.midSynths
@@ -178,7 +115,7 @@ class Moozak_scene1 {
             synth[n].osc.frequency.value = freq
         }
         // trigger adsr envelope
-        adsr({
+        AudioUtils.adsr({
             param:output.gain,
             startTime:time, value:[0.5,0.25],
             a:dur*0.06, d:dur*0.7, s:dur*0.04, r:dur*0.2
@@ -198,7 +135,7 @@ class Moozak_scene1 {
             else synth.lvl.gain.value = 0 // silence
         })
         // trigger adsr envelope
-        adsr({
+        AudioUtils.adsr({
             param:this.midOut.gain,
             startTime:time, value:[1,0.75],
             a:dur*0.2, d:dur*0.1, s:dur*0.4, r:dur*0.2
@@ -219,7 +156,7 @@ class Moozak_scene1 {
             else synth.lvl.gain.value = 0 // silence
         })
         // trigger adsr envelope
-        adsr({
+        AudioUtils.adsr({
             param:output.gain,
             startTime:time, value:[2.5,2],
             a:dur*0.06, d:dur*0.7, s:dur*0.04, r:dur*0.2
@@ -228,7 +165,7 @@ class Moozak_scene1 {
 
     playBass( note, dur, time ){
         this.bass.frequency.value = note
-        adsr({
+        AudioUtils.adsr({
             param:this.bassOut.gain,
             startTime:time, value:[0.05,0.025],
             a:dur*0.3, d:dur*0, s:dur*0, r:dur*0.7
@@ -245,7 +182,7 @@ class Moozak_scene1 {
         let b = 0 // beat
 
         this.seq = new Sequencer( this.actx, {
-            tempo: this.tempo,
+            tempo: 70,
             eighth:function(time){
                 let t = (60/this.tempo)/2 // # of seconds between quarter notes
 
@@ -283,7 +220,4 @@ class Moozak_scene1 {
             }
         })
     }
-
-    toggle(){ this.seq.toggle() }
-    update(){ if(this.seq.isPlaying) this.seq.update() }
 }
