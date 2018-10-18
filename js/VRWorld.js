@@ -139,7 +139,11 @@ class VRWorld {
         let ar = innerWidth/innerHeight
         let fov = (config && config.camera && config.camera.fov) ?
             config.camera.fov : 70
-        this.camera = new THREE.PerspectiveCamera(fov, ar, 0.1, 1000000 )
+        let min = (config && config.camera && config.camera.min) ?
+            config.camera.min : 0.1
+        let max = (config && config.camera && config.camera.max) ?
+            config.camera.max : 1000000
+        this.camera = new THREE.PerspectiveCamera(fov, ar, min, max )
         if(config.camera) {
             let x = config.camera.x || 0
             let y = config.camera.y || 0
