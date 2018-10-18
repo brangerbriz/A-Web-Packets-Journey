@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <title> A Web Packet's Journey </title>
+
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+        <!-- <link rel="apple-touch-icon" sizes="128x128" href="#"> -->
+        <!-- <link rel="icon" type="image/x-icon" href="#"> -->
+
+        <meta name="description" content="A Web Packet's Journey is an online ( desktop, mobile, cardboard and WebVR ) educational interactive-narrative/game based on the route a web request packet takes over the Internet.">
+
+        <!-- for Google+ -->
+        <meta itemprop="name" content="A Web Packet's Journey">
+        <meta itemprop="description" content="A Web Packet's Journey is an online ( desktop, mobile, cardboard and WebVR ) educational interactive-narrative/game based on the route a web request packet takes over the Internet.">
+        <!-- <meta itemprop="image" content="#"> -->
+
+        <!-- for Twitter -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:site" content="@branger_briz">
+        <meta name="twitter:title" content="A Web Packet's Journey">
+        <meta name="twitter:description" content="A Web Packet's Journey is an online ( desktop, mobile, cardboard and WebVR ) educational interactive-narrative/game based on the route a web request packet takes over the Internet.">
+        <meta name="twitter:creator" content="@branger_briz">
+        <!-- Twitter summary card with large image must be at least 280x150px -->
+        <!-- <meta name="twitter:image:src" content="#"> -->
+
+        <!-- for Facebook -->
+        <meta property="og:title" content="A Web Packet's Journey">
+        <meta property="og:type" content="article">
+        <!-- <meta property="og:url" content="#"> -->
+        <!-- <meta property="og:image" content="#"> -->
+        <meta property="og:description" content="A Web Packet's Journey is an online ( desktop, mobile, cardboard and WebVR ) educational interactive-narrative/game based on the route a web request packet takes over the Internet.">
+        <meta property="og:site_name" content="A Web Packet's Journey">
+
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+    <body>
+        <!-- third party dependencies  -->
+        <script src="libs/Tween.js"></script>
+        <script src="libs/stats.min.js"></script>
+        <script src="libs/three.min.js"></script>
+        <script src="libs/misc/QuickHull.js"></script>
+        <script src="libs/vr/WebVR-edited.js"></script>
+        <script src="libs/vr/webvr-polyfill.js"></script>
+        <script src="libs/vr/VREffect.js"></script>
+        <script src="libs/vr/VRControls.js"></script>
+        <script src="libs/controls/OrbitControls.js"></script>
+        <script src="libs/controls/PointerLockControls.js"></script>
+        <script src="libs/loaders/draco/DRACOLoader.js"></script>
+        <script src="libs/shaders/ToonMaterial.js"></script>
+
+        <script src="libs/loaders/OBJLoader.js"></script>
+
+        <!-- globally used classes / functions  -->
+        <script src="js/VRWorld.js"></script>
+        <script src="js/DialogueVR.js"></script>
+        <script src="js/TrackCart.js"></script>
+        <script src="js/BaseObjClass.js"></script>
+        <script src="js/SceneLights.js"></script>
+        <script src="js/utils.js"></script>
+        <!-- scene specific classes / functions  -->
+        <script src="js/Packet.js"></script>
+        <script src="js/WiFiPlane.js"></script>
+        <script src="js/GatewayDaemon.js"></script>
+        <script src="js/s2_functions.js"></script>
+        <script src="js/s2_narrative.js"></script>
+        <!-- web audio music -->
+        <script src="libs/StartAudioContext.js"></script>
+        <script src="js/music/AudioUtils.js"></script>
+        <script src="js/music/Note.js"></script>
+        <script src="js/music/Chord.js"></script>
+        <script src="js/music/Melody.js"></script>
+        <script src="js/music/Moozak.js"></script>
+        <script src="js/music/Sequencer.js"></script>
+        <script src="js/music/sound-fonts/0282_FluidR3_GM_sf2_file.js"></script>
+        <script src="js/music/Moozak_scene2.js"></script>
+
+        <script>
+
+            /*
+                welcome code explorer! we're glad you're interested to see how
+                this game works :) we've done our best to make the code readable
+                ( no minification or obfiscation ) and have tried to leave
+                helpful comments along the way. this project is open-source so
+                you can also look at all this code on our github:
+                https://github.com/brangerbriz/A-Web-Packets-Journey
+
+                if you have any thoughts/questions we'd love to hear 'em. you
+                can contact us@brangerbriz.com
+            */
+
+            const talk = new DialogueVR(narrative)
+
+            const loader = new Loader(1,()=>{
+                // on click
+                // moozak.toggle()
+                // moozak.test()
+                // moozak.playPiano()
+                // moozak.playPianoChord('D#3','maj',moozak.actx.currentTime,3)
+            },()=>{
+                // on load
+                emitter.fadeIn()
+                moozak.toggle()
+            })
+
+            const moozak = new Moozak_scene2()
+            moozak.callbacks = [
+                function(){
+                    // end particle wall
+                    emitter.fadeOut()
+                    // create spinning particles
+                    for (let i = 0; i < 12; i++) {
+                        let t = new ParticleSpinner()
+                        t.mesh.position.z = 200
+                        world.scene.add( t.mesh )
+                        spinParticles.push( t )
+                    }
+                },
+                function(){
+                    // hide passing clouds
+                    passingClouds.forEach(c=>{c.keepPassing = false})
+                    // create spinning clouds
+                    for (let i = 0; i < 8; i++) {
+                        let t = new CloudSpinner({count:8})
+                        t.mesh.position.z = 200
+                        world.scene.add( t.mesh )
+                        spinClouds.push( t )
+                    }
+                }
+            ]
+            moozak.hooks = [
+                function(){
+                    if(moozak.layers < 2){
+                        passingClouds.forEach(c=>{
+                            c.whiteOut()
+                            c.greyScale(0.2,true)
+                        })
+                    }
+                    if(moozak.layers<=2){
+                        spinClouds.forEach(group=>{
+                            group.children.forEach(c=>{
+                                c.whiteOut()
+                                c.greyScale(0.2,true)
+                            })
+                        })
+                    }
+                },
+                function(){
+                    spinParticles.forEach(group=>{
+                        group.children.forEach(c=>c.colorSwap())
+                    })
+                },
+                function(){
+                    spinClouds.forEach(group=>{
+                        group.children.forEach(c=>{
+                            c.whiteOut()
+                            c.colorize(0.2,true)
+                        })
+                    })
+                },
+            ]
+
+
+            const bgcolor = '#34C8F2'
+            let camObj = new THREE.Object3D()
+            let lights, emitter, spiral, waves = []
+            let plane, cart, planes = []
+            let passingClouds = []
+            let spinClouds = []
+            let spinParticles = []
+
+            const gateway = new THREE.Object3D()
+            let island, daemon, wave
+
+            const world = new VRWorld({
+                titleCard:'images/title_screen_s2.png',
+                background:bgcolor,
+                debug:true,
+                // debugControls:true,
+                // camera:{x:-85.32,y:40.5,z:-58.81,fov:70},
+                // camera:{x:-0.42,y:2,z:4.5,fov:70},
+                // fog:{ color:bgcolor, near:150, far:200 },
+                crosshair: {
+                    names:[...talk.options,...Object.keys(narrative)],
+                    block:['dialogue'],
+                    time:1500,
+                    debug:function(names){// mouse click to trigger
+                        console.log(names)
+                    },
+                    progress:function(prog,name){
+                        talk.highlight(name)
+                    },
+                    exit:function(name){
+                        talk.removeHighlight(name)
+                    },
+                    select:function(name){
+                        talk.say(name)
+                    }
+                },
+                setup:(scene,camera,renderer)=>{
+                    // all the functions used here can be found either in the
+                    // js/s2_functions.js file, the js/utils.js file or,
+                    // in the case of some of the classes, in their own
+                    // .js files ( refer to the script tags above )
+
+                    talk.setup({
+                        scene:scene,
+                        camera:camera,
+                        renderer:renderer,
+                        height: 1.6
+                    })
+
+                    lights = new SceneLights(scene)
+                    lights.a.intensity = 0.9
+                    lights.h.intensity = 0.39
+
+                    // dcart = new TrackCart(scene, [
+                    //     new THREE.Vector3(0,1.5,3),
+                    //     new THREE.Vector3(-2,1.5,3),
+                    //     new THREE.Vector3(-2,1.5,2),
+                    //     new THREE.Vector3(-0.5,1.5,0),
+                    //     new THREE.Vector3(2,1.5,2),
+                    //     new THREE.Vector3(2,1.5,3),
+                    //     new THREE.Vector3(2.75,0.83,5)
+                    // ],true)
+
+                    // ======== gateway ========================================
+                    scene.add( gateway )
+
+                    // loadIsland((obj)=>{
+                    //     island = obj
+                    //     obj.rotation.y = Math.PI/2
+                    //     obj.position.set(0,-4,2.5)
+                    //     gateway.add(obj)
+                    //     loader.loaded()
+                    // })
+                    //
+                    // daemon = new GatewayDaemon((mesh)=>{
+                    //     mesh.scale.set(0.15,0.15,0.15)
+                    //     mesh.position.set(-1.5,0.32,0)
+                    //     mesh.rotation.y = Math.PI
+                    //     gateway.add(mesh)
+                    //     loader.loaded()
+                    // })
+                    //
+                    // let clouds = createRandomClouds()
+                    // let clouds = createDataClouds()
+                    // gateway.add( clouds )
+                    //
+                    // wave = new ParticleWave((mesh)=>{
+                    //     mesh.position.set(-0.1,10,8.5)
+                    //     mesh.rotation.y = Math.PI/2
+                    //     gateway.add( mesh )
+                    // })
+
+
+
+
+
+                    // create protagonist plane
+                    plane = new WiFiPlane({
+                        light:lights.d,
+                        ip:'192.168.0.68'
+                    },(mesh,plane)=>{
+                        plane.mesh.remove( plane.pilot )
+                        mesh.rotation.set(0,-Math.PI/2,0)
+                        let p = new THREE.Vector3(0,1.1,0.25)
+                        let c = camera.position.clone()
+                        if(c.x!=0 || c.y!=0 || c.z!=0 ){
+                            c.y -= 1.6 // for vr && cntrls height
+                            p = p.add(c)
+                        }
+                        mesh.position.set(p.x,p.y,p.z)
+                        scene.add(mesh)
+                        loader.loaded()
+                        // cart.mesh.add(plane.mesh)
+                        // planeLoop()
+                    })
+
+
+                    // create other planes
+                    let types = ['dns','http','voip','ftp','imap','ssh','bt','irc']
+                    for (let i = 0; i < 8; i++) {
+                        let t = types[i]
+                        new WiFiPlane({
+                            light:lights.d,
+                            ip:(t=='dns') ? '192.168.0.68' : null
+                        },(m,p)=>{
+                            m.name = `${t}-plane`
+                            p.pilot.name = `${t}-plane`
+                            m.position.set( ...planePos(i) )
+                            m.rotation.set(0,-Math.PI/2,0)
+                            scene.add( m )
+                            p.bobAround()
+                            planes.push( p )
+                        })
+                    }
+
+                    emitter = new ParticleWall(scene)
+                    emitter.mesh.rotation.y = -Math.PI/2
+
+
+                    for (let i = 0; i < 20; i++) {
+                        passingCloud((cloud,moveIt)=>{
+                            passingClouds.push( cloud )
+                            scene.add( cloud.mesh )
+                            let z = cloud.mesh.position.z
+                            let time = Math.map(z,-200,200,0,20000)
+                            moveIt(time)
+                        })
+                    }
+
+                },
+                draw:(scene,camera,renderer,clock)=>{
+                    TWEEN.update()
+                    let tick = clock.getElapsedTime()
+
+                    plane.update(tick)
+                    planes.forEach(p=>p.update(tick))
+
+                    spinClouds.forEach((g,i)=>{
+                        g.update(tick+i*3)
+                    })
+
+                    spinParticles.forEach((g,i)=>{
+                        g.update(tick+i*4)
+                    })
+
+                    // daemon.update(tick)
+                    // wave.update(tick)
+
+                    moozak.update()
+                }
+            })
+
+            // change orbit control target when debugging
+            if(world.scene.userData.debug){
+                // world.debugControls.target = new THREE.Vector3(3,14.1,-1.5)
+            }
+
+
+        </script>
+
+    </body>
+</html>
