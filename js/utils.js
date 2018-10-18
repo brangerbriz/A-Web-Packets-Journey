@@ -43,7 +43,7 @@ function gotoScene(num){
 }
 
 class Loader {
-    constructor(amount,onclick,onload){
+    constructor(amount,callback){
         this.createCover()
 
         this.tally = 0
@@ -52,14 +52,15 @@ class Loader {
             this.cover.removeChild(this.loadStatus)
             this.cover.appendChild(this.clickStart)
             // if we got to this level from previous level
-            if(location.search.includes('lvlprog=true'))
+            if(location.search.includes('lvlprog=true')){
+                if(callback) callback()
                 this.cover.style.display = "none"
-            // run callbacks
-            if(onload) onload()
-            this.clickStart.addEventListener('click',()=>{
-                if(onclick) onclick()
-                this.cover.style.display = "none"
-            })
+            } else { // otherwise 
+                this.clickStart.addEventListener('click',()=>{
+                    if(callback) callback()
+                    this.cover.style.display = "none"
+                })
+            }
         })
 
         let readyYet = setInterval(()=>{
