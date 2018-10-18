@@ -138,7 +138,7 @@ class Moozak_scene2 extends Moozak {
 
         AudioUtils.loadBuffer({
             audioContext: this.actx,
-            file:'../../samples/piano-riff.mp3'
+            file:'samples/piano-riff.mp3'
         },(buffer)=>{
             this.pianoBuffer = buffer
         })
@@ -178,8 +178,8 @@ class Moozak_scene2 extends Moozak {
 
         this.mutedStrumBuffers = []
         this.mutedStrumPaths = [
-            '../../samples/strum-up.mp3',
-            '../../samples/strum-down.mp3'
+            'samples/strum-up.mp3',
+            'samples/strum-down.mp3'
         ]
         this.mutedStrumPaths.forEach((path,i)=>{
             AudioUtils.loadBuffer({
