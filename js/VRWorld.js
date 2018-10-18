@@ -77,7 +77,8 @@ class VRWorld {
 
         this.setRenderer(config)
         this.setScene(config)
-        if(!config.cutscene) this.setControls(config)
+        if(config.cutscene) this.desktopAnimate()
+        else this.setControls(config)
         if(config.debug) this.setDebug()
 
         // run setup function

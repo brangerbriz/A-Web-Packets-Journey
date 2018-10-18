@@ -125,12 +125,13 @@
 
         <!-- web audio music -->
         <script src="libs/StartAudioContext.js"></script>
+        <script src="js/music/AudioUtils.js"></script>
         <script src="js/music/Note.js"></script>
         <script src="js/music/Chord.js"></script>
         <script src="js/music/Melody.js"></script>
         <script src="js/music/Sequencer.js"></script>
-        <script src="js/music/adsr.js"></script>
-        <script src="js/music/moozak_scene1.js"></script>
+        <script src="js/music/Moozak.js"></script>
+        <script src="js/music/Moozak_scene1.js"></script>
 
         <script>
 
@@ -244,7 +245,7 @@
                             nfo.style.animation = 'fade_in 4s'
                             setTimeout(()=>{
                                 resolve()
-                                location = 'part1.html?lvlprog=true'
+                                gotoScene(1)
                             }, 4000)
                         })
 

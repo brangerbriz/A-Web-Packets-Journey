@@ -94,7 +94,11 @@
 
             const moozak = new Moozak_scene1()
             const talk = new DialogueVR(narrative)
-            const loader = new Loader(3,()=>{ moozak.toggle() })
+            const loader = new Loader(3,()=>{
+                if(!location.search.includes('lvlprog=true')) moozak.toggle()
+            },()=>{
+                if(location.search.includes('lvlprog=true')) moozak.toggle()
+            })
             const bgcolor = '#77d878'
 
             let stand, daemon, dcart, sparks = []

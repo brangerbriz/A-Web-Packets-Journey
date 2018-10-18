@@ -72,17 +72,7 @@ function takePlayer2Plane(){
             .then(()=>cart.moveTo(1.0, 8000, TWEEN.Easing.Cubic.In))
             .catch(err => console.error(err))
 
-            let goto
-            if(location.search.includes('platform=webvr')){
-                goto = 'part2.html?lvlprog=true&platform=webvr'
-            } else if(location.search.includes('platform=desktop')){
-                goto = 'part2.html?lvlprog=true&platform=desktop'
-            } else if(location.search.includes('platform=mobile')){
-                goto = 'part2.html?lvlprog=true&platform=mobile'
-            } else {
-                goto = 'part2.html?lvlprog=true'
-            }
-            setTimeout(()=>{ location=goto },12000)
+            setTimeout(()=>{ gotoScene(2) },12000)
         }
     },500)
 }

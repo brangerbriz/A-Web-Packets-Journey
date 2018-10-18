@@ -28,6 +28,20 @@ function after(times,func){
     }
 }
 
+function gotoScene(num){
+    let goto
+    if(location.search.includes(`platform=webvr`)){
+        goto = `part${num}.html?lvlprog=true&platform=webvr`
+    } else if(location.search.includes(`platform=desktop`)){
+        goto = `part${num}.html?lvlprog=true&platform=desktop`
+    } else if(location.search.includes(`platform=mobile`)){
+        goto = `part${num}.html?lvlprog=true&platform=mobile`
+    } else {
+        goto = `part${num}.html?lvlprog=true`
+    }
+    location = goto
+}
+
 class Loader {
     constructor(amount,onclick,onload){
         this.createCover()
