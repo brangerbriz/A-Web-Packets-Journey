@@ -205,7 +205,7 @@ class Moozak_scene2 extends Moozak {
 
     createMusic(){
         let self = this
-        let m = 0 // measure
+        this.m = 0 // measure
         let b = 0 // beat 0-12
 
         this.layers = 0
@@ -237,64 +237,67 @@ class Moozak_scene2 extends Moozak {
             eighth:function(time){
                 let t = (60/this.tempo)/2 // # of seconds between quarter notes
                 // movements ...............
-                if( b==0 && m==8 ){
+                if( b==0 && self.m==8 ){
                     self.layers = 1
                     if(self.callbacks &&  self.callbacks[0]) self.callbacks[0]()
                 }
-                if( b==0 && m==24 ){
+                if( b==0 && self.m==24 ){
                     self.layers = 2
                     if(self.callbacks && self.callbacks[1]) self.callbacks[1]()
                 }
-                if( b==0 && m==32 ) self.layers = 3
+                if( b==0 && self.m==32 ) self.layers = 3
 
                 // rhythm piano ---------------------
-                if(b==0 && m%4==0) self.playPianoSample(time,...pMap['F#4'])
-                if(b==0 && m%4==1) self.playPianoSample(time,...pMap['G4'])
-                if(b==0 && m%4==2) self.playPianoSample(time,...pMap['G#4'])
-                if(b==0 && m%4==3) self.playPianoSample(time,...pMap['G4'])
+                if(b==0 && self.m%4==0) self.playPianoSample(time,...pMap['F#4'])
+                if(b==0 && self.m%4==1) self.playPianoSample(time,...pMap['G4'])
+                if(b==0 && self.m%4==2) self.playPianoSample(time,...pMap['G#4'])
+                if(b==0 && self.m%4==3) self.playPianoSample(time,...pMap['G4'])
 
                 // piano accents -------------------
-                if(m%3==2){
-                    if(b==6) self.playPianoSample(time,...pMap['F#4'],0.2)
-                    if(b==7) self.playPianoSample(time,...pMap['F#4'],0.3)
-                    if(b==8) self.playPianoSample(time,...pMap['F#4'],0.4)
-                    if(b==9) self.playPianoSample(time,...pMap['F#4'],0.5)
-                    if(b==10) self.playPianoSample(time,...pMap['F#4'],0.6)
-                    if(b==11) self.playPianoSample(time,...pMap['F#4'],0.7)
-                } else if(m%3==1){
-                    if(b==6) self.playPianoSample(time,...pMap['G4'],0.7)
-                    if(b==7) self.playPianoSample(time,...pMap['G4'],0.6)
-                    if(b==8) self.playPianoSample(time,...pMap['G4'],0.5)
-                    if(b==9) self.playPianoSample(time,...pMap['G4'],0.4)
-                    if(b==10) self.playPianoSample(time,...pMap['G4'],0.3)
-                    if(b==11) self.playPianoSample(time,...pMap['G4'],0.2)
-                } else if(m%3==0){
-                    if(b==6) self.playPianoSample(time,...pMap['G4'],0.2)
-                    if(b==7) self.playPianoSample(time,...pMap['C#4'],0.4)
-                    if(b==8) self.playPianoSample(time,...pMap['G4'],0.7)
-                    if(b==9) self.playPianoSample(time,...pMap['C#4'],0.7)
-                    if(b==10) self.playPianoSample(time,...pMap['G4'],0.4)
-                    if(b==11) self.playPianoSample(time,...pMap['C#4'],0.2)
+                if(self.layers >=0 ){
+                    if(self.m%3==2){
+                        if(b==6) self.playPianoSample(time,...pMap['F#4'],0.2)
+                        if(b==7) self.playPianoSample(time,...pMap['F#4'],0.3)
+                        if(b==8) self.playPianoSample(time,...pMap['F#4'],0.4)
+                        if(b==9) self.playPianoSample(time,...pMap['F#4'],0.5)
+                        if(b==10) self.playPianoSample(time,...pMap['F#4'],0.6)
+                        if(b==11) self.playPianoSample(time,...pMap['F#4'],0.7)
+                    } else if(self.m%3==1){
+                        if(b==6) self.playPianoSample(time,...pMap['G4'],0.7)
+                        if(b==7) self.playPianoSample(time,...pMap['G4'],0.6)
+                        if(b==8) self.playPianoSample(time,...pMap['G4'],0.5)
+                        if(b==9) self.playPianoSample(time,...pMap['G4'],0.4)
+                        if(b==10) self.playPianoSample(time,...pMap['G4'],0.3)
+                        if(b==11) self.playPianoSample(time,...pMap['G4'],0.2)
+                    } else if(self.m%3==0){
+                        if(b==6) self.playPianoSample(time,...pMap['G4'],0.2)
+                        if(b==7) self.playPianoSample(time,...pMap['C#4'],0.4)
+                        if(b==8) self.playPianoSample(time,...pMap['G4'],0.7)
+                        if(b==9) self.playPianoSample(time,...pMap['C#4'],0.7)
+                        if(b==10) self.playPianoSample(time,...pMap['G4'],0.4)
+                        if(b==11) self.playPianoSample(time,...pMap['C#4'],0.2)
+                    }
                 }
+
                 // callback hook
                 if( b>=6 ){ if(self.hooks && self.hooks[0]) self.hooks[0]() }
 
                 // strum rhythm ---------------------
                 if(b%3==0) self.playStrum(time,0)
-                if(m%4==3){
+                if(self.m%4==3){
                     if(b==7) self.playStrum(time,1,'left')
                     if(b==8) self.playStrum(time,1,'right')
                     if(b==10) self.playStrum(time,1,'left')
                     if(b==11) self.playStrum(time,1,'right')
 
-                } else if(m%4==1){
+                } else if(self.m%4==1){
                     if(b==11) self.playStrum(time,1,'left')
                 }
 
 
                 // bass lines ---------------------
                 if( self.layers>=1 && (b==0||b==6) ){
-                    let n = scale[ vibLine[m%vibLine.length] ]
+                    let n = scale[ vibLine[self.m%vibLine.length] ]
                     self.playVibeBass(n,time,t*4)
                 }
 
@@ -303,20 +306,22 @@ class Moozak_scene2 extends Moozak {
                     let s = (bCnt%2==0) ? 0 : 1
                     self.playPanoBass(n,time,t*2,s)
                     bCnt++; if(bCnt>=bassLine.length) bCnt=0
-                    // callback hook
+                }
+                // callback hook
+                if( b%3==0 && (self.layers>=2 || self.layers==-1) ){
                     if(self.hooks && self.hooks[1]) self.hooks[1]()
                 }
 
 
                 // lead melody ---------------------
                 if(self.layers>=3){
-                    if(m%4==0){
+                    if(self.m%4==0){
                          if(b==0) self.playLeadOsc(scale[lead[0]],time,t*4)
                          if(b==9) self.playLeadOsc(scale[lead[1]],time,t*3)
-                    } else if(m%4==1){
+                    } else if(self.m%4==1){
                         if(b==0) self.playLeadOsc(scale[lead[2]],time,t*4)
                         if(b==9) self.playLeadOsc(scale[lead[3]],time,t*2)
-                    } else if(m%4==2){
+                    } else if(self.m%4==2){
                         if(b==0) self.playLeadOsc(scale[lead[4]],time,t*4)
                         if(b==6) self.playLeadOsc(scale[lead[1]],time,t/2)
                         if(b==7) self.playLeadOsc(scale[lead[0]],time,t/2)
@@ -324,19 +329,19 @@ class Moozak_scene2 extends Moozak {
                         if(b==9) self.playLeadOsc(scale[lead[6]],time,t/2)
                         if(b==10) self.playLeadOsc(scale[lead[7]],time,t/2)
                         if(b==11) self.playLeadOsc(scale[lead[8]],time,t/2)
-                    } else if(m%4==3){
+                    } else if(self.m%4==3){
                         if(b==0) self.playLeadOsc(scale[lead[9]],time,t*3)
                         if(b==3) self.playLeadOsc(scale[lead[10]],time,t*4)
                     }
                     // callback hook
                     if(self.hooks && self.hooks[2]){
-                        if(m%4<=1 && (b==0||b==9) ) self.hooks[2]()
-                        else if(m%4==2 && (b==0||b>=6)) self.hooks[2]()
-                        else if(m%4==3 && (b==0||b==3)) self.hooks[2]()
+                        if(self.m%4<=1 && (b==0||b==9) ) self.hooks[2]()
+                        else if(self.m%4==2 && (b==0||b>=6)) self.hooks[2]()
+                        else if(self.m%4==3 && (b==0||b==3)) self.hooks[2]()
                     }
                 }
 
-                b = (++b%12); if(!b) m++ // inc 12th beat && measure
+                b = (++b%12); if(!b) self.m++ // inc 12th beat && measure
             }
         })
     }
