@@ -337,10 +337,10 @@ class VRWorld {
         } else if(location.search.includes('platform=desktop')){
             this._setCntrls("desktop")
         }  else {
+            // if webVR capability
+            if(navigator.getVRDisplays) this._setCntrls("webvr")
             // if mobile (NOTE: this likely will also fire for tablets)
-            if (typeof window.orientation !== 'undefined') this._setCntrls("mobile")
-            // if desktop w/webVR capability
-            else if(navigator.getVRDisplays) this._setCntrls("webvr")
+            else if (typeof window.orientation !== 'undefined') this._setCntrls("mobile")
             // otherwise asume a non-vr capable desktop
             else this._setCntrls("desktop")
         }
