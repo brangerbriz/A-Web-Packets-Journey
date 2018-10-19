@@ -12,7 +12,6 @@ function planePos(idx){
     return pos[idx]
 }
 
-
 function loadIsland(callback){
     let mesh = new THREE.Object3D()
 
@@ -29,7 +28,7 @@ function loadIsland(callback){
         })
         let island = new THREE.Mesh(geometry,mat)
         island.name = 'the-island'
-        island.castShadow = true
+        // island.castShadow = true
         island.receiveShadow = true
         mesh.add( island )
         loaded()
@@ -53,7 +52,7 @@ function loadIsland(callback){
         })
         let router = new THREE.Mesh(geometry,mat)
         router.name = 'the-island'
-        router.castShadow = true
+        // router.castShadow = true
         router.receiveShadow = true
         mesh.add( router )
         loaded()
@@ -70,6 +69,120 @@ function loadIsland(callback){
         mesh.add( bulbs )
         loaded()
     })
+}
+
+class IslandTransition {
+    constructor(config){
+        this.state = 0
+    }
+
+    setup(config){
+        this.scene = config.scene
+        this.plane = config.plane
+
+        this.cart = new TrackCart(config.scene, [
+            config.start,
+            new THREE.Vector3(10,-10,100),
+            new THREE.Vector3(10,20,150),
+            new THREE.Vector3(-30,20,120),
+            new THREE.Vector3(-20,10,60),
+            new THREE.Vector3(0,10,70),
+            new THREE.Vector3(0,-0.171,100),
+            new THREE.Vector3(0,-0.171,104)
+        ])
+    }
+
+    stateCheck(){
+        // interactions is a global variable created in s2_narrative.js
+        if( interactions > 3 && moozak.layers >= 3) this.state = 1
+    }
+
+    clearSpinArr(spinners){
+        spinners.forEach(spnr=>this.scene.remove(spnr.mesh))
+        spinners = []
+        return spinners
+    }
+
+    clearPlanes(planes){
+        planes.forEach(p=>this.scene.remove(p.mesh))
+        planes = []
+        return planes
+    }
+
+    vanishPlane(){
+        for (let i = 0; i < 500; i++) {
+            let c = (Math.random()<0.25) ?  '#fff' : '#7d182e'
+            let s = Math.random()*0.2
+            let g = new THREE.PlaneBufferGeometry(s,s,s)
+            let m = new THREE.MeshBasicMaterial({
+                transparent:true, opacity:1, side:2, color:c
+            })
+            let p =  new THREE.Mesh( g, m )
+            let x = (Math.random()*2-1)
+            let y = (Math.random()*2-1) - 0.171
+            let z = (Math.random()*2-1) + 104
+            p.position.set(x,y,z)
+            this.scene.add( p )
+            let t = {
+                x:(Math.random()*4-2),
+                y:(Math.random()*4-2) - 0.171,
+                z:(Math.random()*4-2) + 104
+            }
+            new TWEEN.Tween(p.position).to(t, 500)
+            .onUpdate((pos)=>{ p.material.opacity = Math.map(pos.x,x,t.x,1,0) })
+            .onComplete(()=>{ this.scene.remove( p ) }).start()
+        }
+    }
+
+    cloudTransition(config){
+        let gw = this.scene.getChildByName('gateway')
+
+        config.plane.parent.remove( config.plane )
+        this.cart.mesh.add( config.plane )
+
+        let cam = this.scene.getChildByName('camera')
+        let camObj = new THREE.Object3D()
+        this.scene.remove( cam )
+        camObj.add( cam )
+        this.cart.mesh.add( camObj )
+
+        let zLength = 50
+        let zOff = 0
+        let pcs = []
+        for (let i = 0; i < 20; i++) {
+            passingCloud(this.scene,(c,moveIt)=>{
+                pcs.push( c )
+                this.scene.add( c.mesh )
+                c.mesh.position.x = 0
+                c.mesh.position.y = 0
+                let z = Math.random()*zLength-(zLength/2)
+                c.mesh.position.z = z
+                let time = Math.map(z,-zLength/2,zLength/2,0,1000)
+                moveIt(time,zLength,zOff,true)
+            },true)
+        }
+
+        setTimeout(()=>{
+            pcs.forEach(c=>{ c.keepPassing = false })
+            this.cart.moveTo(1, 30000, true).then(()=>{
+                this.state = 4
+                this.vanishPlane()
+                config.plane.parent.remove( config.plane )
+                config.daemon.swapPose(6)
+                camObj.remove( cam )
+                this.scene.add( cam )
+                gw.position.z = -4
+            })
+            this.state = 3
+        },config.duration)
+
+        return pcs
+    }
+
+    update(){
+        this.cart.update()
+    }
+
 }
 
 
@@ -587,7 +700,7 @@ class Cloud {
     }
 }
 
-function passingCloud(callback){
+function passingCloud(scene,callback){
 
     let cloud = new Cloud({
         radius:Math.random()*5+1,
@@ -599,9 +712,9 @@ function passingCloud(callback){
     cloud.mesh.position.z = Math.random()*400-200
     cloud.keepPassing = true
 
-    function move(time){
-        let zLength = 400
-        let fadeOff = 75
+    function move(time, zl, fo, noFade ){
+        let zLength = zl || 400
+        let fadeOff = fo || 75
         let start = zLength/2
         let end = -start
         new TWEEN.Tween(cloud.mesh.position).to({z:end}, time)
@@ -609,18 +722,23 @@ function passingCloud(callback){
             let z = cloud.mesh.position.z
             let m = cloud.mesh.children[0]
             let w = cloud.mesh.children[1]
-            if(z < end+fadeOff){ // fade out
-                m.material.opacity = Math.map(z,end+fadeOff,end,0.75,0)
-                w.material.opacity = Math.map(z,end+fadeOff,end,1,0)
-            } else if(z > start-fadeOff){ // fade in
-                m.material.opacity = Math.map(z,start,start-fadeOff,0,0.75)
-                w.material.opacity = Math.map(z,start,start-fadeOff,0,1)
+            if(!noFade){
+                if(z < end+fadeOff){ // fade out
+                    m.material.opacity = Math.map(z,end+fadeOff,end,0.75,0)
+                    w.material.opacity = Math.map(z,end+fadeOff,end,1,0)
+                } else if(z > start-fadeOff){ // fade in
+                    m.material.opacity = Math.map(z,start,start-fadeOff,0,0.75)
+                    w.material.opacity = Math.map(z,start,start-fadeOff,0,1)
+                }
             }
         })
         .onComplete(()=>{
             if(cloud.keepPassing){
                 cloud.mesh.position.z = start
-                move(20000)
+                let t = noFade ? 1000 : 20000
+                move(t,zl,fo,noFade)
+            } else {
+                scene.remove( cloud.mesh )
             }
         })
         .start()
@@ -666,7 +784,9 @@ function createRandomClouds(){
 }
 
 function createDataClouds(){
-    let clouds = new THREE.Object3D()
+    let clouds = []
+    let cloudsMesh = new THREE.Object3D()
+
     for (let i = 0; i < CloudData.length; i++) {
         let cld = new THREE.Object3D()
         let data = CloudData[i]
@@ -675,6 +795,7 @@ function createDataClouds(){
             let d = data.clouds[j]
             let r = d[3]
             let c = new Cloud({radius:r,stretch:true})
+            clouds.push( c )
             let cx = Math.random()*r*2
             let cy = Math.random()*r*2
             let cz = Math.random()*r*2
@@ -685,9 +806,9 @@ function createDataClouds(){
         }
         let p = data.position
         cld.position.set(p[0],p[1],p[2])
-        clouds.add( cld )
+        cloudsMesh.add( cld )
     }
-    return clouds
+    return { clouds:clouds, mesh:cloudsMesh }
 }
 
 // data for clouds around island, originally generated by createRandomClouds()

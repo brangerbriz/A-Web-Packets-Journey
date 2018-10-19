@@ -78,7 +78,6 @@
         <script src="js/music/Melody.js"></script>
         <script src="js/music/Moozak.js"></script>
         <script src="js/music/Sequencer.js"></script>
-        <script src="js/music/sound-fonts/0282_FluidR3_GM_sf2_file.js"></script>
         <script src="js/music/Moozak_scene2.js"></script>
 
         <script>
@@ -94,20 +93,6 @@
                 if you have any thoughts/questions we'd love to hear 'em. you
                 can contact us@brangerbriz.com
             */
-
-            const talk = new DialogueVR(narrative)
-
-            const loader = new Loader(1,()=>{
-                // on click
-                // moozak.toggle()
-                // moozak.test()
-                // moozak.playPiano()
-                // moozak.playPianoChord('D#3','maj',moozak.actx.currentTime,3)
-            },()=>{
-                // on load
-                emitter.fadeIn()
-                moozak.toggle()
-            })
 
             const moozak = new Moozak_scene2()
             moozak.callbacks = [
@@ -152,47 +137,62 @@
                     }
                 },
                 function(){
-                    spinParticles.forEach(group=>{
-                        group.children.forEach(c=>c.colorSwap())
-                    })
-                },
-                function(){
-                    spinClouds.forEach(group=>{
-                        group.children.forEach(c=>{
+                    if( itran.state<2){
+                        spinParticles.forEach(group=>{
+                            group.children.forEach(c=>c.colorSwap())
+                        })
+                    } else {
+                        clouds.forEach(c=>{
                             c.whiteOut()
                             c.colorize(0.2,true)
                         })
-                    })
+                    }
+                },
+                function(){
+                    if(itran.state<2){
+                        spinClouds.forEach(group=>{
+                            group.children.forEach(c=>{
+                                c.whiteOut()
+                                c.colorize(0.2,true)
+                            })
+                        })
+                    } else if(itran.state===2){
+                        passingClouds.forEach(c=>{
+                            c.whiteOut()
+                            c.colorize(0.2,true)
+                        })
+                    }
                 },
             ]
 
+            const talk = new DialogueVR(narrative)
 
-            const bgcolor = '#34C8F2'
+            const loader = new Loader(3,()=>{
+                    moozak.toggle()
+                    emitter.fadeIn()
+            })
+
+            const itran = new IslandTransition()
+
             let camObj = new THREE.Object3D()
-            let lights, emitter, spiral, waves = []
-            let plane, cart, planes = []
+            let lights, emitter, plane, planes = []
             let passingClouds = []
             let spinClouds = []
             let spinParticles = []
 
             const gateway = new THREE.Object3D()
-            let island, daemon, wave
+            let island, daemon, wave, clouds
 
             const world = new VRWorld({
                 titleCard:'images/title_screen_s2.png',
-                background:bgcolor,
+                background:'#34C8F2',
                 debug:true,
                 // debugControls:true,
-                // camera:{x:-85.32,y:40.5,z:-58.81,fov:70},
-                // camera:{x:-0.42,y:2,z:4.5,fov:70},
-                // fog:{ color:bgcolor, near:150, far:200 },
+                camera:{ min:0.1, max:1000 },
                 crosshair: {
                     names:[...talk.options,...Object.keys(narrative)],
                     block:['dialogue'],
                     time:1500,
-                    debug:function(names){// mouse click to trigger
-                        console.log(names)
-                    },
                     progress:function(prog,name){
                         talk.highlight(name)
                     },
@@ -220,48 +220,19 @@
                     lights.a.intensity = 0.9
                     lights.h.intensity = 0.39
 
-                    // dcart = new TrackCart(scene, [
-                    //     new THREE.Vector3(0,1.5,3),
-                    //     new THREE.Vector3(-2,1.5,3),
-                    //     new THREE.Vector3(-2,1.5,2),
-                    //     new THREE.Vector3(-0.5,1.5,0),
-                    //     new THREE.Vector3(2,1.5,2),
-                    //     new THREE.Vector3(2,1.5,3),
-                    //     new THREE.Vector3(2.75,0.83,5)
-                    // ],true)
+                    // set player's plane start position
+                    let p = new THREE.Vector3(0,1.1,0.25)
+                    let c = camera.position.clone()
+                    if(c.x!=0 || c.y!=0 || c.z!=0 ){
+                        c.y -= 1.6 // for vr && cntrls height
+                        p = p.add(c)
+                    }
 
-                    // ======== gateway ========================================
-                    scene.add( gateway )
+                    // IslandTransition instance
+                    // manages scene state changes
+                    itran.setup({ scene:scene, start:p })
 
-                    // loadIsland((obj)=>{
-                    //     island = obj
-                    //     obj.rotation.y = Math.PI/2
-                    //     obj.position.set(0,-4,2.5)
-                    //     gateway.add(obj)
-                    //     loader.loaded()
-                    // })
-                    //
-                    // daemon = new GatewayDaemon((mesh)=>{
-                    //     mesh.scale.set(0.15,0.15,0.15)
-                    //     mesh.position.set(-1.5,0.32,0)
-                    //     mesh.rotation.y = Math.PI
-                    //     gateway.add(mesh)
-                    //     loader.loaded()
-                    // })
-                    //
-                    // let clouds = createRandomClouds()
-                    // let clouds = createDataClouds()
-                    // gateway.add( clouds )
-                    //
-                    // wave = new ParticleWave((mesh)=>{
-                    //     mesh.position.set(-0.1,10,8.5)
-                    //     mesh.rotation.y = Math.PI/2
-                    //     gateway.add( mesh )
-                    // })
-
-
-
-
+                    // ======== planes + particles + cloudes ===================
 
                     // create protagonist plane
                     plane = new WiFiPlane({
@@ -270,19 +241,10 @@
                     },(mesh,plane)=>{
                         plane.mesh.remove( plane.pilot )
                         mesh.rotation.set(0,-Math.PI/2,0)
-                        let p = new THREE.Vector3(0,1.1,0.25)
-                        let c = camera.position.clone()
-                        if(c.x!=0 || c.y!=0 || c.z!=0 ){
-                            c.y -= 1.6 // for vr && cntrls height
-                            p = p.add(c)
-                        }
                         mesh.position.set(p.x,p.y,p.z)
                         scene.add(mesh)
                         loader.loaded()
-                        // cart.mesh.add(plane.mesh)
-                        // planeLoop()
                     })
-
 
                     // create other planes
                     let types = ['dns','http','voip','ftp','imap','ssh','bt','irc']
@@ -307,7 +269,7 @@
 
 
                     for (let i = 0; i < 20; i++) {
-                        passingCloud((cloud,moveIt)=>{
+                        passingCloud(scene,(cloud,moveIt)=>{
                             passingClouds.push( cloud )
                             scene.add( cloud.mesh )
                             let z = cloud.mesh.position.z
@@ -316,26 +278,88 @@
                         })
                     }
 
+                    // ======== gateway ========================================
+                    scene.add( gateway )
+                    gateway.name = 'gateway'
+                    gateway.position.z = 1500
+
+                    loadIsland((obj)=>{
+                        island = obj
+                        obj.rotation.y = Math.PI/2
+                        obj.position.set(0,-4,2.5)
+                        gateway.add(obj)
+                        loader.loaded()
+                    })
+
+                    daemon = new GatewayDaemon((mesh)=>{
+                        mesh.scale.set(0.15,0.15,0.15)
+                        // mesh.position.set(-1.5,0.32,0)
+                        mesh.position.set(-1.5,0.1,6.2)
+                        mesh.rotation.y = Math.PI
+                        gateway.add(mesh)
+                        loader.loaded()
+                    })
+
+                    let dc = createDataClouds()
+                    clouds = dc.clouds
+                    gateway.add( dc.mesh )
+
+                    wave = new ParticleWave((mesh)=>{
+                        mesh.position.set(-0.1,10,8.5)
+                        mesh.rotation.y = Math.PI/2
+                        gateway.add( mesh )
+                    })
+
+
                 },
                 draw:(scene,camera,renderer,clock)=>{
                     TWEEN.update()
                     let tick = clock.getElapsedTime()
-
-                    plane.update(tick)
-                    planes.forEach(p=>p.update(tick))
-
-                    spinClouds.forEach((g,i)=>{
-                        g.update(tick+i*3)
-                    })
-
-                    spinParticles.forEach((g,i)=>{
-                        g.update(tick+i*4)
-                    })
-
-                    // daemon.update(tick)
-                    // wave.update(tick)
-
                     moozak.update()
+
+                    if(itran.state===0){
+                        // flying through wifi
+                        plane.update(tick)
+                        planes.forEach(p=>p.update(tick))
+
+                        spinClouds.forEach((g,i)=>{
+                            g.update(tick+i*3)
+                        })
+
+                        spinParticles.forEach((g,i)=>{
+                            g.update(tick+i*4)
+                        })
+
+                        itran.stateCheck()
+
+                    } else if(itran.state===1){
+                        // start englufed by clouds
+                        spinClouds = itran.clearSpinArr(spinClouds)
+                        spinParticles = itran.clearSpinArr(spinParticles)
+                        planes = itran.clearPlanes(planes)
+                        passingClouds = itran.cloudTransition({
+                            plane:plane.mesh,
+                            daemon:daemon,
+                            duration:5000
+                        })
+                        gateway.position.z = 100
+                        itran.state = 2
+
+                    } else if(itran.state===2){
+                        // engulfed by cloudes
+                        //(for cloundTransition duraiton)
+                        plane.update(tick)
+                    } else if(itran.state==3){
+                        /// fly over to island
+                        plane.update(tick)
+                        daemon.update(tick)
+                        wave.update(tick)
+                        itran.update()
+                    } else if(itran.state==4){
+                        // parked on the island
+                        moozak.layers = -1
+                        wave.update(tick)
+                    }
                 }
             })
 

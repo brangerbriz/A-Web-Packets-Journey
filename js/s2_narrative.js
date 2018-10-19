@@ -1,4 +1,5 @@
 
+let interactions = 0
 
 const narrative = {
     'dns-plane':{
@@ -25,8 +26,8 @@ const narrative = {
             {
                 text:[
                 //  "--------------------------------------" length of 38 chars
-                    "I saw you looking all around all back",
-                    "home in the device, you looked pretty",
+                    "I saw you looking all around back home",
+                    "in our device. You looked pretty",
                     "confused back there (^_^)"
                 ],
                 options:[
@@ -55,14 +56,8 @@ const narrative = {
                     "Flying through the air is my favorite",
                     "part! It's pretty much all cables",
                     "after this, so enjoy the ride!"
-                ]
-            },{
-                text:[
-                //  "--------------------------------------" length of 38 chars
-                    "Looks like we're both carrying the",
-                    "same payload too. I've also got a DNS",
-                    "request I need to resolve for our User"
-                ]
+                ],
+                after:function(){ interactions++ }
             }
         ]
     },
@@ -98,7 +93,7 @@ const narrative = {
                 ],
                 options:[
                     {text:"what's https?",goto:'https'},
-                    {text:"hmmm,i guess.",goto:'end'}
+                    {text:"hmmm,i guess.",goto:'yes'}
                 ]
             }
         ],
@@ -149,9 +144,10 @@ const narrative = {
                 text:[
                 //  "--------------------------------------" length of 38 chars
                     "...but this server doesn't have any",
-                    "end-to-end encryption set up, so it's ",
-                    "plain-text HTTP for me this time!"
-                ]
+                    "end-to-end encryption set up, so it's",
+                    "plain-text HTTP for him this time!"
+                ],
+                after:function(){ interactions++ }
             }
         ],
         'yes':[
@@ -170,7 +166,27 @@ const narrative = {
                     "to_stop_farting_all_the_time?"
                 ],
                 options:[
-                    {text:"oh dear, that's embarassing!",goto:'no'}
+                    {text:"oh dear, that's embarassing!",goto:'embarrased'}
+                ]
+            }
+        ],
+        'embarrased':[
+            {
+                text:[
+                //  "--------------------------------------" length of 38 chars
+                    "It sure is! Most users don't realize",
+                    "that anything they do on a WiFi",
+                    "network is floating through the air..."
+                ]
+            },{
+                text:[
+                //  "--------------------------------------" length of 38 chars
+                    "...and anyone on the same WiFi can see",
+                    "it. Unless they're encrypting their",
+                    "traffic of course, like with HTTPS."
+                ],
+                options:[
+                    {text:"what's https?",goto:'https'},
                 ]
             }
         ],
@@ -190,7 +206,8 @@ const narrative = {
                     "You could try to take a look at my",
                     "payload, but because it's encrypted",
                     "it'll just look like gibberish to you."
-                ]
+                ],
+                after:function(){ interactions++ }
             }
         ],
     },
@@ -202,14 +219,14 @@ const narrative = {
                     "Hey! I'm carrying an IRC packet, that",
                     "stands for Internet Relay Chat. It's",
                     "used by older chat apps."
-
                 ]
             },{
                 text:[
                 //  "--------------------------------------" length of 38 chars
-                "It's not so common these days, but my user",
-                "likes to keep things old-school ⺌∅‿∅⺌"
-                ]
+                    "Rare to see it these days, but my user",
+                    "likes to kick it old-school (⌐■_■)"
+                ],
+                after:function(){ interactions++ }
             }
         ]
     },
@@ -223,8 +240,9 @@ const narrative = {
             },{
                 text:[
                 //  "--------------------------------------" length of 38 chars
-                "",
-                ]
+                    "",
+                ],
+                after:function(){ interactions++ }
             }
         ]
     },
@@ -238,8 +256,9 @@ const narrative = {
             },{
                 text:[
                 //  "--------------------------------------" length of 38 chars
-                "",
-                ]
+                    "",
+                ],
+                after:function(){ interactions++ }
             }
         ]
     },
@@ -253,8 +272,9 @@ const narrative = {
             },{
                 text:[
                 //  "--------------------------------------" length of 38 chars
-                "",
-                ]
+                    "",
+                ],
+                after:function(){ interactions++ }
             }
         ]
     },
@@ -268,8 +288,33 @@ const narrative = {
             },{
                 text:[
                 //  "--------------------------------------" length of 38 chars
-                "",
-                ]
+                    "",
+                ],
+                after:function(){ interactions++ }
+            }
+        ]
+    },
+    'gateway-daemon':{
+        'start':[
+            {
+                text:[
+                //  "--------------------------------------" length of 38 chars
+                    "Oh hello there!",
+                ],
+                before:function(name,next){
+                    daemon.mesh.rotateX(-0.5)
+                    daemon.swapPose(0)
+                    next()
+                }
+            },{
+                text:[
+                //  "--------------------------------------" length of 38 chars
+                    "Goodbye!",
+                ],
+                before:function(name,next){
+                    daemon.swapPose(1)
+                    next()
+                }
             }
         ]
     }

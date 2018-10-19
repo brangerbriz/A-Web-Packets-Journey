@@ -54,6 +54,8 @@ class GatewayDaemon extends BaseObjClass {
             side:2, map:new THREE.TextureLoader().load('images/gateway_daemon.jpg')
         })
 
+        this.mesh.name = 'gateway-daemon'
+
         this.pushMesh = new THREE.Object3D()
         this.loader.load( `models/drcs/gdaemon_push.drc`, (geopush)=>{
             this.pushMesh = new THREE.Mesh(geopush,this.mat)
@@ -63,15 +65,21 @@ class GatewayDaemon extends BaseObjClass {
         for (let i = 0; i < this.flength; i++) this.loadPoses(i)
     }
 
+    swapPose(i){
+        let frame = this.animFrames[this.fidx]
+        this.mesh.remove( frame )
+        this.fidx = i
+        this.mesh.add( this.animFrames[i] )
+    }
+
     loadPoses(i){
         let idx = i + 1
         let path = `models/drcs/gdaemon_0${idx}.drc`
-
+        let x = [0,-9.72,-19.52,-29.16,-35.279,-46.599,-55.219]
         this.loader.load(path,(geo)=>{
             let pose = new THREE.Mesh(geo,this.mat)
-            let adjust = -9.72
-            pose.position.x = adjust*i
-
+            pose.position.x = x[i]
+            pose.name = 'gateway-daemon'
             if(i==0) this.mesh.add( pose )
             this.animFrames.push( pose )
             this.loaded()
