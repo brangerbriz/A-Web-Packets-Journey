@@ -110,23 +110,23 @@ class IslandTransition {
     }
 
     vanishPlane(){
-        for (let i = 0; i < 500; i++) {
+        for (let i = 0; i < 1000; i++) {
             let c = (Math.random()<0.25) ?  '#fff' : '#7d182e'
-            let s = Math.random()*0.2
+            let s = Math.random()
             let g = new THREE.PlaneBufferGeometry(s,s,s)
             let m = new THREE.MeshBasicMaterial({
                 transparent:true, opacity:1, side:2, color:c
             })
             let p =  new THREE.Mesh( g, m )
             let x = (Math.random()*2-1)
-            let y = (Math.random()*2-1) - 0.171
-            let z = (Math.random()*2-1) + 104
+            let y = (Math.random()*2-1)
+            let z = (Math.random()*2-1)
             p.position.set(x,y,z)
             this.scene.add( p )
             let t = {
                 x:(Math.random()*4-2),
-                y:(Math.random()*4-2) - 0.171,
-                z:(Math.random()*4-2) + 104
+                y:(Math.random()*4-2),
+                z:(Math.random()*4-2)
             }
             new TWEEN.Tween(p.position).to(t, 500)
             .onUpdate((pos)=>{ p.material.opacity = Math.map(pos.x,x,t.x,1,0) })
