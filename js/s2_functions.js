@@ -71,6 +71,92 @@ function loadIsland(callback){
     })
 }
 
+class Cad5Elevator {
+    constructor(callback){
+        this.mesh = new THREE.Object3D()
+        this.mesh.position.z = 5.5
+        this.mesh.position.y = -1.75//1.1
+
+        let material = new THREE.MeshPhongMaterial({color:0xdddddd})
+        let clipGeo = new THREE.BoxBufferGeometry( 0.7, 2, 0.2 )
+        let clip = new THREE.Mesh( clipGeo, material )
+        clip.position.z = 0.6
+        clip.position.y = 0.2
+        this.mesh.add( clip )
+        let backGeo = new THREE.BoxBufferGeometry( 1.4, 2, 0.2 )
+        let back = new THREE.Mesh( backGeo, material )
+        back.position.z = 0.475
+        this.mesh.add( back )
+        let sideGeo = new THREE.BoxBufferGeometry( 0.2, 2, 0.75 )
+        let left = new THREE.Mesh( sideGeo, material )
+        left.position.x = -0.6
+        this.mesh.add( left )
+        let right = new THREE.Mesh( sideGeo, material )
+        right.position.x = 0.6
+        this.mesh.add( right )
+        let cmat = new THREE.MeshPhongMaterial({color:0xf7da1d})
+        let cgeo = new THREE.BoxBufferGeometry( 1.2, 0.4, 0.1)
+        let cnctr = new THREE.Mesh( cgeo, cmat )
+        cnctr.position.y = 0.75
+        this.mesh.add( cnctr )
+        let sx = -0.475
+        for(let i = 0; i < 7; i++) {
+            let w = 1.2/7/4
+            sx += (1/7)-w/2
+            let dgeo = new THREE.BoxBufferGeometry( w, 0.5, 0.175 )
+            let div = new THREE.Mesh( dgeo, material )
+            div.position.y = 0.75
+            div.position.x = sx
+            this.mesh.add( div )
+        }
+        let c = [
+            '#966125','#fff','#2bad36','#fff','#1d6df7','#fff','#f7911d','#fff'
+        ]
+        sx = -0.475
+        for(let i = 0; i < 8; i++) {
+            let r = 1.2/8/2.2
+            let mat = new THREE.MeshLambertMaterial({color:c[i]})
+            let cbgeo = new THREE.CylinderBufferGeometry( r, r, 1.9, 32 )
+            let cb = new THREE.Mesh( cbgeo, mat )
+            cb.position.x = sx
+            cb.position.z = 0.2
+            this.mesh.add( cb )
+            sx += r*2
+        }
+        let doorMat = new THREE.MeshLambertMaterial({color:0xcccccc})
+        let doorGeo = new THREE.BoxBufferGeometry( 0.6, 2, 0.1 )
+        this.leftDoor = new THREE.Mesh( doorGeo, doorMat )
+        this.leftDoor.position.z = -0.2
+        this.leftDoor.position.y = -0.4
+        this.leftDoor.position.x = -0.3
+        this.mesh.add( this.leftDoor )
+        this.rightDoor = new THREE.Mesh( doorGeo, doorMat )
+        this.rightDoor.position.z = -0.2
+        this.rightDoor.position.y = -0.4
+        this.rightDoor.position.x = 0.3
+        this.mesh.add( this.rightDoor )
+        callback(this.mesh)
+    }
+
+    riseUp(){
+        new TWEEN.Tween(this.mesh.position).to({y:0.75},4000)
+        .onComplete(()=>{
+            this.openDoors()
+        }).start()
+    }
+
+    openDoors(){
+        let t = 500
+        new TWEEN.Tween(this.rightDoor.position).to({x:0.6},t).start()
+        new TWEEN.Tween(this.rightDoor.scale).to({x:0},t).start()
+        new TWEEN.Tween(this.leftDoor.position).to({x:-0.6},t).start()
+        new TWEEN.Tween(this.leftDoor.scale).to({x:0},t).start()
+        setTimeout(()=>{
+            new TWEEN.Tween(this.mesh.position).to({z:4.1},t*2).start()
+        },t*2)
+    }
+}
+
 class IslandTransition {
     constructor(config){
         this.state = 0
@@ -93,8 +179,8 @@ class IslandTransition {
     }
 
     stateCheck(){
-        // interactions is a global variable created in s2_narrative.js
-        if( interactions > 3 && moozak.layers >= 3) this.state = 1
+        // interactions is a global object created in s2_narrative.js
+        if( interactions.readyToProgress() ) this.state = 1
     }
 
     clearSpinArr(spinners){
@@ -164,7 +250,8 @@ class IslandTransition {
 
         setTimeout(()=>{
             pcs.forEach(c=>{ c.keepPassing = false })
-            this.cart.moveTo(1, 30000, true).then(()=>{
+            this.cart.moveTo(1, 30000, TWEEN.Easing.Quadratic.In)
+            .then(()=>{
                 this.state = 4
                 this.vanishPlane()
                 config.plane.parent.remove( config.plane )
@@ -172,6 +259,7 @@ class IslandTransition {
                 camObj.remove( cam )
                 this.scene.add( cam )
                 gw.position.z = -4
+                world.rayparams.names.push('gateway-daemon')
             })
             this.state = 3
         },config.duration)

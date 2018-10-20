@@ -181,7 +181,7 @@
             let spinParticles = []
 
             const gateway = new THREE.Object3D()
-            let island, daemon, wave, clouds
+            let island, daemon, wave, clouds, elevator
 
             const world = new VRWorld({
                 titleCard:'images/title_screen_s2.png',
@@ -190,7 +190,11 @@
                 // debugControls:true,
                 camera:{ min:0.1, max:1000 },
                 crosshair: {
-                    names:[...talk.options,...Object.keys(narrative)],
+                    names:[
+                        ...talk.options,
+                        ...Object.keys(narrative)
+                        .filter(n=>n!=='gateway-daemon') // save for later
+                    ],
                     block:['dialogue'],
                     time:1500,
                     progress:function(prog,name){
@@ -247,12 +251,12 @@
                     })
 
                     // create other planes
-                    let types = ['dns','http','voip','ftp','imap','ssh','bt','irc']
+                    let types = ['imap','http','bc','ftp','dns','ssh','bt','irc']
                     for (let i = 0; i < 8; i++) {
                         let t = types[i]
                         new WiFiPlane({
                             light:lights.d,
-                            ip:(t=='dns') ? '192.168.0.68' : null
+                            ip:(t=='imap') ? '192.168.0.68' : null
                         },(m,p)=>{
                             m.name = `${t}-plane`
                             p.pilot.name = `${t}-plane`
@@ -307,6 +311,10 @@
                     wave = new ParticleWave((mesh)=>{
                         mesh.position.set(-0.1,10,8.5)
                         mesh.rotation.y = Math.PI/2
+                        gateway.add( mesh )
+                    })
+
+                    elevator = new Cad5Elevator((mesh)=>{
                         gateway.add( mesh )
                     })
 
