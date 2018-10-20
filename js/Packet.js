@@ -93,7 +93,7 @@ class Packet {
         switch (type) {
           case 'dns': o=[0.25,5,4,0,6.3,0,6.3]; c='#00f'; break;
           case 'http': o=[0.25,7,3,0,6.3,0,3.1]; c='#f00'; break;
-          case 'voip': o=[0.25, 3, 2, 0, 6.3, 0, 2.3]; c='#f0f'; break;
+          case 'bc': o=[0.25, 3, 2, 0, 6.3, 0, 2.3]; c='#f0f'; break;
           case 'ftp': o=[0.25, 0, 4, 0, 6.3, 0, 2.5]; c='#ff0'; break;
           case 'imap': o=[0.25, 0, 0, 0, 6.3, 0, 2.0]; c='#0ff'; break;
           case 'ssh': o=[0.25, 0, 1, 0, 6.3, 0, 4.5]; c='#f70'; break;

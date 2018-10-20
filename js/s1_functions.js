@@ -35,7 +35,7 @@ class LinePackets {
     }
 
     _spawn(num){
-        let types = ['dns','http','voip','ftp','imap','ssh','bt', 'irc']
+        let types = ['dns','http','bc','ftp','imap','ssh','bt', 'irc']
         let i = num + 2 // +2 b/c packet 0-3 are starring at user
         let front = new THREE.Vector3(2.75,0.48,2) // front of the line
         let packet = new Packet({
