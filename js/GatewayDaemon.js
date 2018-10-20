@@ -44,6 +44,8 @@ class GatewayDaemon extends BaseObjClass {
     constructor(callback){
         super(callback)
 
+        this.floating = false
+
         this.fspeed = 2
         this.flength = 7         // 7 poses
         this.loadTotalOf(8,()=>{ // 1 for pushMesh, 7 for poses
@@ -66,10 +68,50 @@ class GatewayDaemon extends BaseObjClass {
     }
 
     swapPose(i){
+        // 0: standing
+        // 1: batons down
+        // 2: batons up
+        // 3: batons left
+        // 4: baton right
+        // 5: batons out
+        // 6: baton cross
         let frame = this.animFrames[this.fidx]
         this.mesh.remove( frame )
         this.fidx = i
         this.mesh.add( this.animFrames[i] )
+    }
+
+    checkPacket(time){
+        new TWEEN.Tween(this.mesh.position).to({z:5}, time)
+        .easing(TWEEN.Easing.Quadratic.Out)
+        .onComplete(()=>{
+            new TWEEN.Tween(this.mesh.position).to({z:7.5}, time)
+            .easing(TWEEN.Easing.Quadratic.Out).start()
+        }).start()
+        new TWEEN.Tween(this.mesh.rotation).to({x:-Math.PI*2}, time)
+        .easing(TWEEN.Easing.Quadratic.Out)
+        .onComplete(()=>{
+            new TWEEN.Tween(this.mesh.rotation).to({x:0}, time)
+            .easing(TWEEN.Easing.Quadratic.Out).start()
+        }).start()
+    }
+
+    float(){
+        if(!this.floating){
+            new TWEEN.Tween(this.mesh.position).to({y:1.25,z:7.5}, 1000)
+            .easing(TWEEN.Easing.Quadratic.Out)
+            .onComplete(()=>{
+                this.floating = true
+                this.float()
+            }).start()
+            new TWEEN.Tween(this.mesh.rotation).to({x:Math.PI*2}, 1000)
+            .easing(TWEEN.Easing.Quadratic.Out).start()
+        } else {
+            let y = (this.mesh.position.y > 1.2) ? 1 : 1.25
+            new TWEEN.Tween(this.mesh.position).to({y:y}, 1000)
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .onComplete(()=>this.float()).start()
+        }
     }
 
     loadPoses(i){
@@ -81,7 +123,7 @@ class GatewayDaemon extends BaseObjClass {
             pose.position.x = x[i]
             pose.name = 'gateway-daemon'
             if(i==0) this.mesh.add( pose )
-            this.animFrames.push( pose )
+            this.animFrames[i] = pose
             this.loaded()
         },null,(err)=>{ console.log(err)})
     }
