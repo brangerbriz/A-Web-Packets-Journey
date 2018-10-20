@@ -316,6 +316,10 @@ class VRWorld {
         } else if(type == "webvr") {
             this.webVRSetup()
             this.createCoverScreen()
+            if(location.search.includes('lvlprog=true')){
+                // if we're in vr don't show cover screen
+                this.toggleCover('off')
+            }
         } else {
             this.createCoverScreen()
             this.desktopSetup()
