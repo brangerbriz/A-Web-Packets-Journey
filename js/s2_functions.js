@@ -138,21 +138,22 @@ class Cad5Elevator {
         callback(this.mesh)
     }
 
-    riseUp(){
+    riseUp(callback){
         new TWEEN.Tween(this.mesh.position).to({y:0.75},4000)
         .onComplete(()=>{
-            this.openDoors()
+            this.openDoors(callback)
         }).start()
     }
 
-    openDoors(){
+    openDoors(callback){
         let t = 500
         new TWEEN.Tween(this.rightDoor.position).to({x:0.6},t).start()
         new TWEEN.Tween(this.rightDoor.scale).to({x:0},t).start()
         new TWEEN.Tween(this.leftDoor.position).to({x:-0.6},t).start()
         new TWEEN.Tween(this.leftDoor.scale).to({x:0},t).start()
         setTimeout(()=>{
-            new TWEEN.Tween(this.mesh.position).to({z:4.1},t*2).start()
+            new TWEEN.Tween(this.mesh.position).to({z:4.1},t*2)
+            .onComplete(()=>callback()).start()
         },t*2)
     }
 }

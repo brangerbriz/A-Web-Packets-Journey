@@ -648,7 +648,7 @@ const narrative = {
                 ],
                 after:function(){
                     daemon.swapPose(6)
-                    elevator.riseUp()
+                    elevator.riseUp(()=>gotoScene(3))
                 }
             }
         ]
