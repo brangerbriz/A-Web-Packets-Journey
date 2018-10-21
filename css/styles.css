@@ -15,7 +15,14 @@
          url('fonts/tds.woff') format('woff');
     font-weight: normal;
     font-style: normal;
+}
 
+@font-face {
+    font-family: 'ss_light';
+    src: url('fonts/sourcesanspro-light-webfont.woff2') format('woff2'),
+         url('fonts/sourcesanspro-light-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @keyframes fade_out { 0% { opacity:1; } 100% { opacity:0; } }
@@ -27,13 +34,8 @@ body,html {
     cursor: url(../images/yellow-cir.png), auto !important;
 }
 
-/* * { overflow-x: hidden; } */
-
-/* section { box-sizing: border-box;  } */
-
-a:hover {
-    cursor: pointer;
-}
+a { color:#000; }
+a:hover { color:#fff; cursor: pointer; }
 
 img {
     user-drag: none;
@@ -53,11 +55,32 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    font-family: 'tds-titles', sans-serif;
+    text-transform: uppercase;
+    font-size: 38px;
+    letter-spacing: 11px;
+    font-weight: 100;
+    text-align: center;
+    margin: 110px 0px 45px 0px;
+}
+
 h3 {
+    font-family: 'tds-titles', sans-serif;
+    font-size: 36px; font-weight: 100; letter-spacing: 2px;
+    margin:0px;
+}
+
+h4 {
     text-align: center; font-weight: 100;
     font-size: 20px;
     text-transform: uppercase;
     letter-spacing: 2px;
+}
+
+p {
+    font-family: 'ss_light', sans-serif; font-size: 1.1em;
+    letter-spacing: 0.09em; font-weight: 300; line-height: 1.7em;
 }
 
 button {
@@ -66,6 +89,12 @@ button {
     text-transform: uppercase; color: #fff;
     font: 13px sans-serif; text-align: center;
     cursor: pointer;
+}
+
+input {
+    border-radius: 4px; border: 1px solid #000;
+    padding: 12px 40px; font: 13px sans-serif;
+    background-color: rgba(255,255,255,0.5);
 }
 
 
@@ -102,34 +131,52 @@ section#splash {
 }
 #project-info > .body > div {
     box-sizing: border-box;
-    width: 100%; max-width: 680px; margin: 0 auto;
+    width: 100%; max-width: 780px;
+    margin: 50px auto 150px auto;
     position: relative; z-index: 2; padding: 10px;
 }
 
+#sign-up { display: flex; justify-content: center; }
+#sign-up > * { margin:0px 3px; }
 
-#behind-the-scenes {
+#supporters { display: flex; justify-content: space-between; margin: 70px 0px; }
+#supporters a { text-align: center; }
+#supporters img { max-width: 40%; }
+
+
+#open-source {
     background: url(../images/bgtile-light.png) repeat center center fixed;
     background-color: #222; color: #fff;
     padding: 250px 10px; margin-top: -150px;
 }
-
-#behind-the-scenes > div {
-    width: 100%; max-width: 680px; margin: 0 auto;
-}
+#open-source > div { width: 100%; max-width: 780px; margin: 0 auto; }
+#blog-posts > div { margin: 80px 0px; }
+#open-source a { color:#fff; }
+#end-card { text-align: center; margin-top: 200px; }
 
 
 @media (max-width: 800px){
     h1 { font-size: 42px; letter-spacing: 8px; }
+    h2 { font-size: 30px; letter-spacing: 4px; }
+    h3 { font-size: 28px; }
 }
 
 @media (max-width: 500px){
+    #sign-up { flex-direction: column; }
+    #sign-up > * { margin: 3px; }
+    #supporters { flex-direction: column; }
+    #supporters > a:first-child { margin-bottom: 40px; }
+    #supporters img { max-width: 60%; }
     #splash-options { width: 100%; display: block; }
     #splash-options > * { margin: 3px auto; display: block; }
 }
 
 @media (max-width: 400px){
-    h1 { font-size: 24px; letter-spacing: 2px; }
-    h3 { font-size: 12px; }
+    h1 { font-size: 32px; letter-spacing: 2px; }
+    h2 { font-size: 24px; letter-spacing: 4px; }
+    h3 { font-size: 24px; }
+    h4 { font-size: 12px; }
+    p { font-size: 1em; }
 }
 
 
