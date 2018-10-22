@@ -115,8 +115,8 @@ section#splash {
 #title { width: 90%; margin: 0 auto; display: block; }
 #packet { margin: 0 auto; }
 #splash-options {
-    display: flex; justify-content: space-between;
-    width: 460px; margin: 0 auto;
+    display: flex; justify-content: space-around;
+    max-width: 460px; margin: 0 auto;
 }
 
 
@@ -167,8 +167,8 @@ section#splash {
     #supporters { flex-direction: column; }
     #supporters > a:first-child { margin-bottom: 40px; }
     #supporters img { max-width: 60%; }
-    #splash-options { width: 100%; display: block; }
-    #splash-options > * { margin: 3px auto; display: block; }
+    #splash-options { padding:12px }
+    #splash-options > button { padding:12px;  }
 }
 
 @media (max-width: 400px){
@@ -180,8 +180,6 @@ section#splash {
 }
 
 
-
-
 /*~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~*/
 /*~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~. PLAY PAGE */
 /*~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~*/
@@ -189,21 +187,77 @@ section#splash {
 section#play {
     width:100%; height:100vh; min-height:320px;
     display:flex; align-items:center; justify-content:center;
-    position:absolute; z-index:9999;
-    /* background:#fff; */
-    background-image: url(../images/bgtile.png);
+    position:absolute; z-index:9999; top:0px;
+    background: url(../images/bgtile.png) repeat center center fixed;
+    background-color: #77d878;
 }
 
 section#play > button { margin: 0px auto; display: block; }
 
-#loading { text-align: center; }
-#list { display: none; }
+#down-arrow {
+    position: absolute; z-index: 999999;
+    bottom: 10px;
+    left: calc(50% - 60px);
+    width: 120px;
+}
+
+#loading { text-align: center; margin-top:50px; }
+
+#begin-button {
+    margin: 70px auto; display: none;
+    max-width: 540px; flex-direction: column;
+    background: url(../images/bgtile-light.png) repeat center center fixed;
+    background-color: #222; color: #fff;
+    border-radius: 4px; padding: 10px;
+}
+
+#begin-button > * { margin:10px auto; text-align: center; }
+#begin-button > button {
+    width:160px;  background-color: #77d878; border-color: #77d878; color:#000;
+}
+#begin-button a { color:#fff; }
+
+
 #nfo {
     position: absolute; z-index: 9998;
+    top:0px; left:0px;
     width: 100%; height: 100%; background: #000;
-    color: #fff; display: flex;
+    color: #fff; display: none;
 }
 #nfo > div {
     padding: 10px; margin: 50vh auto; max-width: 450px;
 }
-@media (max-width: 767px){ #nfo > div { max-width:90%; } }
+
+@media (max-width: 767px){
+    #nfo > div { max-width:90%; }
+}
+
+@media (max-width: 540px){
+    section#play { height:90vh; }
+    #begin-button { margin: 40px 10px; }
+}
+
+@media (max-width:500px) {
+    #begin-button { margin-top: 25px; }
+    #down-arrow { bottom:-28px; }
+}
+
+@media (max-width:400px) {
+    #down-arrow { display: none; }
+}
+
+/*~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~*/
+/*~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~. LEARN PAGE */
+/*~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~._.~'~*/
+
+#learn {
+    min-height:100vh;
+    background: url(../images/bgtile-light.png) repeat center center fixed;
+    background-color: #222; color: #fff;
+}
+
+#learn > div {
+    max-width: 780px; margin: 0 auto; padding: 10px; color:#fff;
+}
+
+#learn a { color:#fff; }

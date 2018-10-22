@@ -193,8 +193,9 @@ function createSparks(sparks){
 }
 
 function createCircuitFloor(){
+    let p = (location.pathname.includes('play')) ? '../' : '' //for cutscene
     let floorGeo = new THREE.PlaneBufferGeometry(10,10,2)
-    let tx = new THREE.TextureLoader().load('images/cir_wb.png')
+    let tx = new THREE.TextureLoader().load(p+'images/cir_wb.png')
     let floorMat = new THREE.MeshPhongMaterial({
         side:2,shininess:500,specular:0xffffff,
         map:tx, alphaMap:tx, alphaTest: 0.9
@@ -257,18 +258,19 @@ function createRunway(){
 // -----------------------------------------------------------------------------
 
 function loadUser(callback){
-    let txBody = new THREE.TextureLoader().load('images/user_body.png')
-    let txHair = new THREE.TextureLoader().load('images/user_hair.jpg')
+    let p = (location.pathname.includes('play')) ? '../' : '' //for cutscene
+    let txBody = new THREE.TextureLoader().load(p+'images/user_body.png')
+    let txHair = new THREE.TextureLoader().load(p+'images/user_hair.jpg')
     let body = new THREE.MeshLambertMaterial({side:2, map:txBody})
     let hair = new THREE.MeshLambertMaterial({side:2, map:txHair})
 
-    THREE.DRACOLoader.setDecoderPath( 'libs/loaders/draco/' )
+    THREE.DRACOLoader.setDecoderPath( p+'libs/loaders/draco/' )
     let loader = new THREE.DRACOLoader()
-    loader.load( `models/drcs/user-body.drc`, (geometry)=>{
+    loader.load( p+`models/drcs/user-body.drc`, (geometry)=>{
         let object = new THREE.Mesh(geometry,body)
             object.name = 'the-user'
 
-        loader.load( `models/drcs/user-hair.drc`, (geohair)=>{
+        loader.load( p+`models/drcs/user-hair.drc`, (geohair)=>{
             object.add( new THREE.Mesh(geohair,hair) )
             if(callback) callback( object )
         },null,(err)=>{ console.log(err)})
@@ -277,7 +279,9 @@ function loadUser(callback){
 }
 
 function createUserRoom(bgClr){
-    THREE.DRACOLoader.setDecoderPath( 'libs/loaders/draco/' )
+    let p = (location.pathname.includes('play')) ? '../' : '' //for cutscene
+
+    THREE.DRACOLoader.setDecoderPath( p+'libs/loaders/draco/' )
     let loader = new THREE.DRACOLoader()
     let room = new THREE.Object3D()
     let geo = new THREE.PlaneBufferGeometry(60,50,2)
@@ -324,7 +328,7 @@ function createUserRoom(bgClr){
 
     // load scene objects ------------------
 
-    loader.load( `models/drcs/s1_fan.drc`, (geometry)=>{
+    loader.load( p+`models/drcs/s1_fan.drc`, (geometry)=>{
         const obj = new THREE.Mesh(geometry,
               new THREE.MeshBasicMaterial({color:'#888'}))
         obj.name = 'fan'
@@ -333,14 +337,14 @@ function createUserRoom(bgClr){
         obj.scale.x = obj.scale.y = obj.scale.z = 0.05
         room.add(obj)
     })
-    loader.load( `models/drcs/s1_door.drc`, (geometry)=>{
+    loader.load( p+`models/drcs/s1_door.drc`, (geometry)=>{
         const obj = new THREE.Mesh(geometry,mat1)
         obj.name = 'door'
         obj.position.set(9,-18,-29.5)
         obj.scale.x = obj.scale.y = obj.scale.z = 0.1
         room.add(obj)
     })
-    loader.load( `models/drcs/s1_window.drc`, (geometry)=>{
+    loader.load( p+`models/drcs/s1_window.drc`, (geometry)=>{
         const obj = new THREE.Mesh(geometry,mat2)
         obj.name = 'window'
         obj.rotation.y = Math.PI/2

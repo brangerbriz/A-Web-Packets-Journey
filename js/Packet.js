@@ -48,7 +48,8 @@ class Packet {
             transparent:true,
             opacity:0.9
         }
-        this.tx = new THREE.TextureLoader().load('images/packet.png',()=>{
+        let p = (location.pathname.includes('play')) ? '../' : '' //for cutscene
+        this.tx = new THREE.TextureLoader().load(p+'images/packet.png',()=>{
             this._init()
             if(callback) callback(this.mesh,this)
         })

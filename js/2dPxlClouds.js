@@ -192,7 +192,6 @@ class PxlFade {
         } else if(this.dir=="down"){
             let y = -2
             for (let r = rows; r >= 0; r--) {
-                console.log(r);
                 let siz = (r*5) + 10
                 let top = y * height
                 let amt = (r+1) * 100

@@ -30,6 +30,7 @@ function after(times,func){
 
 function gotoScene(num){
     let goto
+    let p = (location.pathname.includes('play')) ? '../' : '' //for cutscene
     if(location.search.includes(`platform=webvr`)){
         goto = `part${num}.html?lvlprog=true&platform=webvr`
     } else if(location.search.includes(`platform=desktop`)){
@@ -39,7 +40,27 @@ function gotoScene(num){
     } else {
         goto = `part${num}.html?lvlprog=true`
     }
-    location = goto
+
+    location = p+goto
+}
+
+function platformGuess(){
+    // this function is meant to mirror the platform guessing logic from
+    // VRWorld.js (this should be updated if that's ever updated)
+    if(location.search.includes('platform=webvr')){
+        return "webvr"
+    } else if(location.search.includes('platform=mobile')){
+        return "mobile"
+    } else if(location.search.includes('platform=desktop')){
+        return "desktop"
+    }  else {
+        // if webVR capability
+        if(navigator.getVRDisplays) return "webvr"
+        // if mobile (NOTE: this likely will also fire for tablets)
+        else if (typeof window.orientation !== 'undefined') return "mobile"
+        // otherwise asume a non-vr capable desktop
+        else return "desktop"
+    }
 }
 
 class Loader {
@@ -55,7 +76,7 @@ class Loader {
             if(location.search.includes('lvlprog=true')){
                 if(callback) callback()
                 this.cover.style.display = "none"
-            } else { // otherwise 
+            } else { // otherwise
                 this.clickStart.addEventListener('click',()=>{
                     if(callback) callback()
                     this.cover.style.display = "none"
