@@ -158,6 +158,49 @@ class Cad5Elevator {
     }
 }
 
+class UnderConstruction {
+    constructor(callback){
+        this.mesh = new THREE.Object3D()
+        this.mesh.position.z = 6
+        this.mesh.position.y = -2
+
+        let material = new THREE.MeshPhongMaterial({color:0xdddddd})
+        let postGeo = new THREE.CylinderBufferGeometry( 0.1, 0.1, 3, 32 )
+        let leftPost = new THREE.Mesh( postGeo, material )
+        leftPost.position.x = 0.7
+        this.mesh.add( leftPost )
+        let rightPost = new THREE.Mesh( postGeo, material )
+        rightPost.position.x = -0.7
+        this.mesh.add( rightPost )
+
+        let signGeo = new THREE.BoxBufferGeometry( 2, 0.5, 0.1 )
+        let signMat = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('images/barricade.png')
+        })
+        let topSign = new THREE.Mesh( signGeo, signMat )
+        topSign.position.z = -0.15
+        topSign.position.y = 1.1
+        this.mesh.add( topSign )
+        let midMat = new THREE.MeshLambertMaterial({
+            map: new THREE.TextureLoader().load('images/barricade-text.png')
+        })
+        let midSign = new THREE.Mesh( signGeo, midMat )
+        midSign.position.z = -0.15
+        midSign.position.y = 0.55
+        this.mesh.add( midSign )
+        let bottomSign = new THREE.Mesh( signGeo, signMat )
+        bottomSign.position.z = -0.15
+        bottomSign.position.y = 0
+        this.mesh.add( bottomSign )
+
+        callback(this.mesh)
+    }
+
+    riseUp(callback){
+        new TWEEN.Tween(this.mesh.position).to({y:0.5},4000).start()
+    }
+}
+
 class IslandTransition {
     constructor(config){
         this.state = 0

@@ -186,7 +186,7 @@
             const world = new VRWorld({
                 titleCard:'images/title_screen_s2.png',
                 background:'#34C8F2',
-                debug:true,
+                // debug:true,
                 // debugControls:true,
                 camera:{ min:0.1, max:1000 },
                 crosshair: {
@@ -314,7 +314,10 @@
                         gateway.add( mesh )
                     })
 
-                    elevator = new Cad5Elevator((mesh)=>{
+                    // elevator = new Cad5Elevator((mesh)=>{
+                    //     gateway.add( mesh )
+                    // })
+                    elevator = new UnderConstruction((mesh)=>{
                         gateway.add( mesh )
                     })
 
