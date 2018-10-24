@@ -70,10 +70,13 @@
                     <p>
                         ...as we used to say in the early days. A "proof of concept", is currently available on this site. This includes the first 2 (out of 10) parts that make up A Web Packet's Journey, which you can <a href="play">play right now</a>! This also includes the <a href="learn">supplementary materials</a> for both scenes. To stay up to date on the project's progress sign up for our email list below (no spam, just occasional project updates. we promise).
                     </p>
-                    <div id="sign-up">
-                        <input type="text" placeholder="you@email.net">
-                        <button id="submit-email">get updates</button>
-                    </div>
+
+                    <form id="subForm" class="js-cm-form" action="https://www.createsend.com/t/subscribeerror?description=" method="post" data-id="5B5E7037DA78A748374AD499497E309E38C070287AD94CAE94C82FE84EA458CCDCC84C442B8D9A5A935424E533BC21B1B91A0F20E0ACD915245D3B1B9DAB8BA4">
+                        <input id="fieldEmail" name="cm-olktthd-olktthd" placeholder="you@email.net" type="email" class="js-cm-email-input"
+                        required />
+                        <button class="js-cm-submit-button" type="submit">get updates</button>
+                    </form>
+
                     <h2 id="help">Help Us Finish</h2>
                     <p>
                         We've already done <a href="#open-source">a lot of work</a> to create the bones for this project as well as the first two parts, but we've got <a href="learn">8 more parts</a> left to make! If you're interested in helping us out there's a few ways you can do that! A project like this takes considerable time and money, if you have either please send us@brangerbriz.com an email. We plan on implementing more conventional financial support system soon. For those who prefer to donate their time by either contributing code, 3D models, designs, research or other creative help email is also currently the best way to sync up (until we get individual "todo" tasks up on our github issues page).
@@ -109,7 +112,7 @@
                     Unlike other centralized and corporately controlled platforms (think of smart phone app stores or commercial game consoles for example) the World Wide Web is inherently decentralized. As long as your computer has access to the Internet you can host a web page, and as long as other computers have web browsers on them, they can access your web page. Today, web pages can be much more than just linked documents, they can be multimedia, apps, games and everything else you've ever seen (or have yet to see) on a screen! The more time we spend on our screens the more important the Web's distributed nature becomes. As we move into the era of augmented and virtual realities it's important to remember the Web can do those things too! Let's keep our virtual worlds in the public commons and outside of corporately controlled spaces by creating our virtual future on the Web! We hope that by sharing our commented and non-obfuscated code, as well as our process via blog posts, we can help steer other creative coders in the right direction :)
                 </p>
 
-                <div id="blog-posts">
+                <!-- <div id="blog-posts">
                     <div>
                         <h3>multiple experiences...</h3>
                         <p>vr, mobile, desktop etc explainer for what's going on here</p>
@@ -118,7 +121,7 @@
                         <h3>multiple experiences...</h3>
                         <p>vr, mobile, desktop etc explainer for what's going on here</p>
                     </div>
-                </div>
+                </div> -->
 
                 <div id="end-card">
                     <p>made with love and optimism by</p>
@@ -129,6 +132,7 @@
             </div>
         </section>
 
+        <script type="text/javascript" src="https://js.createsend1.com/javascript/copypastesubscribeformlogic.js"></script>
         <!-- third party dependencies  -->
         <script src="libs/Tween.js"></script>
         <script src="libs/three.min.js"></script>
