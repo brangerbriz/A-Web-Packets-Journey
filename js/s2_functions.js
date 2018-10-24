@@ -198,6 +198,7 @@ class UnderConstruction {
 
     riseUp(callback){
         new TWEEN.Tween(this.mesh.position).to({y:0.5},4000).start()
+        setTimeout(()=>gotoScene(1), 10000)
     }
 }
 
