@@ -412,7 +412,6 @@ class ParticleWall {
     }
 
     initParticle(){
-        let self = this
         let ran = this._ranSpot()
         let s = this.size
         let geometry = new THREE.PlaneBufferGeometry(s,s,s)
@@ -505,7 +504,6 @@ class ParticleWave {
     }
 
     _initEmitterParticle(i){
-        let self = this
         let particle = this._initParticle()
         // position
         particle.position.y = -7.5
@@ -531,7 +529,6 @@ class ParticleWave {
             tick = tick * 2
             let x = this.userData.initX
             let z = this.userData.initZ
-            let h = self.height
             let a = Math.sin((z+tick)*0.3)
             let b = Math.sin((x+tick)*0.5)
             this.position.y = a*self.height + b*self.height
