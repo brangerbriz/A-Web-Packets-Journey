@@ -926,9 +926,6 @@ function createDataClouds(){
             let r = d[3]
             let c = new Cloud({radius:r,stretch:true})
             clouds.push( c )
-            let cx = Math.random()*r*2
-            let cy = Math.random()*r*2
-            let cz = Math.random()*r*2
             c.mesh.position.set(d[0],d[1],d[2])
             c.mesh.rotation.y = Math.random()
             c.mesh.rotation.x = Math.random()-0.75
