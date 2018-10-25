@@ -359,13 +359,13 @@
                         // engulfed by cloudes
                         //(for cloundTransition duraiton)
                         plane.update(tick)
-                    } else if(itran.state==3){
+                    } else if(itran.state===3){
                         /// fly over to island
                         plane.update(tick)
                         daemon.update(tick)
                         wave.update(tick)
                         itran.update()
-                    } else if(itran.state==4){
+                    } else if(itran.state===4){
                         // parked on the island
                         moozak.layers = -1
                         wave.update(tick)
