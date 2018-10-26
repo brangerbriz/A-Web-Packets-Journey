@@ -276,9 +276,18 @@ section#play > button { margin: 0px auto; display: block; }
 .l-goals { font-size: 2em; }
 .l-goals li {  margin:60px; line-height: 1.4em; }
 
-.l-row {
-    display:grid; grid-template-columns:1fr 1fr; grid-column-gap:20px;
+.l-row { display:grid; grid-template-columns:1fr 1fr; grid-column-gap:20px; }
+
+@media (max-width:1000px) {
+    .l-row { display:block; }
+    .l-goals li { margin: 0px 0px 20px 0px; font-size: 1.4em; }
+    .l-goals li { font-size: 0.75em; }
 }
+
+@media (max-width:767px) {
+    ul { font-size: 1em; }
+}
+
 .l-title { margin:100px auto; }
 .l-title h3 { font-size: 60px; text-align: center; }
 .l-title a {
