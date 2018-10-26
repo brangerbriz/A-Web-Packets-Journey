@@ -19,12 +19,12 @@ function loadIsland(callback){
         if(callback) callback( mesh )
     })
 
-    THREE.DRACOLoader.setDecoderPath( 'libs/loaders/draco/' )
+    THREE.DRACOLoader.setDecoderPath( '../libs/loaders/draco/' )
     let loader = new THREE.DRACOLoader()
 
-    loader.load( `models/drcs/island.drc`, (geometry)=>{
+    loader.load( `../models/drcs/island.drc`, (geometry)=>{
         let mat = new THREE.MeshLambertMaterial({
-            side:2, map: new THREE.TextureLoader().load('images/island.jpg')
+            side:2, map: new THREE.TextureLoader().load('../images/island.jpg')
         })
         let island = new THREE.Mesh(geometry,mat)
         island.name = 'the-island'
@@ -35,7 +35,7 @@ function loadIsland(callback){
     })
 
 
-    loader.load( `models/drcs/island_trees.drc`, (geometry)=>{
+    loader.load( `../models/drcs/island_trees.drc`, (geometry)=>{
         let mat = new THREE.MeshBasicMaterial({
             color:new THREE.Color(1, 0.870588, 0.490196),
             opacity:0.5, transparent:true
@@ -46,9 +46,9 @@ function loadIsland(callback){
         loaded()
     })
 
-    loader.load( `models/drcs/router.drc`, (geometry)=>{
+    loader.load( `../models/drcs/router.drc`, (geometry)=>{
         let mat = new THREE.MeshLambertMaterial({
-            side:2, map: new THREE.TextureLoader().load('images/gateway.jpg')
+            side:2, map: new THREE.TextureLoader().load('../images/gateway.jpg')
         })
         let router = new THREE.Mesh(geometry,mat)
         router.name = 'the-island'
@@ -59,7 +59,7 @@ function loadIsland(callback){
     })
 
 
-    loader.load( `models/drcs/router_lights.drc`, (geometry)=>{
+    loader.load( `../models/drcs/router_lights.drc`, (geometry)=>{
         let mat = new THREE.MeshBasicMaterial({
             color:new THREE.Color(0.752941, 0.709804, 0.505882),
             opacity:0.5, transparent:true
@@ -175,14 +175,14 @@ class UnderConstruction {
 
         let signGeo = new THREE.BoxBufferGeometry( 2, 0.5, 0.1 )
         let signMat = new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('images/barricade.png')
+            map: new THREE.TextureLoader().load('../images/barricade.png')
         })
         let topSign = new THREE.Mesh( signGeo, signMat )
         topSign.position.z = -0.15
         topSign.position.y = 1.1
         this.mesh.add( topSign )
         let midMat = new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('images/barricade-text.png')
+            map: new THREE.TextureLoader().load('../images/barricade-text.png')
         })
         let midSign = new THREE.Mesh( signGeo, midMat )
         midSign.position.z = -0.15

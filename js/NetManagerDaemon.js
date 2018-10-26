@@ -58,14 +58,14 @@ class NetManagerDaemon extends BaseObjClass {
         this.pushMesh = new THREE.Object3D()
 
         this.mat = new THREE.MeshLambertMaterial({
-            map: new THREE.TextureLoader().load('images/nmd_diff.jpg')
+            map: new THREE.TextureLoader().load('../images/nmd_diff.jpg')
         })
         this.pink = new THREE.MeshLambertMaterial({ side:2, color:'#ff7599'})
         this.white = new THREE.MeshLambertMaterial({
             side:2, color:'#fff', opacity:'0.7', transparent:true
         })
 
-        this.loader.load( 'models/drcs/nmd_body.drc', (geometry)=>{
+        this.loader.load( '../models/drcs/nmd_body.drc', (geometry)=>{
             let object = new THREE.Mesh( geometry, this.mat )
                 object.name = 'network-manager-daemon'
 
@@ -84,13 +84,13 @@ class NetManagerDaemon extends BaseObjClass {
     }
 
     loadPushFrame(){
-        this.loader.load( `models/drcs/nmd_push.drc`, (geopush)=>{
+        this.loader.load( `../models/drcs/nmd_push.drc`, (geopush)=>{
             this.pushMesh.add( new THREE.Mesh( geopush, this.mat ) )
 
-            this.loader.load( `models/drcs/nmd_push_s.drc`, (geops)=>{
+            this.loader.load( `../models/drcs/nmd_push_s.drc`, (geops)=>{
                 this.pushMesh.add( new THREE.Mesh( geops, this.pink ) )
 
-                this.loader.load( `models/drcs/nmd_push_w.drc`, (geopw)=>{
+                this.loader.load( `../models/drcs/nmd_push_w.drc`, (geopw)=>{
                     this.pushMesh.add( new THREE.Mesh( geopw, this.mat ) )
 
                     this.pushMesh.children.forEach(m=>{ m.position.z = -3 })
@@ -105,8 +105,8 @@ class NetManagerDaemon extends BaseObjClass {
 
     loadFlapping(i){
         let idx = i + 1
-        let wing_spine_path = `models/drcs/nmd_s${idx}.drc`
-        let wing_trans_path = `models/drcs/nmd_w${idx}.drc`
+        let wing_spine_path = `../models/drcs/nmd_s${idx}.drc`
+        let wing_trans_path = `../models/drcs/nmd_w${idx}.drc`
         let wing = new THREE.Object3D()
 
         // conditionally apply y offset

@@ -46,7 +46,7 @@ class BaseObjClass {
         this.animFrames = [] // meshes that function as different frames in
                              // animation update loop
 
-        THREE.DRACOLoader.setDecoderPath( 'libs/loaders/draco/' )
+        THREE.DRACOLoader.setDecoderPath( '../libs/loaders/draco/' )
         this.loader = new THREE.DRACOLoader()
     }
 

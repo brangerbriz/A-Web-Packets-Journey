@@ -59,7 +59,7 @@ class WiFiPlane extends BaseObjClass {
         let toon = new ToonMaterial({r:1,g:0.2,b:0.41},this.light)
         let bmat = this.createCanvasMaterial()
 
-        this.loader.load( `models/drcs/plane.drc`, (geometry)=>{
+        this.loader.load( `../models/drcs/plane.drc`, (geometry)=>{
             this.mesh = new THREE.Mesh(geometry,toon)
             // IP banner
             for (let i = 0; i < this.flength; i++) this.loadBanner(i,bmat)
@@ -129,7 +129,7 @@ class WiFiPlane extends BaseObjClass {
             material.map.needsUpdate = true
             this.loaded()
         }
-        img.src = `images/plane_banner.jpg`
+        img.src = `../images/plane_banner.jpg`
         return canvas
     }
 
@@ -142,7 +142,7 @@ class WiFiPlane extends BaseObjClass {
 
     loadBanner(i,material){
         let idx = i + 1
-        this.loader.load( `models/drcs/banner-0${idx}.drc`, (geometry)=>{
+        this.loader.load( `../models/drcs/banner-0${idx}.drc`, (geometry)=>{
             let object = new THREE.Mesh(geometry,material)
             object.name = "banner"
             this.animFrames.push( object )

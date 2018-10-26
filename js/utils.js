@@ -30,7 +30,6 @@ function after(times,func){
 
 function gotoScene(num){
     let goto
-    let p = (location.pathname.includes('play')) ? '../' : '' //for cutscene
     if(location.search.includes(`platform=webvr`)){
         goto = `part${num}.html?lvlprog=true&platform=webvr`
     } else if(location.search.includes(`platform=desktop`)){
@@ -41,7 +40,7 @@ function gotoScene(num){
         goto = `part${num}.html?lvlprog=true`
     }
 
-    location = p+goto
+    location = goto
 }
 
 function platformGuess(){

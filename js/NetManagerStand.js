@@ -48,10 +48,10 @@ class NetManagerStand extends BaseObjClass {
         this.loadTotalOf(7)  // 1 stand + 6 wind socks to load
 
         this.mat = new THREE.MeshLambertMaterial({
-            side:2, map: new THREE.TextureLoader().load('images/nmd_stand.jpg')
+            side:2, map: new THREE.TextureLoader().load('../images/nmd_stand.jpg')
         })
 
-        this.loader.load( `models/drcs/nmd_stand.drc`, (geometry)=>{
+        this.loader.load( `../models/drcs/nmd_stand.drc`, (geometry)=>{
             this.mesh = new THREE.Mesh(geometry,this.mat)
             for (let i = 0; i < 6; i++) this.loadWindSock(i)
             this.loaded()
@@ -60,7 +60,7 @@ class NetManagerStand extends BaseObjClass {
 
     loadWindSock(i){
         let idx = i + 1
-        this.loader.load( `models/drcs/wind_sock-${idx}.drc`, (geometry)=>{
+        this.loader.load( `../models/drcs/wind_sock-${idx}.drc`, (geometry)=>{
             let object = new THREE.Mesh(geometry,this.mat)
             this.animFrames.push( object )
             if(idx==1){

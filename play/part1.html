@@ -11,15 +11,15 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
-        <link rel="apple-touch-icon" href="images/icon.png">
-        <!-- <link rel="icon" type="image/png" href="images/favicon.png"> -->
+        <link rel="apple-touch-icon" href="../images/icon.png">
+        <!-- <link rel="icon" type="image/png" href="../images/favicon.png"> -->
 
         <meta name="description" content="A Web Packet's Journey is an online ( desktop, mobile, cardboard and WebVR ) educational interactive-narrative/game based on the route a web request packet takes over the Internet.">
 
         <!-- for Google+ -->
         <meta itemprop="name" content="A Web Packet's Journey">
         <meta itemprop="description" content="A Web Packet's Journey is an online ( desktop, mobile, cardboard and WebVR ) educational interactive-narrative/game based on the route a web request packet takes over the Internet.">
-        <meta itemprop="image" content="images/icon.png">
+        <meta itemprop="image" content="../images/icon.png">
 
         <!-- for Twitter -->
         <meta name="twitter:card" content="summary_large_image">
@@ -27,55 +27,55 @@
         <meta name="twitter:title" content="A Web Packet's Journey">
         <meta name="twitter:description" content="A Web Packet's Journey is an online ( desktop, mobile, cardboard and WebVR ) educational interactive-narrative/game based on the route a web request packet takes over the Internet.">
         <meta name="twitter:creator" content="@branger_briz">
-        <meta name="twitter:image:src" content="images/icon.png">
+        <meta name="twitter:image:src" content="../images/icon.png">
 
         <!-- for Facebook -->
         <meta property="og:title" content="A Web Packet's Journey">
         <meta property="og:type" content="article">
         <meta property="og:url" content="http://awebpacketsjourney.net">
-        <meta property="og:image" content="images/icon.png">
+        <meta property="og:image" content="../images/icon.png">
         <meta property="og:description" content="A Web Packet's Journey is an online ( desktop, mobile, cardboard and WebVR ) educational interactive-narrative/game based on the route a web request packet takes over the Internet.">
         <meta property="og:site_name" content="A Web Packet's Journey">
 
-        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="../css/styles.css">
     </head>
     <body>
         <!-- third party dependencies  -->
-        <script src="libs/Tween.js"></script>
-        <script src="libs/stats.min.js"></script>
-        <script src="libs/three.min.js"></script>
-        <script src="libs/vr/WebVR-edited.js"></script>
-        <script src="libs/vr/webvr-polyfill.js"></script>
-        <script src="libs/vr/VREffect.js"></script>
-        <script src="libs/vr/VRControls.js"></script>
-        <script src="libs/controls/OrbitControls.js"></script>
-        <script src="libs/controls/PointerLockControls.js"></script>
-        <script src="libs/loaders/draco/DRACOLoader.js"></script>
-        <script src="libs/shaders/ToonMaterial.js"></script>
+        <script src="../libs/Tween.js"></script>
+        <script src="../libs/stats.min.js"></script>
+        <script src="../libs/three.min.js"></script>
+        <script src="../libs/vr/WebVR-edited.js"></script>
+        <script src="../libs/vr/webvr-polyfill.js"></script>
+        <script src="../libs/vr/VREffect.js"></script>
+        <script src="../libs/vr/VRControls.js"></script>
+        <script src="../libs/controls/OrbitControls.js"></script>
+        <script src="../libs/controls/PointerLockControls.js"></script>
+        <script src="../libs/loaders/draco/DRACOLoader.js"></script>
+        <script src="../libs/shaders/ToonMaterial.js"></script>
 
         <!-- globally used classes / functions  -->
-        <script src="js/VRWorld.js"></script>
-        <script src="js/DialogueVR.js"></script>
-        <script src="js/TrackCart.js"></script>
-        <script src="js/BaseObjClass.js"></script>
-        <script src="js/SceneLights.js"></script>
-        <script src="js/utils.js"></script>
+        <script src="../js/VRWorld.js"></script>
+        <script src="../js/DialogueVR.js"></script>
+        <script src="../js/TrackCart.js"></script>
+        <script src="../js/BaseObjClass.js"></script>
+        <script src="../js/SceneLights.js"></script>
+        <script src="../js/utils.js"></script>
         <!-- scene specific classes / functions  -->
-        <script src="js/Packet.js"></script>
-        <script src="js/WiFiPlane.js"></script>
-        <script src="js/NetManagerStand.js"></script>
-        <script src="js/NetManagerDaemon.js"></script>
-        <script src="js/s1_functions.js"></script>
-        <script src="js/s1_narrative.js"></script>
+        <script src="../js/Packet.js"></script>
+        <script src="../js/WiFiPlane.js"></script>
+        <script src="../js/NetManagerStand.js"></script>
+        <script src="../js/NetManagerDaemon.js"></script>
+        <script src="../js/s1_functions.js"></script>
+        <script src="../js/s1_narrative.js"></script>
         <!-- web audio music -->
-        <script src="libs/StartAudioContext.js"></script>
-        <script src="js/music/AudioUtils.js"></script>
-        <script src="js/music/Note.js"></script>
-        <script src="js/music/Chord.js"></script>
-        <script src="js/music/Melody.js"></script>
-        <script src="js/music/Sequencer.js"></script>
-        <script src="js/music/Moozak.js"></script>
-        <script src="js/music/Moozak_scene1.js"></script>
+        <script src="../libs/StartAudioContext.js"></script>
+        <script src="../js/music/AudioUtils.js"></script>
+        <script src="../js/music/Note.js"></script>
+        <script src="../js/music/Chord.js"></script>
+        <script src="../js/music/Melody.js"></script>
+        <script src="../js/music/Sequencer.js"></script>
+        <script src="../js/music/Moozak.js"></script>
+        <script src="../js/music/Moozak_scene1.js"></script>
 
         <script>
 
@@ -101,7 +101,7 @@
             let lights, looping = true
 
             const world = new VRWorld({
-                titleCard:'images/title_screen_s1.png',
+                titleCard:'../images/title_screen_s1.png',
                 background:bgcolor,
                 // debug:true,
                 // debugControls:true,

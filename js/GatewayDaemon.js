@@ -53,13 +53,13 @@ class GatewayDaemon extends BaseObjClass {
         })
 
         this.mat = new THREE.MeshLambertMaterial({
-            side:2, map:new THREE.TextureLoader().load('images/gateway_daemon.jpg')
+            side:2, map:new THREE.TextureLoader().load('../images/gateway_daemon.jpg')
         })
 
         this.mesh.name = 'gateway-daemon'
 
         this.pushMesh = new THREE.Object3D()
-        this.loader.load( `models/drcs/gdaemon_push.drc`, (geopush)=>{
+        this.loader.load( `../models/drcs/gdaemon_push.drc`, (geopush)=>{
             this.pushMesh = new THREE.Mesh(geopush,this.mat)
             this.loaded()
         },null,(err)=>{ console.log(err)})
@@ -116,7 +116,7 @@ class GatewayDaemon extends BaseObjClass {
 
     loadPoses(i){
         let idx = i + 1
-        let path = `models/drcs/gdaemon_0${idx}.drc`
+        let path = `../models/drcs/gdaemon_0${idx}.drc`
         let x = [0,-9.72,-19.52,-29.16,-35.279,-46.599,-55.219]
         this.loader.load(path,(geo)=>{
             let pose = new THREE.Mesh(geo,this.mat)
