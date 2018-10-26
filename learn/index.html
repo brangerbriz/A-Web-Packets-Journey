@@ -59,9 +59,12 @@
                         </p>
                     </div>
                     <div>
+                        <p>
+                            In our game, this journey is divided into 10 parts. Below are links to references and supplementary learning materials for each section:
+                        </p>
                         <ul>
-                            <li><a href="#part1">Part I: the reQuest</a></li>
-                            <li><a href="#part2">Part II: the Daemon at the Gateway</a></li>
+                            <li><a href="part1.html">Part I: the reQuest</a></li>
+                            <li><a href="part2.html">Part II: the Daemon at the Gateway</a></li>
                             <li><a>Part III: the Last Mile</a></li>
                             <li><a>Part IV: the Fiber Express</a></li>
                             <li><a>Part V: 未来 (Mirai)</a></li>
@@ -76,179 +79,20 @@
 
                 <h2>Learning Objectives</h2>
                 <p>
-                    A Web Packet's Journey is an interactive narrative version of the fraction of a second odyssey described above. What follows is a summary of each part of this journey as it is represented in the <a href="../play">game</a>. The goal of this page is to explain in a bit more depth all the aspects of the journey metaphorically represented in the game as well as to provide references for further research.
+                    A Web Packet's Journey is an interactive narrative version of the fraction of a second odyssey described above. What follows is a summary of each part of this journey as it is represented in the <a href="../play">game</a>. The goal of the pages linked above is to explain in a bit more depth all the aspects of the journey metaphorically represented in the game as well as to provide references for further research.
                 </p>
                 <ul class="l-goals">
                     <li>Understand at a high level what the Internet is technically, by chronologically stepping through the various steps a web request takes as it traverses it. </li>
                     <li>Learn about related Internet health issues and how you can take an active role in caring for the Internet and the Web.</li>
                     <li>Gain a cultural appreciation for the web through historical anecdotes related to each stage of a web request's journey</li>
                 </ul>
-
                 <br>
                 <hr>
                 <br>
-
-                <div id="part1" class="l-title">
-                    <h4>Part I</h4>
-                    <h3>the reQuest</h3>
-                    <a href="../part1.html" target="_blank">play part I</a>
-                </div>
-                <div class="l-row">
-                    <div>
-                        <h3>the Story</h3>
-                        <p>
-                            Our adventure begins inside the smart phone of "the User", a young girl sitting in a cafe, using their WiFi to check her social media feed. You, our protagonist, are a new Internet packet created the moment the young girl taps on her device. She appears frozen on the other side of the screen, because for you, inside the device, time moves much slower (the entire journey only takes a fraction of a second in "human" time). You look around and interact with another fellow packet. He explains that you are a TCP/IP packet carrying a DNS request. The user has requested information from "socialmedia.com" and it's your job to find that info on the Internet and bring it back home to this device. You also meet the Network Manager, a daemon responsible for making sure the device is connected to the Internet so all the apps that require Internet access can send their data to-and-fro.
-                        </p>
-                    </div>
-                    <div>
-                        <h3>the Tech</h3>
-                        <p>
-                            A <a href="https://en.wikipedia.org/wiki/Network_packet" target="_blank">network packet</a> is simply a file with text data (maybe an HTML page, maybe an email, maybe parts of a video you're watching) organized in a particular way. Like a letter traveling over the post, the first few lines of a network packet specify the to and from (<a href="https://en.wikipedia.org/wiki/Internet_Protocol" target="_blank">IP</a>) addresses of the recipient and destination computers, followed by a few lines used for error checking and reliability (<a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol" target="_blank">TCP</a> or <a href="https://en.wikipedia.org/wiki/User_Datagram_Protocol" target="_blank">UDP</a>). After that, the data gets more specific and depends on the app that created the packet; if it was an email app then we've got email data (<a href="https://en.wikipedia.org/wiki/Post_Office_Protocol" target="_blank">POP</a>/<a href="https://en.wikipedia.org/wiki/Internet_Message_Access_Protocol" target="_blank">IMAP</a>) if it was a browser then we've got web data (<a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol" target="_blank">HTTP</a>), etc. These different sections of the packet are usually referred to as "layers".
-                        </p>
-                        <p>
-                            You are a TCP/IP packet (outer layers) carrying a <a href="https://en.wikipedia.org/wiki/Domain_Name_System" target="_blank">DNS</a> request (the inner application layer), which is a packet responsible for taking a domain name like "socialmedia.com" and finding a DNS server that can translate that into our "to" IP address of the destination computer where "socialmedia.com" is hosted. This is the first stage of a web request. Obviously these packets aren't tiny cubes with smiley faces, their text files, this is what a <a href="http://www.cs.miami.edu/home/burt/learning/Csc524.092/notes/ip_example.html" target="_blank">DNS request actually looks like</a>.
-                        </p>
-                        <p>
-                            A <a href="https://en.wikipedia.org/wiki/Daemon_(computing)" target="_blank">daemon</a> is simply a program that runs in the background. Most of the programs you interact with have GUIs (graphical user interfaces) that you can click, swipe and interact with. But your device is always running programs int he background to manage all the other processes that keep things ticking (like our Network Manager).
-                        </p>
-                    </div>
-                </div>
-                <h2>taking care of the net</h2>
-                <div class="l-row">
-                    <div>
-                        <p>
-                            In Part I, we don't specify whether the DNS request you are carrying (for socialmedia.com) originated from a web browser or another application (maybe socialmedia.com's mobile app). This is because it could have come from either, both use the Internet to send your data back and fourth between their servers and your device. You can think of a social media app on your phone as a browser that can only visit a single website, theirs. That would seem ridiculous on our laptops, but it's become the norm on mobile devices. The same is likely to happen to future devices like VR and AR headsets if we don't take note of this. These apps typically also need to be approved by the companies that control the app stores.
-                        </p>
-                        <p>
-                            Today you have a choice, you can choose to download specific apps for specific sites which have been approved by a third party, or you can download a web browser and with it you can use any/every app hosted openly on the Web (no third party approval required). But if as netizens we don't appreciate the choice we have today and instead get lost wondering into the walled gardens of the app stores, we could loose that choice for tomorrow. This raises the issue of "<a href="https://internethealthreport.org/2018/category/decentralization/" target="_blank">centralization"</a>. The Internet (the physical network of cables and computers) and the Web (the collection of websites made by anyone/everyone) are inherently decentralized.
-                        </p>
-                    </div>
-                    <div>
-                        <p>
-                            The Web, especially, is owned and controlled by everyone, this is one of it's most valuable and distinguishing characteristics. But app stores and websites turned mobile apps have shown us that the Web can in fact become centralized if we choose to go in that direction. App stores aren't the only centralizing force; lots of different <a href="https://en.wikipedia.org/wiki/Browser_wars" target="_blank">web browsers compete</a> for market share, which is great for users because competition breeds innovation. That said, these days one browser, Google Chrome, is starting to <a href="https://internethealthreport.org/2018/google-dominates-browser-market/" target="_blank">dominate</a>. If we leave the walled gardens of the app stores only to use a single web browser, we would have ended up centralizing the web another way.
-
-                        </p>
-                        <p>
-                            How can we avoid centralization? For starters, use the web! This encourages app makers to place more effort in their web app (accessible on any device with a browser) over their native app (locked down to a single platform or system). Secondly, use more than one browser and try to support open source browsers like <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank">Firefox</a> who want to keep the web decentralized rather than proprietary browsers motivated by other goals (often attempting to centralize and control). Support new, innovative and experimental browsers by downloading them and giving the creators feedback. Browsers like <a href="https://www.supermedium.com/" target="_blank">Supermedium</a> which is experimenting with Virtual Reality, or the <a href="https://beakerbrowser.com/" target="_blank">Beaker Browser</a> which is trying to make the web even more decentralized than it already is by using peer-to-peer technology! Lastly, diversify your activity online. Are you an Internet explorer, or do you stick to the same handful of sites? We'll discuss this issue some more in the last part of this series.
-
-                        </p>
-                    </div>
-                </div>
-                <h2>a "bit" of history</h2>
-                <div class="l-row">
-                    <p>
-                        The Internet has no single inventor, lots of different people contributed ideas, inventions and inspiration over many years before we got to where we are today. Even the core notion of an Internet "packet" had many different creators. If you look up the origins of TCP/IP packets you'll quickly learn of it's inventors, two of the Internet's founding fathers: Vint Cerf and Bob Kahn. But their work on network packets was built on the work of another computer scientist named Leonard Kleinrock at MIT (later UCLA). The three of whom were working together with others on the ARPANET (the proto-internet) including Larry Roberts who, at a conference in the late 60's, was presenting their collaborative work on the ARPANET only to realize that another group of researchers where doing almost the same exact thing in the UK on a network called the NPL. In fact it was from the NPLs research that the American researchers borrowed the term "packet". And because innovation always spawns from a tangled mess of inspirations, the NPL researchers, namely Donald Davies, based much of their work on another American researcher working at RAND named Paul Baran (who the ARPANET folks initially didn't know about).
-                    </p>
-                    <p>
-                        A wise innovator once said, "I invented nothing new. I simply assembled the discoveries of other men behind whom were centuries of work... progress happens when all the factors that make for it are ready and then it is inevitable." The invention of the Internet is a great example of this, if not in the US with the ARPANET or the UK with the NPL the Internet would have sprung up somewhere else (don't even get me started on the CYCLADES network in France from more or less the same time). Thankfully, today we have the Interent which can help avoid the doubling up of research and facilitate global collaboration (rather than relying on serendipitous conference rendezvous). For more info on the invention of the Interent see the references below:
-                    </p>
-                </div>
-                <ul>
-                    <li>Leiner, Barry M. et al. <a href="https://www.internetsociety.org/internet/history-internet/brief-history-internet/" target="_blank">Brief History of the Internet</a>. The Internet Society. 1997.</li>
-                    <li>Hafner, Katie. Where Wizards Stay Up Late: The Origins Of The Internet. Simon & Schuster. 1998.</li>
-                    <li>Ryan, Johnny. A History of the Internet and the Digital Future. Reaktion Books. 2010.</li>
-                    <li>King, Steven., P.J. Chvany. <a href="https://archive.org/details/ComputerNetworks_TheHeraldsOfResourceSharing" target="_blank">Computer Networks - The Heralds Of Resource Sharing.</a> Arpanet. 1972.</li>
-                    <li>Baran, Paul. <a href="https://ethw.org/Oral-History:Paul_Baran" target="_blank">An Interview Conducted by David Hochfelder</a>, IEEE History Center. 1999.</li>
-                    <li>Licklider, J.C.R., Robert W. Taylor. <a href="http://memex.org/licklider.pdf" target="_blank">The Computer as a Communication Device</a>. Science and Technology. 1968.</li>
-                    <li>Briz, Nick. <a href="https://www.youtube.com/watch?v=wr6ootvAsl8" target="_blank">The Internet: invented for nuclear war?</a>. 2016. </li>
-                </ul>
-
-
-                <br>
-                <hr>
-                <br>
-
-                <div id="part2" class="l-title">
-                    <h4>Part II</h4>
-                    <h3>the Daemon at the Gateway</h3>
-                    <a href="../part2.html" target="_blank">play part II</a>
-                </div>
-                <div class="l-row">
-                    <div>
-                        <h3>the Story</h3>
-                        <p>
-                            At end of the last scene you board a plane with a banner waving behind it. On that banner there is a number, your device's IP address. You fly off into the air to join other packets flying through the electromagnetic spectrum. While in the air you begin to speak with other packets. Though you can see every packet and their IP addresses waving behind them, you can't always see what their carrying inside. Some of these packet's fly through the air unencyrpted, and in those cases they share their contents with you, be it an embarrassing forum post left by their user or a password being used to log into a server. In other cases the packet's are carrying encrypted payloads, you can see them flying around, but you can't read what their carrying. Eventually you reach the router, a lighthouse on an island floating in the sky. There you meet another daemon, this one in charge of establishing the network all the users in the cafe are connected to and assigning each their local IP addresses. Like an air traffic controller, he guides packets in and out of the local network, it is at this point that our local network connects to the rest of the Internet.
-
-                        </p>
-                    </div>
-                    <div>
-                        <h3>the Tech</h3>
-                        <p>
-                            Every device on a network needs an IP address so that routers know where a packet needs to go and where it came from. The router of your local WiFi network assigns you an IP address when you connect to it. But when the packet leaves the local network it adopts the router's IP address assigned to it by the ISP or Internet Service Provider (the next stage in our journey).
-                        </p>
-                        <p>
-                            We are surrounded by electromagnetic radiation resonating at different frequencies, this is known as the <a href="https://en.wikipedia.org/wiki/Electromagnetic_spectrum" target="_blank">electromagnetic spectrum</a>. For most of human history we didn't know it was there, except of course for the part we could see (the visible light spectrum), but over time we discovered the rest of it and created technology that would allow us to broadcast messages over it, like radio and television. In the United States the <a href="https://en.wikipedia.org/wiki/Federal_Communications_Commission" target="_blank">FCC</a> regulates who can use which part of the electromagnetic spectrum and <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/United_States_Frequency_Allocations_Chart_2016_-_The_Radio_Spectrum.pdf/page1-6300px-United_States_Frequency_Allocations_Chart_2016_-_The_Radio_Spectrum.pdf.jpg" target="_blank">what they can use it for</a>. They allow anyone to use the 2.4GHz or 5GHz part of the spectrum for WiFi.
-                        </p>
-                        <p>
-                            Your computer typically ignores any packets which aren't meant for you (ie. which aren't addressed to your IP). But it's trivially easy to use your WiFi card to <a href="https://en.wikipedia.org/wiki/Monitor_mode" target="_blank">listen to all the packets</a> on the network (it's all just floating through the air). This is one reason why encryption is important. While the outer layers of the packets must remain unencrypted for the Internet to work (everyone needs to be able to see the IP addresses otherwise they won't be routed properly) the application layer payloads inside can, and often should, be encrypted. 
-                        </p>
-                    </div>
-                </div>
-                <h2>taking care of the net</h2>
-                <div class="l-row">
-                    <div>
-                        <p>
-                            They say if you're not doing anything wrong you've got nothing to hide. Of course that's ridiculous, there's plenty of things worth keeping secret for example personal finances or health. There are times you might want to keep your location private from your friends, or your political views private from certain family members or your sexual orientation from your government. Or maybe you've got some kinky interests you don't want anyone except a significant other to know about. Or maybe you're writing a book and you don't want anyone anywhere to see it until the first draft is finished... and in none of those cases is what your hiding "wrong." When we're doing something online that you don't' want the entire world to know about, you can use "<a href="https://en.wikipedia.org/wiki/Encryption" target="_blank">encryption</a>."
-                        <p>
-                            To encrypt data means to scramble the contents of that file using a key (aka passphrase) such that it can't be unscrambled (decrypted) without using the same (or otherwise cryptographically related) key. Every time you use a passphrase, you are encrypting or decrypting something. Your browser sometimes handles the passphrase part for you, every time you see the green lock or <a href="https://en.wikipedia.org/wiki/HTTPS" target="_blank">HTTPS</a> (the "S" is for "secure") in your browser's address bar that means you're using encryption to communicate with the computer running that website's server. Your packets are scrambled before they leave your device and remain scrambled throughout their journey until they arrive at the computer running that website's server, this is what's known as "<a href="https://en.wikipedia.org/wiki/End-to-end_encryption" target="_blank">end to end encryption</a>".
-
-                        </p>
-                    </div>
-                    <div>
-                        <p>
-                            Unfortunately, as a user of a web app or site, you don't really have a say in whether or not that website uses HTTPS, only the web developer can implement that. Often they don't, simply because it's not as much a priority as graphic design or user interaction. Fortunately, as we continue to live more of our lives online and realize the importance of encryption, <a href="https://internethealthreport.org/2018/encrypted-websites-have-become-the-norm/" target="_blank">HTTPS has become the norm</a>. Web developers have started to prioritize it to meet our demand. Unfortunately, for those in power the proliferation of encryption is sometimes seen as an obstacle, and they often <a href="https://internethealthreport.org/2018/sweeping-attacks-on-encryption-worldwide/" target="_blank">attempt to weaken encryption</a> by passing laws that enforce "backdoors" and other intentional weak encryption standards in the name of "security"... but it's important to ask "security for who?"
-
-                        </p>
-                        <p>
-                            All that said, using an HTTP site isn't the worse thing in the world, while it does mean others could in theory read your data (especially those on the same local network, like the other folks in the same cafe as our user) a good rule of thumb is treat any HTTP activity like a public space; don't do anything you wouldn't be ok with the rest of the folks on that cafe WiFi network knowing about. Not EVERYTHING has to be encrypted, there are things you intentionally want to share. The most important part is to be aware and decide for yourself when and where it's important for you, this is a process known as "<a href="https://ssd.eff.org/en/glossary/threat-model" target="_blank">threat modeling</a>" (a somewhat intense phrase for an otherwise routine thought experiment).
-                        </p>
-                    </div>
-                </div>
-                <h2>a "bit" of history</h2>
-                <div class="l-row">
-                    <div>
-                        <p>
-                            Encryption is not an Internet age invention. We've had secrets longer than we've had written language and encryption is nearly as old. Some of the earliest forms of encryption date back to ancient Egypt, Greece and Rome. Of course in those days it was done by hand, for example in ancient Rome they would take a message and replace each letter with another a certain number of letters separated from it in the alphabet. The number to shift each letter by was the "key". So if the key was 3, the phrase "abcdefg" becomes "defhijk", or "hello" becomes "khoor", this was known as The Caesar Shift Cipher.
-                        </p>
-                        <p>
-                            Over the years various forms of encryption have been used for everything from <span class="secret">love</span> to war. In Victorian England it wasn't easy for young lovers <span class="secret">to</span> express their affection especially when it was forbidden by parents. When writing letters through the post was too risky, they would instead <span class="secret">leave</span> encrypted messages for each other in the personal columns of the newspaper. These were known as "agony columns." During World War II, much of the communication was done over radio, which as discussed earlier can be easily intercepted, and so some form of encryption was necessary. The US Marines enlisted 29 Native American Navajo to translate English messages into the Navajo language before communicating it over the radio. The non-written language was so unique it proved uncrackable during the war, and those Marines became known as the Navajo Code Talkers.
-
-                        </p>
-                    </div>
-                    <div>
-                        <p>
-                            Cryptography isn't always about scrambling <span class="secret">messages</span> in transit, which is to say there are other techniques for communicating secretly beyond encryption. During the Vietnam War, American POW <a href="https://www.cbsnews.com/news/jeremiah-denton-ex-senator-and-vietnam-pow-who-blinked-torture-in-morse-code-dies-at-89/" target="_blank">Jeremiah Denton</a> was forced to lie on camera about the brutal conditions he was being held <span class="secret">in</span> by his captors in a televised press conference. However he was able to hide the truth in plain site by spelling out "T-O-R-T-U-R-E" in Morse Code by blinking his eyes. The idea of hiding a message in <span class="secret">plain site</span> is generally referred to as steganography. One common example is writing a message using invisible ink. Another is taking a newspaper and marking certain letters with tiny dots or wholes underneath, each deceptively marked letter being a part of the secret message.
-                        </p>
-                        <p>
-                            Computers are really good at traditional forms of mathematical encryption and so this has become the dominant form of cryptography today, but that doesn't mean there isn't room for new creative forms of digital age <a href="https://en.wikipedia.org/wiki/Steganography" target="_blank">steganography</a>. For example, artist Maddy Varner hides secret messages within images of Kim Kardashian which proliferate on social media. She even produced a browser plugin called <a href="https://cargocollective.com/maddyv/KARDASHIAN-KRYPT" target="_blank">KARDASHIAN KRYPT</a> so you can too. Another example is this website. If you're reading this on a desktop computer use your mouse to highlight the text of these paragraphs to discover a secrete message we've left you!
-                        </p>
-                    </div>
-                </div>
-                <ul>
-                    <li>Singh, Simon. The Code Book: The Secrets Behind Codebreaking. Anchor. 2000.</li>
-                    <li>Damico, Tony M. <a href="http://www.inquiriesjournal.com/articles/1698/a-brief-history-of-cryptography" target="_blank">A Brief History of Cryptography</a>. Inquiries Journal. 2009.</li>
-                    <li>Levenson, Eric. <a href="https://www.cnn.com/2017/11/28/us/navajo-code-talkers-trump-who/index.html" target="_blank">The incredible story of the Navajo Code Talkers that got lost in all the politics.</a> CNN. 2017.</li>
-                </ul>
+                <p class="center">
+                    <a href="part1.html">continue to part I</a>
+                </p>
             </div>
         </section>
-
-        <script src="../js/utils.js"></script>
-        <script>
-
-            /*
-                welcome code explorer! we're glad you're interested to see how
-                this game works :) we've done our best to make the code readable
-                ( no minification or obfiscation ) and have tried to leave
-                helpful comments along the way. this project is open-source so
-                you can also look at all this code on our github:
-                https://github.com/brangerbriz/A-Web-Packets-Journey
-
-                if you have any thoughts/questions we'd love to hear 'em. you
-                can contact us@brangerbriz.com
-            */
-
-            let platform = platformGuess()
-
-        </script>
     </body>
 </html>

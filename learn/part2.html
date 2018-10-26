@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <title> A Web Packet's Journey </title>
+
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+        <link rel="apple-touch-icon" href="../images/icon.png">
+        <!-- <link rel="icon" type="image/png" href="../images/favicon.png"> -->
+
+        <meta name="description" content="A Web Packet's Journey is an online ( desktop, mobile, cardboard and WebVR ) educational interactive-narrative/game based on the route a web request packet takes over the Internet.">
+
+        <!-- for Google+ -->
+        <meta itemprop="name" content="A Web Packet's Journey">
+        <meta itemprop="description" content="A Web Packet's Journey is an online ( desktop, mobile, cardboard and WebVR ) educational interactive-narrative/game based on the route a web request packet takes over the Internet.">
+        <meta itemprop="image" content="../images/icon.png">
+
+        <!-- for Twitter -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:site" content="@branger_briz">
+        <meta name="twitter:title" content="A Web Packet's Journey">
+        <meta name="twitter:description" content="A Web Packet's Journey is an online ( desktop, mobile, cardboard and WebVR ) educational interactive-narrative/game based on the route a web request packet takes over the Internet.">
+        <meta name="twitter:creator" content="@branger_briz">
+        <meta name="twitter:image:src" content="../images/icon.png">
+
+        <!-- for Facebook -->
+        <meta property="og:title" content="A Web Packet's Journey">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="http://awebpacketsjourney.net">
+        <meta property="og:image" content="../images/icon.png">
+        <meta property="og:description" content="A Web Packet's Journey is an online ( desktop, mobile, cardboard and WebVR ) educational interactive-narrative/game based on the route a web request packet takes over the Internet.">
+        <meta property="og:site_name" content="A Web Packet's Journey">
+
+        <link rel="stylesheet" href="../css/styles.css">
+    </head>
+    <body>
+
+        <section id="learn">
+            <div>
+                <div id="part2" class="l-title">
+                    <h4>Part II</h4>
+                    <h3>the Daemon at the Gateway</h3>
+                    <a href="../part2.html" target="_blank">play part II</a>
+                </div>
+                <div class="l-row">
+                    <div>
+                        <h3>the Story</h3>
+                        <p>
+                            At end of the last scene you board a plane with a banner waving behind it. On that banner there is a number, your device's IP address. You fly off into the air to join other packets flying through the electromagnetic spectrum. While in the air you begin to speak with other packets. Though you can see every packet and their IP addresses waving behind them, you can't always see what their carrying inside. Some of these packet's fly through the air unencyrpted, and in those cases they share their contents with you, be it an embarrassing forum post left by their user or a password being used to log into a server. In other cases the packet's are carrying encrypted payloads, you can see them flying around, but you can't read what their carrying. Eventually you reach the router, a lighthouse on an island floating in the sky. There you meet another daemon, this one in charge of establishing the network all the users in the cafe are connected to and assigning each their local IP addresses. Like an air traffic controller, he guides packets in and out of the local network, it is at this point that our local network connects to the rest of the Internet.
+
+                        </p>
+                    </div>
+                    <div>
+                        <h3>the Tech</h3>
+                        <p>
+                            Every device on a network needs an IP address so that routers know where a packet needs to go and where it came from. The router of your local WiFi network assigns you an IP address when you connect to it. But when the packet leaves the local network it adopts the router's IP address assigned to it by the ISP or Internet Service Provider (the next stage in our journey).
+                        </p>
+                        <p>
+                            We are surrounded by electromagnetic radiation resonating at different frequencies, this is known as the <a href="https://en.wikipedia.org/wiki/Electromagnetic_spectrum" target="_blank">electromagnetic spectrum</a>. For most of human history we didn't know it was there, except of course for the part we could see (the visible light spectrum), but over time we discovered the rest of it and created technology that would allow us to broadcast messages over it, like radio and television. In the United States the <a href="https://en.wikipedia.org/wiki/Federal_Communications_Commission" target="_blank">FCC</a> regulates who can use which part of the electromagnetic spectrum and <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/United_States_Frequency_Allocations_Chart_2016_-_The_Radio_Spectrum.pdf/page1-6300px-United_States_Frequency_Allocations_Chart_2016_-_The_Radio_Spectrum.pdf.jpg" target="_blank">what they can use it for</a>. They allow anyone to use the 2.4GHz or 5GHz part of the spectrum for WiFi.
+                        </p>
+                        <p>
+                            Your computer typically ignores any packets which aren't meant for you (ie. which aren't addressed to your IP). But it's trivially easy to use your WiFi card to <a href="https://en.wikipedia.org/wiki/Monitor_mode" target="_blank">listen to all the packets</a> on the network (it's all just floating through the air). This is one reason why encryption is important. While the outer layers of the packets must remain unencrypted for the Internet to work (everyone needs to be able to see the IP addresses otherwise they won't be routed properly) the application layer payloads inside can, and often should, be encrypted.
+                        </p>
+                    </div>
+                </div>
+                <h2>taking care of the net</h2>
+                <div class="l-row">
+                    <div>
+                        <p>
+                            They say if you're not doing anything wrong you've got nothing to hide. Of course that's ridiculous, there's plenty of things worth keeping secret for example personal finances or health. There are times you might want to keep your location private from your friends, or your political views private from certain family members or your sexual orientation from your government. Or maybe you've got some kinky interests you don't want anyone except a significant other to know about. Or maybe you're writing a book and you don't want anyone anywhere to see it until the first draft is finished... and in none of those cases is what your hiding "wrong." When we're doing something online that you don't' want the entire world to know about, you can use "<a href="https://en.wikipedia.org/wiki/Encryption" target="_blank">encryption</a>."
+                        <p>
+                            To encrypt data means to scramble the contents of that file using a key (aka passphrase) such that it can't be unscrambled (decrypted) without using the same (or otherwise cryptographically related) key. Every time you use a passphrase, you are encrypting or decrypting something. Your browser sometimes handles the passphrase part for you, every time you see the green lock or <a href="https://en.wikipedia.org/wiki/HTTPS" target="_blank">HTTPS</a> (the "S" is for "secure") in your browser's address bar that means you're using encryption to communicate with the computer running that website's server. Your packets are scrambled before they leave your device and remain scrambled throughout their journey until they arrive at the computer running that website's server, this is what's known as "<a href="https://en.wikipedia.org/wiki/End-to-end_encryption" target="_blank">end to end encryption</a>".
+
+                        </p>
+                    </div>
+                    <div>
+                        <p>
+                            Unfortunately, as a user of a web app or site, you don't really have a say in whether or not that website uses HTTPS, only the web developer can implement that. Often they don't, simply because it's not as much a priority as graphic design or user interaction. Fortunately, as we continue to live more of our lives online and realize the importance of encryption, <a href="https://internethealthreport.org/2018/encrypted-websites-have-become-the-norm/" target="_blank">HTTPS has become the norm</a>. Web developers have started to prioritize it to meet our demand. Unfortunately, for those in power the proliferation of encryption is sometimes seen as an obstacle, and they often <a href="https://internethealthreport.org/2018/sweeping-attacks-on-encryption-worldwide/" target="_blank">attempt to weaken encryption</a> by passing laws that enforce "backdoors" and other intentional weak encryption standards in the name of "security"... but it's important to ask "security for who?"
+
+                        </p>
+                        <p>
+                            All that said, using an HTTP site isn't the worse thing in the world, while it does mean others could in theory read your data (especially those on the same local network, like the other folks in the same cafe as our user) a good rule of thumb is treat any HTTP activity like a public space; don't do anything you wouldn't be ok with the rest of the folks on that cafe WiFi network knowing about. Not EVERYTHING has to be encrypted, there are things you intentionally want to share. The most important part is to be aware and decide for yourself when and where it's important for you, this is a process known as "<a href="https://ssd.eff.org/en/glossary/threat-model" target="_blank">threat modeling</a>" (a somewhat intense phrase for an otherwise routine thought experiment).
+                        </p>
+                    </div>
+                </div>
+                <h2>a "bit" of history</h2>
+                <div class="l-row">
+                    <div>
+                        <p>
+                            Encryption is not an Internet age invention. We've had secrets longer than we've had written language and encryption is nearly as old. Some of the earliest forms of encryption date back to ancient Egypt, Greece and Rome. Of course in those days it was done by hand, for example in ancient Rome they would take a message and replace each letter with another a certain number of letters separated from it in the alphabet. The number to shift each letter by was the "key". So if the key was 3, the phrase "abcdefg" becomes "defhijk", or "hello" becomes "khoor", this was known as The Caesar Shift Cipher.
+                        </p>
+                        <p>
+                            Over the years various forms of encryption have been used for everything from <span class="secret">love</span> to war. In Victorian England it wasn't easy for young lovers <span class="secret">to</span> express their affection especially when it was forbidden by parents. When writing letters through the post was too risky, they would instead <span class="secret">leave</span> encrypted messages for each other in the personal columns of the newspaper. These were known as "agony columns." During World War II, much of the communication was done over radio, which as discussed earlier can be easily intercepted, and so some form of encryption was necessary. The US Marines enlisted 29 Native American Navajo to translate English messages into the Navajo language before communicating it over the radio. The non-written language was so unique it proved uncrackable during the war, and those Marines became known as the Navajo Code Talkers.
+
+                        </p>
+                    </div>
+                    <div>
+                        <p>
+                            Cryptography isn't always about scrambling <span class="secret">messages</span> in transit, which is to say there are other techniques for communicating secretly beyond encryption. During the Vietnam War, American POW <a href="https://www.cbsnews.com/news/jeremiah-denton-ex-senator-and-vietnam-pow-who-blinked-torture-in-morse-code-dies-at-89/" target="_blank">Jeremiah Denton</a> was forced to lie on camera about the brutal conditions he was being held <span class="secret">in</span> by his captors in a televised press conference. However he was able to hide the truth in plain site by spelling out "T-O-R-T-U-R-E" in Morse Code by blinking his eyes. The idea of hiding a message in <span class="secret">plain site</span> is generally referred to as steganography. One common example is writing a message using invisible ink. Another is taking a newspaper and marking certain letters with tiny dots or wholes underneath, each deceptively marked letter being a part of the secret message.
+                        </p>
+                        <p>
+                            Computers are really good at traditional forms of mathematical encryption and so this has become the dominant form of cryptography today, but that doesn't mean there isn't room for new creative forms of digital age <a href="https://en.wikipedia.org/wiki/Steganography" target="_blank">steganography</a>. For example, artist Maddy Varner hides secret messages within images of Kim Kardashian which proliferate on social media. She even produced a browser plugin called <a href="https://cargocollective.com/maddyv/KARDASHIAN-KRYPT" target="_blank">KARDASHIAN KRYPT</a> so you can too. Another example is this website. If you're reading this on a desktop computer use your mouse to highlight the text of these paragraphs to discover a secrete message we've left you!
+                        </p>
+                    </div>
+                </div>
+                <ul>
+                    <li>Singh, Simon. The Code Book: The Secrets Behind Codebreaking. Anchor. 2000.</li>
+                    <li>Damico, Tony M. <a href="http://www.inquiriesjournal.com/articles/1698/a-brief-history-of-cryptography" target="_blank">A Brief History of Cryptography</a>. Inquiries Journal. 2009.</li>
+                    <li>Levenson, Eric. <a href="https://www.cnn.com/2017/11/28/us/navajo-code-talkers-trump-who/index.html" target="_blank">The incredible story of the Navajo Code Talkers that got lost in all the politics.</a> CNN. 2017.</li>
+                </ul>
+            </div>
+        </section>
+
+        <script src="../libs/Tween.js"></script>
+        <script src="../libs/three.min.js"></script>
+        <script src="../js/utils.js"></script>
+        <script src="../js/SceneLights.js"></script>
+        <script src="../libs/loaders/draco/DRACOLoader.js"></script>
+        <script src="../js/BaseObjClass.js"></script>
+        <script src="../js/NetManagerDaemon.js"></script>
+        <script>
+
+            /*
+                welcome code explorer! we're glad you're interested to see how
+                this game works :) we've done our best to make the code readable
+                ( no minification or obfiscation ) and have tried to leave
+                helpful comments along the way. this project is open-source so
+                you can also look at all this code on our github:
+                https://github.com/brangerbriz/A-Web-Packets-Journey
+
+                if you have any thoughts/questions we'd love to hear 'em. you
+                can contact us@brangerbriz.com
+            */
+
+
+            class Simple3JS {
+                constructor(config){
+                    this.parent = document.querySelector(config.parent)
+                    this.w = this.parent.offsetWidth
+                    this.h = this.parent.offsetHeight
+                    this.scene = new THREE.Scene()
+                    this.camera = new THREE.PerspectiveCamera(
+                        75, this.w/this.h, 0.1, 100)
+                    this.camera.position.x = config.cam.x
+                    this.camera.position.y = config.cam.y
+                    this.camera.position.z = config.cam.z
+                    this.renderer = new THREE.WebGLRenderer({
+                        alpha:true, antialias:true
+                    })
+                    this.renderer.setSize(this.w,this.h)
+                    this.parent.appendChild( this.renderer.domElement )
+                    config.setup(this)
+                    this.clock = new THREE.Clock()
+                    this.draw = config.draw
+                }
+                resize(){
+                    this.w = this.parent.offsetWidth
+                    this.h = this.parent.offsetHeight
+                    this.camera.aspect = this.w / this.h
+                    this.camera.updateProjectionMatrix()
+                    this.renderer.setSize( this.w,  this.h )
+                }
+                update(){
+                    let tick = this.clock.getElapsedTime()
+                    this.draw(tick)
+                    this.renderer.render( this.scene, this.camera )
+                }
+            }
+
+            const p1d = new Simple3JS({
+                parent:'#p1-daemon',
+                cam:{x:0,y:0,z:1.5},
+                setup:function(self){
+
+                    let lights = new SceneLights(self.scene)
+                    // lights.a.intensity = 0.75
+                    // lights.h.intensity = 0.39
+
+                    self.daemon = new NetManagerDaemon((mesh)=>{
+                        mesh.scale.set(0.15,0.15,0.15)
+                        // mesh.rotation.y = Math.PI
+                        self.scene.add(mesh)
+                    })
+                },
+                draw:function(tick){
+                    if(this.daemon) this.daemon.update(tick)
+                }
+            })
+
+            window.addEventListener('resize',(e)=>{
+                p1d.resize()
+            })
+
+            function animate(){
+                requestAnimationFrame( animate )
+                TWEEN.update()
+                p1d.update()
+            }
+
+            animate()
+
+        </script>
+    </body>
+</html>
