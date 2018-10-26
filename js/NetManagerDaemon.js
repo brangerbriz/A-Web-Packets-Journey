@@ -58,7 +58,6 @@ class NetManagerDaemon extends BaseObjClass {
         this.pushMesh = new THREE.Object3D()
 
         this.mat = new THREE.MeshLambertMaterial({
-            side:2, wrapS:1000, wrapT:1000,
             map: new THREE.TextureLoader().load('images/nmd_diff.jpg')
         })
         this.pink = new THREE.MeshLambertMaterial({ side:2, color:'#ff7599'})
