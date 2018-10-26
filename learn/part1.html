@@ -54,7 +54,11 @@
                         <p>
                             Our adventure begins inside the smart phone of "the User", a young girl sitting in a cafe, using their WiFi to check her social media feed. You, our protagonist, are a new Internet packet created the moment the young girl taps on her device. She appears frozen on the other side of the screen, because for you, inside the device, time moves much slower (the entire journey only takes a fraction of a second in "human" time). You look around and interact with another fellow packet. He explains that you are a TCP/IP packet carrying a DNS request. The user has requested information from "socialmedia.com" and it's your job to find that info on the Internet and bring it back home to this device. You also meet the Network Manager, a daemon responsible for making sure the device is connected to the Internet so all the apps that require Internet access can send their data to-and-fro.
                         </p>
-                        <div id="p1-packet"></div>
+                        <div id="p1-daemon" class="didactic-3js">
+                            <div class="caption-3js">
+                                the Network Manager Daemon
+                            </div>
+                        </div>
                     </div>
                     <div>
                         <h3>the Tech</h3>
@@ -69,7 +73,21 @@
                         </p>
                     </div>
                 </div>
-                <div id="p1-daemon"></div>
+                <div class="l-row">
+                    <div id="p1-packet" class="didactic-3js">
+                        <div class="caption-3js">
+                            our DNS packet
+                        </div>
+                    </div>
+                    <div id="dns-packet">
+                        <div>
+                            <span>00 18 8b 75 1d e0 00 1f f3 d8 47 ab 08 00</span> <span>45 00 00 44 ad 0b 00 00 40 11 72 72 ac 14 02 fd ac 14 00 06</span> <span>e5 87 00 35 00 30 5b 6d</span> <span>ab c9 01 00 00 01 00 00 00 00 00 00 09 6d 63 63 6c 65 6c 6c 61 6e 02 63 73 05 6d 69 61 6d 69 03 65 64 75 00 00 01 00 01<span>
+                        </div>
+                        <div>
+                            This is what a DNS packet <i>actually</i> looks like. The packet above is represented in hex code, you can think of hex as a shorter way to write binary code. Hover over it to see what the different parts mean.
+                        </div>
+                    </div>
+                </div>
                 <h2>taking care of the net</h2>
                 <div class="l-row">
                     <div>
@@ -161,6 +179,15 @@
                     config.setup(this)
                     this.clock = new THREE.Clock()
                     this.draw = config.draw
+                    this.captionPosition()
+                }
+                captionPosition(){
+                    let cap = this.parent.querySelector('.caption-3js')
+                    if(cap){
+                        let cw = cap.offsetWidth
+                        let pw = this.parent.offsetWidth
+                        cap.style.left = `${pw/2 - cw/2}px`
+                    }
                 }
                 resize(){
                     this.parent.style.height = this.parent.offsetWidth+"px"
@@ -169,6 +196,7 @@
                     this.camera.aspect = this.w / this.h
                     this.camera.updateProjectionMatrix()
                     this.renderer.setSize( this.w,  this.h )
+                    this.captionPosition()
                 }
                 update(){
                     let tick = this.clock.getElapsedTime()
@@ -177,59 +205,59 @@
                 }
             }
 
-            // const p1d = new Simple3JS({
-            //     parent:'#p1-daemon',
-            //     cam:{x:0,y:0,z:1.5},
-            //     setup:function(self){
-            //
-            //         let lights = new SceneLights(self.scene)
-            //         // lights.a.intensity = 0.75
-            //         // lights.h.intensity = 0.39
-            //
-            //         self.daemon = new NetManagerDaemon((mesh)=>{
-            //             mesh.scale.set(0.15,0.15,0.15)
-            //             // mesh.rotation.y = Math.PI
-            //             self.scene.add(mesh)
-            //         })
-            //     },
-            //     draw:function(tick){
-            //         if(this.daemon) this.daemon.update(tick)
-            //     }
-            // })
-            //
-            // const p1p = new Simple3JS({
-            //     parent:'#p1-packet',
-            //     cam:{x:0,y:0,z:1.5},
-            //     setup:function(self){
-            //
-            //         let lights = new SceneLights(self.scene)
-            //
-            //         self.packet = new Packet({
-            //             bounce:true,
-            //             // lights:false,
-            //             type:'dns'
-            //         },(mesh)=>{
-            //             self.scene.add(mesh)
-            //         })
-            //     },
-            //     draw:function(tick){
-            //         if(this.daemon) this.daemon.update(tick)
-            //     }
-            // })
-            //
-            // window.addEventListener('resize',(e)=>{
-            //     p1p.resize()
-            //     p1d.resize()
-            // })
-            //
-            // function animate(){
-            //     requestAnimationFrame( animate )
-            //     TWEEN.update()
-            //     p1p.update()
-            //     p1d.update()
-            // }
-            //
-            // animate()
+            const p1d = new Simple3JS({
+                parent:'#p1-daemon',
+                cam:{x:0,y:-0.1,z:1.2},
+                setup:function(self){
+
+                    let lights = new SceneLights(self.scene)
+                    // lights.a.intensity = 0.75
+                    // lights.h.intensity = 0.39
+
+                    self.daemon = new NetManagerDaemon((mesh)=>{
+                        mesh.scale.set(0.15,0.15,0.15)
+                        // mesh.rotation.y = Math.PI
+                        self.scene.add(mesh)
+                    })
+                },
+                draw:function(tick){
+                    if(this.daemon) this.daemon.update(tick)
+                }
+            })
+
+            const p1p = new Simple3JS({
+                parent:'#p1-packet',
+                cam:{x:0,y:0,z:1.5},
+                setup:function(self){
+
+                    let lights = new SceneLights(self.scene)
+
+                    self.packet = new Packet({
+                        bounce:false,
+                        // lights:false,
+                        type:'dns'
+                    },(mesh)=>{
+                        self.scene.add(mesh)
+                    })
+                },
+                draw:function(tick){
+                    if(this.daemon) this.daemon.update(tick)
+                }
+            })
+
+            window.addEventListener('resize',(e)=>{
+                p1p.resize()
+                p1d.resize()
+            })
+
+            function animate(){
+                requestAnimationFrame( animate )
+                TWEEN.update()
+                p1p.update()
+                p1d.update()
+            }
+
+            animate()
 
         </script>
     </body>

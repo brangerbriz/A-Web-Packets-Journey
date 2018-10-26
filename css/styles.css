@@ -293,12 +293,43 @@ section#play > button { margin: 0px auto; display: block; }
 .l-title h3 { font-size: 60px; text-align: center; }
 .l-title a {
     border-radius: 4px; border: 1px solid #000;
-    padding: 12px 40px; background: #fff;
+    padding: 12px 40px; background:rgba(255,255,255,0.6);
     text-transform: uppercase; color: #000 !important;
     font: 13px sans-serif; text-align: center;
     text-decoration: none; display: block;
     width: 80px; margin: 34px auto;
 }
+.l-title a:hover { background:rgba(255,255,255,1); }
 
 #learn  .secret::selection { background: #f00; }
 #learn  .secret::-moz-selection { background: #f00; }
+
+.didactic-3js { position: relative; }
+.caption-3js {
+    color:#000; background-color: rgba(255,255,255,0.6);
+    padding: 10px; border-radius: 5px;
+    position: absolute; z-index: 10; bottom:0px;
+}
+.caption-3js:after {
+    content: '';
+    position: absolute; top: 0; left: 50%;
+    width: 0; height: 0;
+    border: 20px solid transparent;
+    border-bottom-color: rgba(255,255,255,0.6);
+    border-top: 0;
+    margin-left: -20px; margin-top: -20px;
+}
+
+#dns-packet {
+    background-color: rgba(255,255,255,0.6);
+    padding: 10px; border-radius: 5px;
+}
+#dns-packet:after {
+    content: '';
+    position: absolute; left: 0; top: 50%;
+    width: 0; height: 0;
+    border: 20px solid transparent;
+    border-right-color: rgba(255,255,255,0.6);
+    border-left: 0;
+    margin-top: -20px; margin-left: -20px;
+}
