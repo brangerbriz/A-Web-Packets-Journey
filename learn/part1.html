@@ -63,28 +63,30 @@
                     <div>
                         <h3>the Tech</h3>
                         <p>
+                            A <a href="https://en.wikipedia.org/wiki/Daemon_(computing)" target="_blank">daemon</a> is simply a program that runs in the background. Most of the programs you interact with have GUIs (graphical user interfaces) that you can click, swipe and interact with, but your device is always running programs in the background to manage all the other processes that keep things ticking (like our Network Manager).
+                        </p>
+                        <p>
                             A <a href="https://en.wikipedia.org/wiki/Network_packet" target="_blank">network packet</a> is simply a file with text data (maybe an HTML page, maybe an email, maybe parts of a video you're watching) organized in a particular way. Like a letter traveling over the post, the first few lines of a network packet specify the "to" and "from" (<a href="https://en.wikipedia.org/wiki/Internet_Protocol" target="_blank">IP</a>) addresses of the recipient and destination computers, followed by a few lines used for error checking and reliability (<a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol" target="_blank">TCP</a> or <a href="https://en.wikipedia.org/wiki/User_Datagram_Protocol" target="_blank">UDP</a>). After that, the data gets more specific and depends on the app that created the packet. If it was an email app, then we've got email data (<a href="https://en.wikipedia.org/wiki/Post_Office_Protocol" target="_blank">POP</a>/<a href="https://en.wikipedia.org/wiki/Internet_Message_Access_Protocol" target="_blank">IMAP</a>). If it was a browser, then we've got web data (<a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol" target="_blank">HTTP</a>), etc. These different sections of the packet are usually referred to as "layers."
                         </p>
                         <p>
-                            You are a TCP/IP packet (the outer layers) carrying a <a href="https://en.wikipedia.org/wiki/Domain_Name_System" target="_blank">DNS</a> request (the inner application layer), which is a packet responsible for taking a domain name like "socialmedia.com" and finding a DNS server that can translate that into our "to" IP address of the destination computer where "socialmedia.com" is hosted. This is the first stage of a web request. Obviously these packets aren't tiny cubes with smiley faces; they are text files! This is what a <a href="http://www.cs.miami.edu/home/burt/learning/Csc524.092/notes/ip_example.html" target="_blank">DNS request actually looks like</a>.
-                        </p>
-                        <p>
-                            A <a href="https://en.wikipedia.org/wiki/Daemon_(computing)" target="_blank">daemon</a> is simply a program that runs in the background. Most of the programs you interact with have GUIs (graphical user interfaces) that you can click, swipe and interact with, but your device is always running programs in the background to manage all the other processes that keep things ticking (like our Network Manager).
+                            You are a TCP/IP packet (the outer layers) carrying a <a href="https://en.wikipedia.org/wiki/Domain_Name_System" target="_blank">DNS</a> request (the inner application layer), which is a packet responsible for taking a domain name like "socialmedia.com" and finding a DNS server that can translate that into our "to" IP address of the destination computer where "socialmedia.com" is hosted. This is the first stage of a web request. Obviously these packets aren't tiny cubes with smiley faces; they are text files! Check out the diagram below to see what a DNS packet actually looks like.
                         </p>
                     </div>
                 </div>
-                <div class="l-row">
+                <div id="packet-graphic">
+                    <div>
+                        <div id="dns-packet">
+                            <div>
+                                <span>00 18 8b 75 1d e0 00 1f f3 d8 47 ab 08 00</span> <span>45 00 00 44 ad 0b 00 00 40 11 72 72 ac 14 02 fd ac 14 00 06</span> <span>e5 87 00 35 00 30 5b 6d</span> <span>ab c9 01 00 00 01 00 00 00 00 00 00 09 6d 63 63 6c 65 6c 6c 61 6e 02 63 73 05 6d 69 61 6d 69 03 65 64 75 00 00 01 00 01<span>
+                            </div>
+                            <div>
+                                This is what a DNS packet <i>actually</i> looks like. The data above is represented in hex code, you can think of hex as a shorter way to represent binary code. Hover over it to see what the different parts mean. (<a href="http://www.cs.miami.edu/home/burt/learning/Csc524.092/notes/ip_example.html" target="_blank">source</a>)
+                            </div>
+                        </div>
+                    </div>
                     <div id="p1-packet" class="didactic-3js">
                         <div class="caption-3js">
                             our DNS packet
-                        </div>
-                    </div>
-                    <div id="dns-packet">
-                        <div>
-                            <span>00 18 8b 75 1d e0 00 1f f3 d8 47 ab 08 00</span> <span>45 00 00 44 ad 0b 00 00 40 11 72 72 ac 14 02 fd ac 14 00 06</span> <span>e5 87 00 35 00 30 5b 6d</span> <span>ab c9 01 00 00 01 00 00 00 00 00 00 09 6d 63 63 6c 65 6c 6c 61 6e 02 63 73 05 6d 69 61 6d 69 03 65 64 75 00 00 01 00 01<span>
-                        </div>
-                        <div>
-                            This is what a DNS packet <i>actually</i> looks like. The packet above is represented in hex code, you can think of hex as a shorter way to write binary code. Hover over it to see what the different parts mean.
                         </div>
                     </div>
                 </div>
@@ -131,7 +133,7 @@
                 <hr>
                 <br>
                 <p class="center">
-                    <a href="part2.html">continue to part II</a>
+                    <a href="part2.html">continue to part II supplement</a>
                 </p>
             </div>
         </section>
@@ -139,6 +141,7 @@
         <script src="../libs/Tween.js"></script>
         <script src="../libs/three.min.js"></script>
         <script src="../js/utils.js"></script>
+        <script src="../js/site-utils.js"></script>
         <script src="../js/SceneLights.js"></script>
         <script src="../libs/loaders/draco/DRACOLoader.js"></script>
         <script src="../js/BaseObjClass.js"></script>
@@ -158,65 +161,14 @@
                 can contact us@brangerbriz.com
             */
 
-
-            class Simple3JS {
-                constructor(config){
-                    this.parent = document.querySelector(config.parent)
-                    this.parent.style.height = this.parent.offsetWidth+"px"
-                    this.w = this.parent.offsetWidth
-                    this.h = this.parent.offsetHeight
-                    this.scene = new THREE.Scene()
-                    this.camera = new THREE.PerspectiveCamera(
-                        75, this.w/this.h, 0.1, 100)
-                    this.camera.position.x = config.cam.x
-                    this.camera.position.y = config.cam.y
-                    this.camera.position.z = config.cam.z
-                    this.renderer = new THREE.WebGLRenderer({
-                        alpha:true, antialias:true
-                    })
-                    this.renderer.setSize(this.w,this.h)
-                    this.parent.appendChild( this.renderer.domElement )
-                    config.setup(this)
-                    this.clock = new THREE.Clock()
-                    this.draw = config.draw
-                    this.captionPosition()
-                }
-                captionPosition(){
-                    let cap = this.parent.querySelector('.caption-3js')
-                    if(cap){
-                        let cw = cap.offsetWidth
-                        let pw = this.parent.offsetWidth
-                        cap.style.left = `${pw/2 - cw/2}px`
-                    }
-                }
-                resize(){
-                    this.parent.style.height = this.parent.offsetWidth+"px"
-                    this.w = this.parent.offsetWidth
-                    this.h = this.parent.offsetHeight
-                    this.camera.aspect = this.w / this.h
-                    this.camera.updateProjectionMatrix()
-                    this.renderer.setSize( this.w,  this.h )
-                    this.captionPosition()
-                }
-                update(){
-                    let tick = this.clock.getElapsedTime()
-                    this.draw(tick)
-                    this.renderer.render( this.scene, this.camera )
-                }
-            }
-
-            const p1d = new Simple3JS({
+            // Network Dameon graphic
+            const p1d = new Didactic3JS({
                 parent:'#p1-daemon',
                 cam:{x:0,y:-0.1,z:1.2},
                 setup:function(self){
-
                     let lights = new SceneLights(self.scene)
-                    // lights.a.intensity = 0.75
-                    // lights.h.intensity = 0.39
-
                     self.daemon = new NetManagerDaemon((mesh)=>{
                         mesh.scale.set(0.15,0.15,0.15)
-                        // mesh.rotation.y = Math.PI
                         self.scene.add(mesh)
                     })
                 },
@@ -225,18 +177,26 @@
                 }
             })
 
-            const p1p = new Simple3JS({
+
+            // DNS Packet graphic
+            let packet
+            function packetLook(){
+                setTimeout(packetLook,Math.random()*2000+2000)
+                let x = Math.random() - 0.3
+                let y = -(Math.random()*0.4 + 0.4)
+                new TWEEN.Tween(packet.mesh.rotation).to({x:x,y:y}, 250)
+                .easing(TWEEN.Easing.Quadratic.InOut).start()
+            }
+            const p1p = new Didactic3JS({
                 parent:'#p1-packet',
                 cam:{x:0,y:0,z:1.5},
                 setup:function(self){
-
-                    let lights = new SceneLights(self.scene)
-
-                    self.packet = new Packet({
+                    packet = new Packet({
                         bounce:false,
-                        // lights:false,
+                        lights:false,
                         type:'dns'
                     },(mesh)=>{
+                        packetLook()
                         self.scene.add(mesh)
                     })
                 },
@@ -245,6 +205,45 @@
                 }
             })
 
+            // DNS Packet diagram
+            const pdgrm = document.querySelector('#dns-packet')
+            const hex = pdgrm.querySelector('div:nth-child(1)')
+            const nfo = pdgrm.querySelector('div:nth-child(2)')
+
+            let layers = [
+                {
+                    color:'#fbb1b1',
+                    nfo:'This is the "data link layer", it contains info for handing the packet off to the next node (computer or router) in the packet\'s journey'
+                },
+                {
+                    color:'#fbeeb1',
+                    nfo:'This is the "network layer", which is where we find the to/from IP info, our device\'s IP address and the IP address of where we\'re going (the DNS Server)'
+                },
+                {
+                    color:'#b1fbb2',
+                    nfo:'This is the "transport layer", it tells the destination computer which port the app it\'s destined for is running on as well as some error checking info to make sure all the data needed is there.'
+                },
+                {
+                    color:'#b1e6fb',
+                    nfo:'This is the "application layer", and in our case this contains a DNS Request, the info the daemon (ie. background app) at the DNS Server needs in order to look up the IP address. This includes the domain name itself (of course) as well as other registration info'
+                }
+            ]
+
+            for (let i = 0; i < hex.children.length; i++) {
+                hex.children[i].addEventListener('mouseover',(e)=>{
+                    nfo.style.background = layers[i].color
+                    hex.children[i].style.background = layers[i].color
+                    nfo.innerHTML = layers[i].nfo
+                })
+                hex.children[i].addEventListener('mouseout',(e)=>{
+                    nfo.style.background = '#b1b1fb'
+                    hex.children[i].style.background = 'none'
+                    nfo.innerHTML = 'This is what a DNS packet <i>actually</i> looks like. The data above is represented in hex code, you can think of hex as a shorter way to represent binary code. Hover over it to see what the different parts mean. (<a href="http://www.cs.miami.edu/home/burt/learning/Csc524.092/notes/ip_example.html" target="_blank">source</a>)'
+                })
+            }
+
+
+            // render grpahics
             window.addEventListener('resize',(e)=>{
                 p1p.resize()
                 p1d.resize()

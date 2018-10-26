@@ -55,6 +55,11 @@
                             At end of the last scene, you board a plane with a banner waving behind it. On that banner, there is a number: your device's IP address. You fly off into the air to join other packets flying through the electromagnetic spectrum. While in the air, you begin to speak with other packets. Though you can see every packet and their IP addresses waving behind them, you can't always see what they're carrying inside. Some of these packets fly through the air unencrypted, and in those cases, they share their contents with you... be it an embarrassing forum post left by their user or a password being used to log into a server. In other cases, the packets are carrying encrypted payloads. You can see them flying around, but you can't read what they're carrying. Eventually you reach the router, a lighthouse on an island floating in the sky. There you meet another daemon. This one is in charge of establishing the network all the users in the cafe are connected to and assigning each their local IP addresses. Like an air traffic controller, he guides packets in and out of the local network. It is at this point that our local network connects to the rest of the Internet.
 
                         </p>
+                        <div id="p2-daemon" class="didactic-3js">
+                            <div class="caption-3js">
+                                the Daemon at the Gateway is based on a real program called <a href="https://en.wikipedia.org/wiki/Dnsmasq" target="_blank">dnsmasq</a> which is where the desing of his mask comes from.
+                            </div>
+                        </div>
                     </div>
                     <div>
                         <h3>the Tech</h3>
@@ -117,13 +122,13 @@
             </div>
         </section>
 
-        <script src="../libs/Tween.js"></script>
         <script src="../libs/three.min.js"></script>
         <script src="../js/utils.js"></script>
+        <script src="../js/site-utils.js"></script>
         <script src="../js/SceneLights.js"></script>
         <script src="../libs/loaders/draco/DRACOLoader.js"></script>
         <script src="../js/BaseObjClass.js"></script>
-        <script src="../js/NetManagerDaemon.js"></script>
+        <script src="../js/GatewayDaemon.js"></script>
         <script>
 
             /*
@@ -138,53 +143,16 @@
                 can contact us@brangerbriz.com
             */
 
-
-            class Simple3JS {
-                constructor(config){
-                    this.parent = document.querySelector(config.parent)
-                    this.w = this.parent.offsetWidth
-                    this.h = this.parent.offsetHeight
-                    this.scene = new THREE.Scene()
-                    this.camera = new THREE.PerspectiveCamera(
-                        75, this.w/this.h, 0.1, 100)
-                    this.camera.position.x = config.cam.x
-                    this.camera.position.y = config.cam.y
-                    this.camera.position.z = config.cam.z
-                    this.renderer = new THREE.WebGLRenderer({
-                        alpha:true, antialias:true
-                    })
-                    this.renderer.setSize(this.w,this.h)
-                    this.parent.appendChild( this.renderer.domElement )
-                    config.setup(this)
-                    this.clock = new THREE.Clock()
-                    this.draw = config.draw
-                }
-                resize(){
-                    this.w = this.parent.offsetWidth
-                    this.h = this.parent.offsetHeight
-                    this.camera.aspect = this.w / this.h
-                    this.camera.updateProjectionMatrix()
-                    this.renderer.setSize( this.w,  this.h )
-                }
-                update(){
-                    let tick = this.clock.getElapsedTime()
-                    this.draw(tick)
-                    this.renderer.render( this.scene, this.camera )
-                }
-            }
-
-            const p1d = new Simple3JS({
-                parent:'#p1-daemon',
+            const p2d = new Didactic3JS({
+                parent:'#p2-daemon',
                 cam:{x:0,y:0,z:1.5},
                 setup:function(self){
-
                     let lights = new SceneLights(self.scene)
-                    // lights.a.intensity = 0.75
-                    // lights.h.intensity = 0.39
 
-                    self.daemon = new NetManagerDaemon((mesh)=>{
+                    self.daemon = new GatewayDaemon((mesh,dmn)=>{
                         mesh.scale.set(0.15,0.15,0.15)
-                        // mesh.rotation.y = Math.PI
+                        mesh.position.x = 1.45
+                        mesh.remove( dmn.mesh.children[0] )
                         self.scene.add(mesh)
                     })
                 },
@@ -194,13 +162,12 @@
             })
 
             window.addEventListener('resize',(e)=>{
-                p1d.resize()
+                p2d.resize()
             })
 
             function animate(){
                 requestAnimationFrame( animate )
-                TWEEN.update()
-                p1d.update()
+                p2d.update()
             }
 
             animate()

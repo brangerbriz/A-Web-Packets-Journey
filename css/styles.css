@@ -304,6 +304,9 @@ section#play > button { margin: 0px auto; display: block; }
 #learn  .secret::selection { background: #f00; }
 #learn  .secret::-moz-selection { background: #f00; }
 
+#p1-daemon { height: 490px; }
+#p2-daemon { height: 490px; }
+
 .didactic-3js { position: relative; }
 .caption-3js {
     color:#000; background-color: rgba(255,255,255,0.6);
@@ -319,17 +322,28 @@ section#play > button { margin: 0px auto; display: block; }
     border-top: 0;
     margin-left: -20px; margin-top: -20px;
 }
+#learn .caption-3js > a { color:#000; }
+
+#packet-graphic {
+    margin: 70px auto;
+    display:grid; grid-template-columns:1fr 1fr; grid-column-gap:20px;
+}
+
+@media (max-width:1000px) {
+    #packet-graphic {
+        height: auto; margin: 70px auto;
+        grid-template-columns:3fr 1fr;
+    }
+}
 
 #dns-packet {
-    background-color: rgba(255,255,255,0.6);
+    background-color: rgba(255,255,255,0.6); color:#000;
     padding: 10px; border-radius: 5px;
 }
-#dns-packet:after {
-    content: '';
-    position: absolute; left: 0; top: 50%;
-    width: 0; height: 0;
-    border: 20px solid transparent;
-    border-right-color: rgba(255,255,255,0.6);
-    border-left: 0;
-    margin-top: -20px; margin-left: -20px;
+#dns-packet a { color:#000; }
+
+#dns-packet > div:nth-child(2){
+    background: #b1b1fb;  padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px; line-height: 20px;
 }
